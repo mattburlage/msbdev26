@@ -1,1004 +1,505 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="https://www.msb.dev/static/favicon.png" />
-    <link rel="apple-touch-icon" sizes="57x57" href="https://www.msb.dev/static/favicon.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://www.msb.dev/static/favicon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://www.msb.dev/static/favicon.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://www.msb.dev/static/favicon.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://www.msb.dev/static/favicon.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://www.msb.dev/static/favicon.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://www.msb.dev/static/favicon.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://www.msb.dev/static/favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://www.msb.dev/static/favicon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://www.msb.dev/static/favicon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://www.msb.dev/static/favicon.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://www.msb.dev/static/favicon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://www.msb.dev/static/favicon.png">
-
-    <meta name="msapplication-TileColor" content="#343A40">
-    <meta name="msapplication-TileImage" content="https://msb.dev/static/favicon.png">
-    <meta name="theme-color" content="#343A40">
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-    <title>Matthew Smith Burlage - Software Engineer</title>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- Custom styles for this template -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <style>
-        .link-unstyled {
-            color: inherit;
-            text-decoration: inherit;
-        }
-
-        .link-discreet {
-            color: inherit;
-            text-decoration: underline dotted;
-        }
-        .link-discreet:hover {
-            color: inherit;
-            text-decoration: underline;
-        }
-
-        .small-md {
-            font-size: 85%;
-        }
-
-        textarea {
-            resize: none;
-        }
-
-        @media (min-width: 1200px) {
-            .small-md {font-size: 100%;}
-        }
-
-        html, body {
-            scroll-behavior: smooth;
-            height: 100%;
-        }
-
-        .nyc-bg {
-            background-image: url("https://static.s5s.dev/media/msbdev/nyc5.jpg");
-            background-position: 100%;
-            background-size: cover;
-            height: 100%;
-            transition: all .5s ease-in-out;
-            min-height: 400px;
-        }
-
-        .nyc-bg-2 {
-            height: 100%;
-            background-color: black;
-            opacity: 65%;
-        }
-
-        .nyc-bg-3 {
-            display: flex;
-            height: 80%;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .nyc-bg-link {
-            filter: brightness(125%);
-        }
-
-        .arrow-div {
-            position: absolute;
-            bottom: 10px;
-        }
-
-        .nyc-bg-text {
-            color: #dcdcdc;
-        }
-
-        #spacing-top {
-            transition: all .5s linear;
-        }
-
-        .hide-horiz-overflow {
-            overflow: hidden;
-        }
-
-        .arrow {
-            color: #dcdcdc;
-            text-align: center;
-            margin: 8% 0;
-            display: none;
-        }
-
-        .bounce {
-            -moz-animation: bounce 2s infinite;
-            -webkit-animation: bounce 2s infinite;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-30px);
-            }
-            60% {
-                transform: translateY(-15px);
-            }
-        }
-    </style>
-</head>
-<body class="bg-dark">
-
-<div class="nyc-bg d-print-none">
-    <div class="nyc-bg-2">
-        <div class="navbar box-shadow">
-            <div class="container d-flex">
-                <a href="https://www.msb.dev" class="navbar-brand nyc-bg-text d-flex align-items-center"> <strong>msb</strong>.dev</a>
-            </div>
-        </div>
-
-        <div class="nyc-bg-3">
-            <div class="d-print-none nyc-bg-text text-center">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <h1 class="mt-3">Matthew Smith Burlage</h1>
-                            <h4 class="collapse-div collapse show">Software Engineer</h4>
-                            <p class="lead">
-                                Focused on creating secure, powerful, efficient, and intuitive web systems.
-                            </p>
-                            <ul class="nav justify-content-center collapse-div collapse">
-                                <li class="nav-item">
-                                    <a class="nav-link text-info nyc-bg-link" onclick='print(); return false;' href="#">
-                                        Print Me
-                                    </a>
-                                </li>
-
-
-
-
-
-                                <li class="nav-item">
-                                </li>
-                                <a class="nav-link text-info nyc-bg-link" onclick="toggleResume(); return false;" href="#">
-                                    Back
-                                </a>
-                            </ul>
-                            <ul class="nav justify-content-center collapse-div collapse show">
-                                <li class="nav-item">
-                                    <a class="nav-link text-info nyc-bg-link" href="#aboutme">About Me</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-info nyc-bg-link" onclick="toggleResume(); return false;" href="#">
-                                        My Resume
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-info nyc-bg-link" href="#mywork">My Work</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-info nyc-bg-link" href="#principles">Principles</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-info nyc-bg-link" href="#contactme">Contact Me</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="arrow-div">
-                <div class="arrow bounce collapse show">
-                    <i class="fa fa-arrow-down fa-2x"></i>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="d-none d-print-block">
-    <div class="container pt-5 pb-5">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="display-4 text-center">Matthew Smith Burlage</h1>
-                <p class="lead text-center collapse"><b>Software Engineer</b></p>
-                <p class="lead text-center">Matthew is a software engineer focused on creating secure, powerful, efficient, and intuitive web systems.</p>
-            </div>
-        </div>
-    </div>
-</div>
-<section class="jumbotron jumbotron-fluid hide-horiz-overflow text-center mb-0 collapse show" id='aboutme'>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 mb-5 mb-md-0 col-md-4" data-aos="fade-left">
-                <img class="rounded-circle" src="https://i.ibb.co/Mp2Y9gy/me.jpg" alt="Me">
-            </div>
-            <div class="col-12 col-md-8" data-aos="fade-right">
-                <h4 class="jumbotron-heading mb-3">Hello World, I'm Matthew.</h4>
-
-                <ul class="list-unstyled">
-                    <li>
-                        I am a software engineer focused on
-                        <a href="#" class="link-discreet" onclick="addlInfoSection('improvelives'); return false;">
-                            improving people’s lives through technology.
-                        </a>
-                        Even before becoming an engineer, I always focused on
-                        <a href="#" class="link-discreet" onclick="addlInfoSection('otherjobs'); return false;">
-                            improving efficiency through technology in every job
-                        </a>
-                        I have ever had.
-                        As an engineer, it has been my focus to build secure software
-                        that removes
-                        <a href="#" class="link-discreet" onclick="addlInfoSection('duplicatework'); return false;">
-                            duplicate work,
-                        </a>
-                        <a href="#" class="link-discreet" onclick="addlInfoSection('badprocess'); return false;">
-                            bad processes,
-                        </a> and
-                        <a href="#" class="link-discreet" onclick="addlInfoSection('waste'); return false;">
-                            waste.
-                        </a>
-                        Take a look at my
-                        <a class="link-discreet" onclick="toggleResume()" href="#">resume</a>,
-                        <a href="#mywork" class="link-discreet">previous work</a>, or
-                        <a href="#principles" class="link-discreet">development principles</a>
-                        to learn more about me. Or
-                        <a href="#contactme" class="link-discreet">reach out</a>
-                        and see what I can do for your organization!
-                    </li>
-                </ul>
-                <div class="mt-3 collapse addl-info"  id="addl-info-improvelives">
-                    <h5>Improving people's lives with technology</h5>
-                    <h6>My Thoughts</h6>
-                    The ultimate purpose for technology and software is to improve the lives of the user.
-                    But I’m sure I’m not the only one who has said the phrase “it’s great when it works”
-                    when an app has seemed to be more trouble than it was worth.
-                    My philosophy with software is that it should just work.
-                    You shouldn’t need to attend a training to use a piece of software.
-                    Instead, it should be intuitive enough to be used with limited instruction
-                    and should be self-documenting when a more complicated interface is needed.
-                </div>
-                <div class="mt-3 collapse addl-info" id="addl-info-otherjobs">
-                    <h5>Using Technology in My Past Jobs</h5>
-                    I have always used technology to make processes easier,
-                    even when my job had nothing to do with software development.
-                    As the 19 year old stage manager at the
-                    <a class="link-unstyled" href="https://www.youtube.com/watch?v=7uJ1tRRrF3c" target="_blank">
-                        magic department
-                    </a>
-                    for
-                    a children's performance arts sleep-away camp, I developed
-                    an Access database to handle the organization of 100+ children
-                    across six magic shows to make sure that visitors could watch
-                    their kids saw their friends and half or whatever other crazy
-                    routine they had come up with. When I worked as a manager and
-                    bartender for a couple of NYC restaurants and bars, I was always
-                    the go-to for POS integration, website maintenance, and all other
-                    technology needs. I have a passion for automation and process
-                    simplification and am always evaluating if there are better ways
-                    to do things.
-                </div>
-                <div class="mt-3 collapse addl-info" id="addl-info-duplicatework">
-                    <h5>Eliminating Duplicate Work</h5>
-                    When I was a PC Technician, I would always be on the lookout for
-                    ways to reduce duplicate work. If I had to do the same task more
-                    than a few times, I would always evaluate if there was a way to
-                    script or otherwise automate it, and often there was. A piece of
-                    software that we had to install on each computer required running
-                    seven different MSI file as well as some registry edits and other
-                    configuration steps. I was able to script that down to five clicks
-                    of the mouse.
-                </div>
-                <div class="mt-3 collapse addl-info" id="addl-info-badprocess">
-                    <h5>Eliminating Bad Processes</h5>
-                    My first task as Software Developer in my current role was to improve
-                    the process of IT Access form submission, which had a terrible compliance
-                    rate with the then-current method of emailing a PDF.  I created a system to
-                    handle this process as well as automate many of the user creation steps
-                    required by our Active Directory environment. In addition, we found that
-                    the entire process of on-boarding new employees required entering the same
-                    information seven different times. I was able to expand the system to handle
-                    this which now only requires a single point of data entry for HR.
-                </div>
-                <div class="mt-3 collapse addl-info" id="addl-info-waste">
-                    <h5>Eliminating Waste</h5>
-                    Before my work as a software developer, the HR department for my current
-                    organization used emailing PDFs around for their approval workflow. In addition,
-                    each user would typically print the PDF for their own records, creating possibly 7
-                    different paper copies of the same document, leading to wasted time, money, and
-                    environmental harm for no good reason. The system I build them now acts as the source
-                    of truth requiring no printing whatsoever to archive the records in perpetuity.
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 collapse addl-info" >
-                Additional Info about other jobs
-            </div>
-            <div class="col-12 collapse addl-info">
-
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="album py-5 bg-light collapse show" id='mywork'>
-    <div class="container">
-        <div class="row text-center mb-3">
-            <div class="col-12" data-aos="zoom-in" data-aos-anchor="#card1">
-                <h4 class="jumbotron-heading text-center">My Work</h4>
-            </div>
-        </div>
-
-        <div class="row">
-
-            <div id="card1" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0">
-                <div class="card mb-4 box-shadow">
-
-                    <div class="card-body">
-                        <div class="card-text">
-                            <strong>Agenda Management</strong>
-
-
-                            <br/><span class="text-muted small">React, Django, PostgreSQL, IIS</span>
-
-                            <div>The Agenda Management software helps local governments stay on top of their meetings, including approval workflows and minutes capture.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="card2" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0">
-                <div class="card mb-4 box-shadow">
-
-                    <div class="card-body">
-                        <div class="card-text">
-                            <strong>Five Star Ordering</strong>
-
-                            <a class="small text-muted ml-2" target="_blank" href="https://www.fivestarpizzanyc.com">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-
-
-                            <br/><span class="text-muted small">React, Django, PostgreSQL, PythonAnywhere</span>
-
-                            <div>The Five Star ordering system allows restaurants to receive delivery and pickup orders and handles payments thru Stripe. Additional restaurants and locations can be quickly added.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="card3" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0">
-                <div class="card mb-4 box-shadow">
-
-                    <div class="card-body">
-                        <div class="card-text">
-                            <strong>create-django-react-app</strong>
-
-                            <a class="small text-muted ml-2" target="_blank" href="https://pypi.org/project/create-django-react-app/">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-
-
-                            <br/><span class="text-muted small">Python</span>
-
-                            <div>This open source python module enables users to easily create a Django and React based application, including JWT based authentication.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="card4" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0">
-                <div class="card mb-4 box-shadow">
-
-                    <div class="card-body">
-                        <div class="card-text">
-                            <strong>Position Control</strong>
-
-
-                            <br/><span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span>
-
-                            <div>Allows Human Resources to keep track of budgeted positions and employee records easily and allows Finance departments to easily forcast labor budgets.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="card5" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0">
-                <div class="card mb-4 box-shadow">
-
-                    <div class="card-body">
-                        <div class="card-text">
-                            <strong>SmartBackup</strong>
-
-                            <a class="small text-muted ml-2" target="_blank" href="https://github.com/mattburlage/smart_backup">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-
-
-                            <br/><span class="text-muted small">Bootstrap, Django, SQLite, IIS</span>
-
-                            <div>SmartBackup helps Database administrators keep backups automated and dependable while keeping file sizes low.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="card6" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0">
-                <div class="card mb-4 box-shadow">
-
-                    <div class="card-body">
-                        <div class="card-text">
-                            <strong>IT Access Control</strong>
-
-
-                            <br/><span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span>
-
-                            <div>Allows departments to submit access requests to IT resources and automatically creates and sets up Active Directory accounts for new users.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="card7" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0">
-                <div class="card mb-4 box-shadow">
-
-                    <div class="card-body">
-                        <div class="card-text">
-                            <strong>NertzBoard</strong>
-
-                            <a class="small text-muted ml-2" target="_blank" href="https://www.nertzboard.com">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-
-
-                            <br/><span class="text-muted small">React, Django, MySQL, PythonAnywhere</span>
-
-                            <div>NertzBoard is a scoreboard keeping app for a multiplayer solitaire card game called Nertz. With live score updates, scoring history, and multiple game rooms, players can keep their head in the game.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="card8" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0">
-                <div class="card mb-4 box-shadow">
-
-                    <div class="card-body">
-                        <div class="card-text">
-                            <strong>Financial Documents App</strong>
-
-
-                            <br/><span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span>
-
-                            <div>Helps the Finance department manage travel reimbursment as well as recurring billing items, and reminds the user in question when they are up for renewal.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="card9" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0">
-                <div class="card mb-4 box-shadow">
-
-                    <div class="card-body">
-                        <div class="card-text">
-                            <strong>Administrative Policy</strong>
-
-
-                            <br/><span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span>
-
-                            <div>Allows administration to create, approve, and display policies for the organization including expiration notifications and version control.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-    </div>
-</div>
-
-<section class="jumbotron hide-horiz-overflow jumbotron-fluid text-center mb-0 collapse show" id='principles'>
-    <div class="container">
-        <h4 class="jumbotron-heading" data-aos="zoom-in" data-aos-anchor="#prin2">My Development Principles</h4>
-        <ul class="list-unstyled" data-aos="fade-right" data-aos-anchor="#prin2" id="prin1">
-            <li>
-                <h6 class="mt-3">Security First </h6>In today's world, the value of data is ever increasing. With this in mind, any software system should consider security from the outset. From design through implementation and maintenance, security should be front and center.  No system is worth a penny if it is insecure.
-            </li>
-        </ul>
-        <ul class="list-unstyled" data-aos="fade-left" id="prin2">
-            <li>
-                <h6>
-                    Ease of Use </h6>
-                The number one goal of any system should, outside security, be to create a wonderful user experience for end users and admins alike.  Users should be able to focus on their work, not on learning new systems. This can be accomplished by focusing the experience around the tasks that your users need to complete. All a user needs to know is what their end goal is, and the system should take care of putting the information they need in front of them or whomever needs it.
-            </li>
-        </ul>
-
-        <ul class="list-unstyled" data-aos="fade-right" data-aos-anchor="#prin2" id="prin3">
-            <li>
-                <h6>
-                    Embrace and Prepare for Change </h6>
-                Business needs change regularly, and any successful enterprise must have software that can adjust with them. Software solutions, therefore, must be customizable and built to handle changing needs.  This includes building them from day one in a way that makes later upgrades a breeze.
-            </li>
-        </ul>
-
-    </div>
-</section>
-
-<section class="jumbotron hide-horiz-overflow bg-light jumbotron-fluid mb-0 collapse show" id='contactme'>
-    <div class="container">
-        <div class="card bg-light pt-5 pb-5" data-aos="flip-up" data-aos-offset="200">
-            <div class="row text-center">
-                <div class="col">
-                    <h4 class="jumbotron-heading">So Now What?</h4>
-                    <div class="lead">Reach out to me!</div>
-                    <div>If you think that I can help your project or organization, feel free to reach out!</div>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-12 col-md-8 offset-md-2">
-                    <form onsubmit="submitForm(); return false">
-                        <label for="id_email" class="font-weight-bold mt-1">
-                            Email
-                        </label>
-                        <input type="email" required id="id_email" class="form-control">
-
-                        <label for="id_note" class="font-weight-bold mt-2">
-                            Comments
-                        </label>
-                        <textarea required rows="5" id="id_note" class="form-control"></textarea>
-                        <button id="sub_btn" class="btn btn-outline-primary mt-2">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="collapse bg-light pt-5 pb-5" id="resume">
-    <div class="container">
-
-        <div class="row">
-            <div class="col-md-8">
-
-                <h5>Projects</h5>
-
-                <div>
-                    <div class="mb-2">
-                        <span class="font-weight-bold">Agenda Management</span>&nbsp;&nbsp;
-                        <span class="text-muted small">React, Django, PostgreSQL, IIS</span>
-                    </div>
-                    <div class="mb-4">
-                        The Agenda Management software is designed to assist governments of all sizes in the preparation,
-                        approval, creation, publishing, recording, and archiving of official Board meetings. The system
-                        allows for an organization to allow different departments to enter their desired agenda items,
-                        which then flow through a completely customizable workflow for needed approvals.
-                        The system allows for the production of PDFs for each agenda item, the agenda list, the minutes,
-                        any supporting documents, and conversion of any attachments to PDF. Those PDFs and agendas
-                        are also uploaded to a public site to comply with any publication requirements that may exist.
-                    </div>
-                </div>
-
-                <div class="mb-2">
-                    <span class="font-weight-bold">Five Star Ordering</span>&nbsp;&nbsp;
-                    <span class="text-muted small">React, Django, PostgreSQL, PythonAnywhere</span>
-                </div>
-                <div class="mb-4">
-                    The Five Star ordering system is a fixed-rate restaurant online ordering platform that supports
-                    both pickup and delivery orders. It allows for address verification and integrates with Stripe
-                    payment processing.  The platform allows new restaurants to be added with zero additional coding
-                    and can be completed as quickly as a few hours.
-                </div>
-
-
-                <div class="mb-2">
-                    <span class="font-weight-bold">Position Control</span>&nbsp;&nbsp;
-                    <span class="text-muted small">Django, React, Microsoft SQL, IIS</span>
-                </div>
-                <div class="mb-4">
-                    The Position Control system is designed to handle the tracking and paperwork for all employee
-                    records. It handles all paperwork including new hires, job changes, termination, and more.
-                    It also handles the creation and budgeting of new positions. It allows approval on both the
-                    department and administration level. It also handles automatic creation
-                    of Active Directory user accounts and uses Active Directory for user authentication.
-                    The Finance department can use the system to calculate labor costs for individual departments or
-                    the whole county, and projects future budgets.
-                </div>
-
-
-
-
-
-
-
-
-
-
-
-                <hr>
-
-                <h5>Work Experience</h5>
-                <div class="mb-2">
-                    Software Developer,
-                    <span class="font-weight-bold">Hall County Government</span>
-                    <span class="text-muted small">2019 - Current</span>
-                </div>
-                <div>
-                    <ul class="small-md">
-                        <li>Developed internal and external systems to manage Hall County’s day to day business needs.</li>
-                        <li>Management systems include Agenda, Personnel, Fleet, Finance, Policies, and IT Access.</li>
-                        <li>Started new Enterprise Application Development division from the ground up.</li>
-                        <li>Made foundational decisions on tools, design paradigms, methodology, and stack.</li>
-                        <li>Implemented thorough and robust error, tracking, and development lifecycle tools.</li>
-                        <li>Maintained thorough documentation for users, admins, and future developers through comments.</li>
-                        <li>Installed, configured, and managed development, staging, and production servers.</li>
-                    </ul>
-                </div>
-                <div class="mb-2">
-                    Systems Technician,
-                    <span class="font-weight-bold">Hall County Government</span>
-                    <span class="text-muted small">2018</span>
-                </div>
-                <div>
-                    <ul class="small-md">
-                        <li>Co-managed enterprise Active Directory environment with 1300 end units plus other hardware.</li>
-                        <li>Used scripting in order to increase speed of deployments, software installation, and repairs.</li>
-                        <li>Co-managed Windows Servers under guidance of Systems Administrator, including IIS & SQL.</li>
-                    </ul>
-                </div>
-                <div class="mb-2">
-                    Remote and In Store Repair Technician and Leader,
-                    <span class="font-weight-bold">Geek Squad</span>
-                    <span class="text-muted small">2014 - 2017</span>
-                </div>
-                <div>
-                    <ul class="small-md">
-                        <li>Assisted clients remotely with repairs, including malware and Windows and macOS issues.</li>
-                        <li>Achieved Rock Star status from first week in remote. (NPS 95.5, Resolves per hour 1.74)</li>
-                        <li>Championed improvement of process quality to provide better client experiences.</li>
-                        <li>Educated agents in the tools and strategies to improve efficiency and quality.</li>
-                        <li>Acted as Sales Floor Leader. Regularly handles delicate issues throughout store.</li>
-                        <li>Managed, with guidance, scheduling and staffing, including helping with hiring.</li>
-                    </ul>
-                </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </div>
-            <div class="col-md-4">
-                <div class="text-center mb-5">
-                    <img src="https://www.msb.dev/static/favicon.png" alt="" class="img-responsive" style="max-width: 100px">
-                </div>
-
-                <h5>Contact Information</h5>
-                <ul class="list-unstyled">
-                    <li>
-                        <a class="link-unstyled" href="tel:6464703317" target="_blank">
-                            <i class="fas fa-phone pr-2" aria-hidden="true"></i>(646) 470-3317
-                        </a>
-                    </li>
-                    <li>
-                        <a class="link-unstyled" href="https://www.msb.dev" target="_blank">
-                            <i class="fas fa-globe pr-2" aria-hidden="true"></i>www.msb.dev
-                        </a>
-                    </li>
-                    <li>
-                        <a class="link-unstyled" href="mailto:matt@msb.dev">
-                            <i class="fas fa-at pr-2" aria-hidden="true"></i>matt@msb.dev
-                        </a>
-                    </li>
-                    <li>
-                        <a class="link-unstyled" href="https://www.linkedin.com/in/matthew-burlage" target="_blank">
-                            <i class="fab fa-linkedin pr-2" aria-hidden="true"></i>/matthew-burlage
-                        </a>
-                    </li>
-                    <li>
-                        <a class="link-unstyled" href="https://www.linkedin.com/in/matthew-burlage" target="_blank">
-                            <i class="fab fa-github pr-2" aria-hidden="true"></i>/mattburlage
-                        </a>
-                    </li>
-                </ul>
-                <h5>Skills</h5>
-                <ul class="list-unstyled">
-                    <li>
-                        <i class="fab fa-react" aria-hidden="true"></i>&nbsp;&nbsp;React.js, Redux, React Router
-                    </li>
-                    <li>
-                        <i class="fab fa-python" aria-hidden="true"></i>&nbsp;&nbsp;Python, Django, DRF, Flask
-                    </li>
-                    <li>
-                        <i class="fab fa-node-js" aria-hidden="true"></i>&nbsp;&nbsp;Webpack, NPM, Meteor.js
-                    </li>
-
-
-
-                    <li>
-                        <i class="fas fa-database" aria-hidden="true"></i>&nbsp;&nbsp;PostgreSQL, MS SQL, MongoDB
-                    </li>
-                    <li>
-                        <i class="fas fa-server" aria-hidden="true"></i>&nbsp;&nbsp;IIS, Ubuntu, wfastcgi
-                    </li>
-                    <li>
-                        <i class="fas fa-wrench" aria-hidden="true"></i>&nbsp;&nbsp;Git, GitHub, Jira, Sentry
-                    </li>
-                    <li>
-                        <i class="fas fa-ellipsis-h"></i>&nbsp;&nbsp;PHP, Java, JSON
-                    </li>
-                </ul>
-                <h5>Education</h5>
-                <ul class="list-unstyled small">
-                    <li>
-                        <i class="fas fa-university" aria-hidden="true"></i>&nbsp;&nbsp;BS, Computer Science, Univ. of North Georgia
-                    </li>
-                    <li>
-                        <i class="fas fa-university" aria-hidden="true"></i>&nbsp;&nbsp;TA, Software Engineering, 2020
-                    </li>
-                </ul>
-                <hr>
-                <h5>Open Source Projects</h5>
-                <p class="small text-muted">Here are a few open source things I have built.</p>
-                <h6>create-django-react-app</h6>
-                <p>
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/> 
+        <meta name="description" content=""/> 
+        <meta name="author" content=""/> 
+        <link rel="shortcut icon" href="static/favicon.png"/> 
+        <link rel="apple-touch-icon" sizes="57x57" href="static/favicon.png"/> 
+        <link rel="apple-touch-icon" sizes="60x60" href="static/favicon.png"/> 
+        <link rel="apple-touch-icon" sizes="72x72" href="static/favicon.png"/> 
+        <link rel="apple-touch-icon" sizes="76x76" href="static/favicon.png"/> 
+        <link rel="apple-touch-icon" sizes="114x114" href="static/favicon.png"/> 
+        <link rel="apple-touch-icon" sizes="120x120" href="static/favicon.png"/> 
+        <link rel="apple-touch-icon" sizes="144x144" href="static/favicon.png"/> 
+        <link rel="apple-touch-icon" sizes="152x152" href="static/favicon.png"/> 
+        <link rel="apple-touch-icon" sizes="180x180" href="static/favicon.png"/> 
+        <link rel="icon" type="image/png" sizes="192x192" href="static/favicon.png"/> 
+        <link rel="icon" type="image/png" sizes="32x32" href="static/favicon.png"/> 
+        <link rel="icon" type="image/png" sizes="96x96" href="static/favicon.png"/> 
+        <link rel="icon" type="image/png" sizes="16x16" href="static/favicon.png"/> 
+        <meta name="msapplication-TileColor" content="#343A40"/> 
+        <meta name="msapplication-TileImage" content="static/favicon.png"/> 
+        <meta name="theme-color" content="#343A40"/> 
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"/> 
+        <title>Matthew Smith Burlage - Software Engineer</title>         
+        <!-- Bootstrap core CSS -->         
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"/> 
+        <!-- Custom styles for this template -->         
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/> 
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/> 
+        <link rel="stylesheet" href="static/styles.css"/> 
+    </head>     
+    <body class="bg-dark"> 
+        <div class="nyc-bg d-print-none"> 
+            <div class="nyc-bg-2"> 
+                <div class="navbar box-shadow"> 
+                    <div class="container d-flex"> <a href="https://www.msb.dev" class="navbar-brand nyc-bg-text d-flex align-items-center"> <strong>msb</strong>.dev</a> 
+                    </div>                     
+                </div>                 
+                <div class="nyc-bg-3"> 
+                    <div class="d-print-none nyc-bg-text text-center"> 
+                        <div class="container-fluid"> 
+                            <div class="row"> 
+                                <div class="col-12"> 
+                                    <h1 class="mt-3">Matthew Smith Burlage</h1> 
+                                    <h4 class="collapse-div collapse show">Leading Software Engineering Teams</h4> 
+                                    <p class="lead"> 
+                                Focused on creating secure and intuitive web systems. </p> 
+                                    <ul class="nav justify-content-center collapse-div collapse"> 
+                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" onclick='print(); return false;' href="#"> 
+                                        Print Me </a> 
+                                        </li>                                         
+                                        <li class="nav-item"> 
+</li>                                         <a class="nav-link text-info nyc-bg-link" onclick="toggleResume(); return false;" href="#"> 
+                                    Back </a> 
+                                    </ul>                                     
+                                    <ul class="nav justify-content-center collapse-div collapse show"> 
+                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" href="#aboutme">About Me</a> 
+                                        </li>                                         
+                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" onclick="toggleResume(); return false;" href="#"> 
+                                        My Resume </a> 
+                                        </li>                                         
+                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" href="#mywork">My Work</a> 
+                                        </li>                                         
+                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" href="#principles">Principles</a> 
+                                        </li>                                         
+                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" href="#contactme">Contact Me</a> 
+                                        </li>                                         
+                                    </ul>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                    <div class="arrow-div"> 
+                        <div class="arrow bounce collapse show"> <i class="fa fa-arrow-down fa-2x"></i> 
+                        </div>                         
+                    </div>                     
+                </div>                 
+            </div>             
+        </div>         
+        <div class="d-none d-print-block"> 
+            <div class="container pt-5 pb-5"> 
+                <div class="row"> 
+                    <div class="col-12"> 
+                        <h1 class="display-4 text-center">Matthew Smith Burlage</h1> 
+                        <p class="lead text-center collapse"><b>Software Engineer</b></p> 
+                        <p class="lead text-center">Matthew is a software engineer focused on creating secure, powerful, efficient, and intuitive web systems.</p> 
+                    </div>                     
+                </div>                 
+            </div>             
+        </div>         
+        <section class="jumbotron jumbotron-fluid hide-horiz-overflow text-center mb-0 collapse show" id='aboutme'> 
+            <div class="container"> 
+                <div class="row"> 
+                    <div class="col-12 mb-5 mb-md-0 col-md-4" data-aos="fade-left"> 
+                        <img class="rounded-circle headshot" src="static/me2.jpg" alt="Me"/> 
+                    </div>                     
+                    <div class="col-12 col-md-8" data-aos="fade-right"> 
+                        <h4 class="jumbotron-heading mb-3">Hello World, I'm Matthew.</h4> 
+                        <ul class="list-unstyled"> 
+                            <li> 
+                                I am a software engineer focused on<a href="#" class="link-discreet" onclick="addlInfoSection('improvelives'); return false;"> 
+                            improving people’s lives through technology. </a> 
+                                Even before becoming an engineer, I always focused on<a href="#" class="link-discreet" onclick="addlInfoSection('otherjobs'); return false;"> 
+                            improving efficiency through technology in every job </a> 
+                                I have ever had.
+                                As an engineer, it has been my focus to build secure software
+                                that removes<a href="#" class="link-discreet" onclick="addlInfoSection('duplicatework'); return false;"> 
+                            duplicate work, </a> <a href="#" class="link-discreet" onclick="addlInfoSection('badprocess'); return false;"> 
+                            bad processes, </a> and<a href="#" class="link-discreet" onclick="addlInfoSection('waste'); return false;"> 
+                            waste. </a> 
+                                Take a look at my<a class="link-discreet" onclick="toggleResume()" href="#">resume</a>,<a href="#mywork" class="link-discreet">previous work</a>, or<a href="#principles" class="link-discreet">development principles</a> 
+                                to learn more about me. Or<a href="#contactme" class="link-discreet">reach out</a> 
+                                and see what I can do for your organization!
+                            </li>                             
+                        </ul>                         
+                        <div class="mt-3 collapse addl-info" id="addl-info-improvelives"> 
+                            <h5>Improving people's lives with technology</h5> 
+                            The ultimate purpose for technology and software is to improve the lives of the user.
+                            But I’m sure I’m not the only one who has said the phrase “it’s great when it works”
+                            when an app has seemed to be more trouble than it was worth.
+                            My philosophy with software is that it should just work.
+                            You shouldn’t need to attend a training to use a piece of software.
+                            Instead, it should be intuitive enough to be used with limited instruction
+                            and should be self-documenting when a more complicated interface is needed.
+                        </div>                         
+                        <div class="mt-3 collapse addl-info" id="addl-info-otherjobs"> 
+                            <h5>Using Technology in My Past Jobs</h5> 
+                            I have always used technology to make processes easier,
+                            even when my job had nothing to do with software development.
+                            As the 19-year-old stage manager at the<a class="link-unstyled" href="https://www.youtube.com/watch?v=7uJ1tRRrF3c" target="_blank"> 
+                        magic department </a> 
+                            for a children's performance arts sleep-away camp, I developed
+                            an Access database to handle the organization of 100+ children
+                            across six magic shows to make sure that visitors could watch
+                            their kids saw their friends and half or whatever other crazy
+                            routine they had come up with. When I worked as a manager and
+                            bartender for a couple of NYC restaurants and bars, I was always
+                            the go-to for POS integration, website maintenance, and all other
+                            technology needs. I have a passion for automation and process
+                            simplification and am always evaluating if there are better ways
+                            to do things.
+                        </div>                         
+                        <div class="mt-3 collapse addl-info" id="addl-info-duplicatework"> 
+                            <h5>Eliminating Duplicate Work</h5> 
+                            When I was a PC Technician, I would always be on the lookout for
+                            ways to reduce duplicate work. If I had to do the same task more
+                            than a few times, I would always evaluate if there was a way to
+                            script or otherwise automate it, and often there was. A piece of
+                            software that we had to install on each computer required running
+                            seven different MSI file as well as some registry edits and other
+                            configuration steps. I was able to script that down to five clicks
+                            of the mouse.
+                        </div>                         
+                        <div class="mt-3 collapse addl-info" id="addl-info-badprocess"> 
+                            <h5>Eliminating Bad Processes</h5> 
+                            My first task as Software Developer in my current role was to improve
+                            the process of IT Access form submission, which had a terrible compliance
+                            rate with the then-current method of emailing a PDF.  I created a system to
+                            handle this process as well as automate many of the user creation steps
+                            required by our Active Directory environment. In addition, we found that
+                            the entire process of on-boarding new employees required entering the same
+                            information seven different times. I was able to expand the system to handle
+                            this which now only requires a single point of data entry for HR.
+                        </div>                         
+                        <div class="mt-3 collapse addl-info" id="addl-info-waste"> 
+                            <h5>Eliminating Waste</h5> 
+                            Before my work as a software developer, the HR department for my current
+                            organization used emailing PDFs around for their approval workflow. In addition,
+                            each user would typically print the PDF for their own records, creating possibly 7
+                            different paper copies of the same document, leading to wasted time, money, and
+                            environmental harm for no good reason. The system I build them now acts as the source
+                            of truth requiring no printing whatsoever to archive the records in perpetuity.
+                        </div>                         
+                    </div>                     
+                </div>                 
+                <div class="row"> 
+                    <div class="col-12 collapse addl-info"> 
+                        Additional Info about other jobs
+</div>                     
+                    <div class="col-12 collapse addl-info"> 
+</div>                     
+                </div>                 
+            </div>             
+        </section>         
+        <div class="album py-5 bg-light collapse show" id='mywork'> 
+            <div class="container"> 
+                <div class="row text-center mb-3"> 
+                    <div class="col-12" data-aos="zoom-in" data-aos-anchor="#card1"> 
+                        <h4 class="jumbotron-heading text-center">My Work</h4> 
+                    </div>                     
+                </div>                 
+                <div class="row"> 
+                    <div id="card1" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
+                        <div class="card mb-4 box-shadow"> 
+                            <div class="card-body"> 
+                                <div class="card-text"> <strong>Agenda Management</strong> <br/> <span class="text-muted small">React, Django, PostgreSQL, IIS</span> 
+                                    <div>The Agenda Management software helps local governments stay on top of their meetings, including approval workflows and minutes capture.</div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                    <div id="card2" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
+                        <div class="card mb-4 box-shadow"> 
+                            <div class="card-body"> 
+                                <div class="card-text"> <strong>Five Star Ordering</strong> <br/> <span class="text-muted small">React, Django, PostgreSQL, PythonAnywhere</span> 
+                                    <div>The Five Star ordering system allows restaurants to receive delivery and pickup orders and handles payments thru Stripe. Additional restaurants and locations can be quickly added.</div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                    <div id="card3" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
+                        <div class="card mb-4 box-shadow"> 
+                            <div class="card-body"> 
+                                <div class="card-text"> <strong>create-django-react-app</strong> <a class="small text-muted ml-2" target="_blank" href="https://pypi.org/project/create-django-react-app/"> <i class="fas fa-external-link-alt"></i> </a> <br/> <span class="text-muted small">Python</span> 
+                                    <div>This open source python module enables users to easily create a Django and React based application, including JWT based authentication.</div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                    <div id="card4" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
+                        <div class="card mb-4 box-shadow"> 
+                            <div class="card-body"> 
+                                <div class="card-text"> <strong>Position Control</strong> <br/> <span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span> 
+                                    <div>Allows Human Resources to keep track of budgeted positions and employee records easily and allows Finance departments to easily forcast labor budgets.</div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                    <div id="card5" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
+                        <div class="card mb-4 box-shadow"> 
+                            <div class="card-body"> 
+                                <div class="card-text"> <strong>SmartBackup</strong> <a class="small text-muted ml-2" target="_blank" href="https://github.com/mattburlage/smart_backup"> <i class="fas fa-external-link-alt"></i> </a> <br/> <span class="text-muted small">Bootstrap, Django, SQLite, IIS</span> 
+                                    <div>SmartBackup helps Database administrators keep backups automated and dependable while keeping file sizes low.</div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                    <div id="card6" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
+                        <div class="card mb-4 box-shadow"> 
+                            <div class="card-body"> 
+                                <div class="card-text"> <strong>IT Access Control</strong> <br/> <span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span> 
+                                    <div>Allows departments to submit access requests to IT resources and automatically creates and sets up Active Directory accounts for new users.</div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                    <div id="card7" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
+                        <div class="card mb-4 box-shadow"> 
+                            <div class="card-body"> 
+                                <div class="card-text"> <strong>NertzBoard</strong> <br/> <span class="text-muted small">React, Django, MySQL, PythonAnywhere</span> 
+                                    <div>NertzBoard is a scoreboard keeping app for a multiplayer solitaire card game called Nertz. With live score updates, scoring history, and multiple game rooms, players can keep their head in the game.</div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                    <div id="card8" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
+                        <div class="card mb-4 box-shadow"> 
+                            <div class="card-body"> 
+                                <div class="card-text"> <strong>Financial Documents App</strong> <br/> <span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span> 
+                                    <div>Helps the Finance department manage travel reimbursment as well as recurring billing items, and reminds the user in question when they are up for renewal.</div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                    <div id="card9" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
+                        <div class="card mb-4 box-shadow"> 
+                            <div class="card-body"> 
+                                <div class="card-text"> <strong>Administrative Policy</strong> <br/> <span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span> 
+                                    <div>Allows administration to create, approve, and display policies for the organization including expiration notifications and version control.</div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </div>                     
+                </div>                 
+            </div>             
+        </div>         
+        <section class="jumbotron hide-horiz-overflow jumbotron-fluid text-center mb-0 collapse show" id='principles'> 
+            <div class="container"> 
+                <h4 class="jumbotron-heading" data-aos="zoom-in" data-aos-anchor="#prin2">My Development Principles</h4> 
+                <ul class="list-unstyled" data-aos="fade-right" data-aos-anchor="#prin2" id="prin1"> 
+                    <li> 
+                        <h6 class="mt-3">Security First </h6> 
+                        In today's world, the value of data is ever-increasing. With this in mind, any software
+                        system should consider security from the outset. From design through implementation and
+                        maintenance, security should be front and center.  No system is worth a penny if it is insecure.
+                    </li>                     
+                </ul>                 
+                <ul class="list-unstyled" data-aos="fade-left" id="prin2"> 
+                    <li> 
+                        <h6>Ease of Use </h6> 
+                        The number one goal of any system should, outside security, be to create a wonderful
+                        user experience for end users and admins alike.  Users should be able to focus on their work,
+                        not on learning new systems. This can be accomplished by focusing the experience around the tasks
+                        that your users need to complete. All a user needs to know is what their end goal is, and the
+                        system should take care of putting the information they need in front of them or whoever needs it.
+                    </li>                     
+                </ul>                 
+                <ul class="list-unstyled" data-aos="fade-right" data-aos-anchor="#prin2" id="prin3"> 
+                    <li> 
+                        <h6>Embrace and Prepare for Change </h6> 
+                        Business needs change regularly, and any successful enterprise must have software that
+                        can adjust with them. Software solutions, therefore, must be customizable and built to handle
+                        changing needs.  This includes building them from day one in a way that makes later upgrades a breeze.
+                    </li>                     
+                </ul>                 
+            </div>             
+        </section>         
+        <section class="jumbotron hide-horiz-overflow bg-light jumbotron-fluid mb-0 collapse show" id='contactme'> 
+            <div class="container"> 
+                <div class="card bg-light pt-5 pb-5" data-aos="flip-up" data-aos-offset="200"> 
+                    <div class="row text-center"> 
+                        <div class="col"> 
+                            <h4 class="jumbotron-heading">So Now What?</h4> 
+                            <div class="lead">Reach out to me!</div>                             
+                            <div>If you think that I can help your project or organization, feel free to reach out!</div>                             
+                        </div>                         
+                    </div>                     
+                    <div class="row mt-2"> 
+                        <div class="col-12 col-md-8 offset-md-2"> 
+                            <form class="s5-contact-form" method="post" data-form-key="d2ff6e16-1bb9-4595-aeb9-bcf27d26fc6b"> 
+                                <label for="id_name" class="font-weight-bold mt-1"> 
+                                    Name
+</label>                                 
+                                <input type="name" required id="id_name" class="form-control"/> 
+                                <label for="id_email" class="font-weight-bold mt-1"> 
+                                    Email
+</label>                                 
+                                <input type="email" required id="id_email" class="form-control"/> 
+                                <label for="id_message" class="font-weight-bold mt-2"> 
+                                    Comments
+</label>                                 
+                                <textarea name="message" required rows="5" id="id_message" class="form-control"></textarea> 
+                                <button id="sub_btn" type="submit" class="btn btn-outline-primary mt-2">Send Message</button>                                 
+                            </form>                             
+                        </div>                         
+                    </div>                     
+                </div>                 
+            </div>             
+        </section>         
+        <div class="collapse bg-light pt-5 pb-5" id="resume"> 
+            <div class="container"> 
+                <div class="row"> 
+                    <div class="col-md-8"> 
+                        <h5>Work Experience</h5> 
+                        <div class="mb-2"> 
+                            Senior Software Developer,<span class="font-weight-bold">Hall County Government</span> <span class="text-muted small">2019 - Current</span> 
+                        </div>                         
+                        <div> 
+                            <ul class="small-md"> 
+                                <li>Started new Enterprise Application Development division from the ground up.</li>                                 
+                                <li>Manages development of internal and external systems to manage day to day business needs.</li>                                 
+                                <li>Management systems include Agenda, Personnel, Fleet, Finance, Policies, and IT Access.</li>                                 
+                                <li>Manages and guides non-senior developers towards business and career goals.</li>                                 
+                                <li>Manages implementation of entire development lifecycle, including design and prototyping.</li>                                 
+                                <li>Manages support process for all internally developed software applications.</li>                                 
+                                <li>Oversees project timelines, deadlines, goals, and sprints for scrum development.</li>                                 
+                                <li>Makes foundational decisions on tools, design paradigms, methodology, and stack.</li>                                 
+                                <li>Implements thorough and robust error, tracking, and development lifecycle tools.</li>                                 
+                                <li>Maintains thorough documentation for users, admins, and future developers through comments.</li>                                 
+                                <li>Installs, configures, and manages CI/CD for development, staging, and production servers.</li>                                 
+                            </ul>                             
+                        </div>                         
+                        <div class="mb-2"> 
+                            Systems Technician,<span class="font-weight-bold">Hall County Government</span> <span class="text-muted small">2018</span> 
+                        </div>                         
+                        <div> 
+                            <ul class="small-md"> 
+                                <li>Co-managed enterprise Active Directory environment with 1300 end units plus other hardware.</li>                                 
+                            </ul>                             
+                        </div>                         
+                        <div class="mb-2"> 
+                            Remote and In Store Repair Technician and Leader,<span class="font-weight-bold">Geek Squad</span> <span class="text-muted small">2014 - 2017</span> 
+                        </div>                         
+                        <div> 
+                            <ul class="small-md"> 
+                                <li>Assisted clients remotely with repairs, including malware and Windows and macOS issues.</li>                                 
+                                <li>Acted as Sales Floor Leader. Regularly handles delicate issues throughout store.</li>                                 
+                            </ul>                             
+                        </div>                         
+                        <hr/> 
+                        <h5>Projects & Experience</h5> 
+                        <div> 
+                            <div class="mb-2"> <span class="font-weight-bold">Agenda Management</span>&nbsp;&nbsp;<span class="text-muted small">React, Django, PostgreSQL, IIS</span> 
+                            </div>                             
+                            <div class="mb-4"> 
+                                The Agenda Management software is designed to assist governments of all sizes in the preparation,
+                                approval, creation, publishing, recording, and archiving of official Board meetings. The system
+                                allows for an organization to allow different departments to enter their desired agenda items,
+                                which then flow through a completely customizable workflow for needed approvals.
+                                The system allows for the production of PDFs for each agenda item, the agenda list, the minutes,
+                                any supporting documents, and conversion of any attachments to PDF. Those PDFs and agendas
+                                are also uploaded to a public site to comply with any publication requirements that may exist.
+</div>                             
+                        </div>                         
+                        <div class="mb-2"> <span class="font-weight-bold">Forms Portal</span>&nbsp;&nbsp;<span class="text-muted small">React, Django, PostgreSQL, IIS</span> 
+                        </div>                         
+                        <div class="mb-4"> 
+                            The Forms Portal is a form creation platform on which IT can create and host various
+                            digital dynamic forms for completion by end users. This includes a dynamic workflow system
+                            where the data entered can alter the workflow based on the needs of the business.  This allows
+                            the Application Development team to spin up a new form-based application in a matter of hours
+                            as opposed to weeks writing a brand-new app. It also means all apps look and work the same
+                            and can be more easily administered.
+</div>                         
+                        <div class="mb-2"> <span class="font-weight-bold">Position Control</span>&nbsp;&nbsp;<span class="text-muted small">Django, React, Microsoft SQL, IIS</span> 
+                        </div>                         
+                        <div class="mb-4"> 
+                            The Position Control system is designed to handle the tracking and paperwork for all employee
+                            records. It handles all paperwork including new hires, job changes, termination, and more.
+                            It also handles the creation and budgeting of new positions. It allows approval on both the
+                            department and administration level. It also handles automatic creation
+                            of Active Directory user accounts and uses Active Directory for user authentication.
+                            The Finance department can use the system to calculate labor costs for individual departments or
+                            the whole county, and projects future budgets.
+</div>                         
+                    </div>                     
+                    <div class="col-md-4"> 
+                        <div class="text-center mb-5"> 
+                            <img src="static/favicon.png" alt="" class="img-responsive" style="max-width: 100px"/> 
+                        </div>                         
+                        <h5>Contact Information</h5> 
+                        <ul class="list-unstyled"> 
+                            <li> <a class="link-unstyled" href="tel:6463970112" target="_blank">  <i class="fas fa-phone pr-2" aria-hidden="true"></i>(646) 397-0112 </a> 
+                            </li>                             
+                            <li> <a class="link-unstyled" href="https://www.msb.dev" target="_blank">  <i class="fas fa-globe pr-2" aria-hidden="true"></i>www.msb.dev </a> 
+                            </li>                             
+                            <li> <a class="link-unstyled" href="mailto:matt@msb.dev">  <i class="fas fa-at pr-2" aria-hidden="true"></i>matt@msb.dev </a> 
+                            </li>                             
+                            <!--                    <li>-->                             
+                            <!--                        <a class="link-unstyled" href="https://www.linkedin.com/in/matthew-burlage" target="_blank">-->                             
+                            <!--                            <i class="fab fa-linkedin pr-2" aria-hidden="true"></i>/matthew-burlage </a>-->                             
+                            <!--                    </li>-->                             
+                            <li> <a class="link-unstyled" href="https://github.com/mattburlage" target="_blank">  <i class="fab fa-github pr-2" aria-hidden="true"></i>/mattburlage </a> 
+                            </li>                             
+                        </ul>                         
+                        <h5>Skills</h5> 
+                        <ul class="list-unstyled"> 
+                            <li> <i class="fab fa-react" aria-hidden="true"></i>&nbsp;&nbsp;React.js, Redux, React Router
+                            </li>                             
+                            <li> <i class="fab fa-python" aria-hidden="true"></i>&nbsp;&nbsp;Python, Django, DRF, Flask
+                            </li>                             
+                            <li> <i class="fab fa-node-js" aria-hidden="true"></i>&nbsp;&nbsp;Angular, Webpack, NPM
+                            </li>                             
+                            <li> <i class="fas fa-database" aria-hidden="true"></i>&nbsp;&nbsp;PostgreSQL, MS SQL, MySQL
+                            </li>                             
+                            <li> <i class="fas fa-server" aria-hidden="true"></i>&nbsp;&nbsp;IIS, Docker, wfastcgi
+                            </li>                             
+                            <li> <i class="fas fa-wrench" aria-hidden="true"></i>&nbsp;&nbsp;Git, GitHub, Jira, Sentry
+                            </li>                             
+                            <li> <i class="fas fa-ellipsis-h"></i>&nbsp;&nbsp;PHP, Java, JSON
+                            </li>                             
+                        </ul>                         
+                        <h5>Education</h5> 
+                        <ul class="list-unstyled small"> 
+                            <li> <i class="fas fa-university" aria-hidden="true"></i>&nbsp;&nbsp;BS, Computer Science, Univ. of North Georgia
+                            </li>                             
+                            <li> <i class="fas fa-university" aria-hidden="true"></i>&nbsp;&nbsp;TA, Software Engineering, 2020
+                            </li>                             
+                        </ul>                         
+                        <hr/> 
+                        <h5>Open Source Projects</h5> 
+                        <p class="small text-muted">Here are a few open source things I have built.</p> 
+                        <h6>create-django-react-app</h6> 
+                        <p> 
                     A python package designed to help users set up a Django and React based app,
-                    including the REST framework, JWT based login, and CORS header handling.
-                    <span class="text-muted small">
-                            <a class="text-muted" target="_blank" href="https://pypi.org/project/create-django-react-app/">PyPi</a> -
-                            <a class="text-muted" target="_blank" href="https://github.com/mattburlage/create-django-react-app">GitHub</a>
-                        </span>
-                </p>
-                <h6>NertzBoard</h6>
-                <p>
+                    including the REST framework, JWT based login, and CORS header handling. <span class="text-muted small">  <a class="text-muted" target="_blank" href="https://pypi.org/project/create-django-react-app/">PyPi</a> - <a class="text-muted" target="_blank" href="https://github.com/mattburlage/create-django-react-app">GitHub</a> </span>  </p> 
+                        <h6>SmartBackup</h6> 
+                        <p> 
+                    SmartBackup is an open source PostgresSQL backup manager and automation tool,
+                    allowing recurring backups and dynamic consolidation. <span class="text-muted small">  <a class="text-muted" target="_blank" href="https://github.com/mattburlage/smart_backup">GitHub</a> </span>  </p> 
+                        <h6>NertzBoard</h6> 
+                        <p> 
                     NertzBoard is a scoreboard for a multiplayer solitaire game called Nertz. NertzBoard handles the calculations for scoring and
-                    updates the other players in real time to see who is ahead. Players can focus on the action instead of worrying about math.
-                    <span class="text-muted small">
-                            <a class="text-muted" target="_blank" href="https://www.nertzboard.com">View</a> -
-                            <a class="text-muted" target="_blank" href="https://github.com/mattburlage/nertzboard">GitHub</a>
-                        </span>
-                </p>
-                <h6>django-bs-icons</h6>
-                <p>
-                    A package designed to make it easy for users to display Bootstrap Icons.
-                    <span class="text-muted small">
-                            <a class="text-muted" target="_blank" href="https://pypi.org/project/django-bs-icons/">PyPi</a> -
-                            <a class="text-muted" target="_blank" href="https://github.com/mattburlage/django-bs-icons">GitHub</a>
-                        </span>
-                </p>
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer class="text-muted pb-3 pt-4 bg-dark d-print-none">
-    <div class="container">
-        <p class="float-right"> <a href="#" class="text-light small">Back to top</a> </p>
-        <p class="text-white small">Thank you for visiting my site!</p>
-        <p  class="text-white small">&copy; 2020 Matt Smith Burlage Development Shop</p>
-    </div>
-</footer>
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script
-        type="module"
-        src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs"
-></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js" integrity="sha512-efUTj3HdSPwWJ9gjfGR71X9cvsrthIA78/Fvd/IN+fttQVy7XWkOAXb295j8B3cmm/kFKVxjiNYzKw9IQJHIuQ==" crossorigin="anonymous"></script>
-<script>
-    // Show the contact form when the link is clicked
-    function showContactForm() {
-        $('#navbarHeader').collapse('show');
-        $('#id_email').focus();
-        return false;
-    }
-
-    // Pulled from Django Docs
-    // https://docs.djangoproject.com/en/3.0/ref/csrf/#setting-the-token-on-the-ajax-request
-
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-
-    // Function to submit the contact form via AJAX
-    function submitForm () {
-
-        let formData = {
-            email: $('#id_email').val(),
-            note: $('#id_note').val(),
-        };
-
-        fetch('/api/submit/',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken'),
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(res => {
-                if (res.ok) return res.json();
-                else $("#sub_btn").notify("Error");
-            })
-            .then(json => {
-                $('#id_email').val('');
-                $('#id_note').val('');
-                $("#sub_btn").notify("Submitted", 'success');
-            })
-    }
-    let toggled = false;
-    let scrolled = false;
-    let tallEnough = true;
-    const arrow = $('.arrow')
-
-    function toggleResume () {
-        const spacingTop = $('#spacing-top')
-        const spacingTop2 = $('#spacing-top2')
-        const nycBg = $('.nyc-bg')
-
-        if (toggled) {
-            nycBg.height('100%')
-            nycBg.css('min-height', '400px')
-            spacingTop.height('25%')
-            spacingTop2.height('15%')
-        }
-        else {
-            $('.nyc-bg').height('300px')
-            nycBg.css('min-height', '300px')
-            spacingTop.height('5%')
-            spacingTop2.height('0%')
-        }
-
-        toggled = !toggled;
-
-        $('#principles').collapse('toggle');
-        $('#mywork').collapse('toggle');
-        $('#aboutme').collapse('toggle');
-        $('#resume').collapse('toggle');
-        $('#contactme').collapse('toggle');
-        $('.collapse-div').collapse('toggle');
-        arrow.fadeOut();
-    }
-
-    const tallEnoughHeight = 450;
-
-    $(document).ready(() => {
-
-        setTimeout(() => {
-            if (!toggled && !scrolled && tallEnough) arrow.fadeIn();
-        }, 2000)
-
-        $(window).scroll(() => {
-            scrolled = true;
-            arrow.fadeOut()
-        })
-
-        calcCardDelay();
-
-        $(window).resize(() => {
-            calcCardDelay();
-        })
-    })
-
-    function addlInfoSection(section) {
-        $('.addl-info').collapse('hide')
-        $('#addl-info-' + section).collapse('show')
-    }
-
-    function calcCardDelay (val) {
-        const cards = $('.cards');
-        let columns = 3;
-
-        const width = $(window).width();
-        if (width < 768) columns = 1;
-        else if (width < 992) columns = 2;
-
-        cards.each(index => {
-            const newDelay = (index % columns) * 150
-            $('#card' + (index+1)).attr('data-aos-delay', newDelay)
-        })
-
-        tallEnough = $(window).height() > 450;
-        if (!tallEnough) arrow.hide();
-    }
-
-    AOS.init({
-        once: true,
-        duration: 600,
-    });
-</script>
-</body>
+                    updates the other players in real time to see who is ahead. <span class="text-muted small"> <a class="text-muted" target="_blank" href="https://www.nertzboard.com">View</a> - <a class="text-muted" target="_blank" href="https://github.com/mattburlage/nertzboard">GitHub</a> </span>  </p> 
+                    </div>                     
+                </div>                 
+            </div>             
+        </div>         
+        <footer class="text-muted pb-3 pt-4 bg-dark d-print-none"> 
+            <div class="container"> 
+                <p class="float-right"> <a href="#" class="text-light small">Back to top</a> </p> 
+                <p class="text-white small">Thank you for visiting my site!</p> 
+                <p class="text-white small">&copy; 2022 Matt Smith Burlage</p> 
+            </div>             
+        </footer>         
+        <!-- Bootstrap core JavaScript
+================================================== -->         
+        <!-- Placed at the end of the document so the pages load faster -->         
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>         
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>         
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>         
+        <script type="module" src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs"></script>         
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>         
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>         
+        <script type='text/javascript' src="https://sites.studio5.dev/components/contact_form/contact_form.js"></script>         
+        <script type='text/javascript' src="static/msb.js"></script>         
+        <!--<script>-->         
+        <!--    document.addEventListener('DOMContentLoaded', () => {-->         
+        <!--        toggleResume()-->         
+        <!--    })-->         
+        <!--</script>-->         
+    </body>     
 </html>
