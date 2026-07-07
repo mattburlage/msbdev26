@@ -1,505 +1,1267 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-    <head> 
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/> 
-        <meta name="description" content=""/> 
-        <meta name="author" content=""/> 
-        <link rel="shortcut icon" href="static/favicon.png"/> 
-        <link rel="apple-touch-icon" sizes="57x57" href="static/favicon.png"/> 
-        <link rel="apple-touch-icon" sizes="60x60" href="static/favicon.png"/> 
-        <link rel="apple-touch-icon" sizes="72x72" href="static/favicon.png"/> 
-        <link rel="apple-touch-icon" sizes="76x76" href="static/favicon.png"/> 
-        <link rel="apple-touch-icon" sizes="114x114" href="static/favicon.png"/> 
-        <link rel="apple-touch-icon" sizes="120x120" href="static/favicon.png"/> 
-        <link rel="apple-touch-icon" sizes="144x144" href="static/favicon.png"/> 
-        <link rel="apple-touch-icon" sizes="152x152" href="static/favicon.png"/> 
-        <link rel="apple-touch-icon" sizes="180x180" href="static/favicon.png"/> 
-        <link rel="icon" type="image/png" sizes="192x192" href="static/favicon.png"/> 
-        <link rel="icon" type="image/png" sizes="32x32" href="static/favicon.png"/> 
-        <link rel="icon" type="image/png" sizes="96x96" href="static/favicon.png"/> 
-        <link rel="icon" type="image/png" sizes="16x16" href="static/favicon.png"/> 
-        <meta name="msapplication-TileColor" content="#343A40"/> 
-        <meta name="msapplication-TileImage" content="static/favicon.png"/> 
-        <meta name="theme-color" content="#343A40"/> 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"/> 
-        <title>Matthew Smith Burlage - Software Engineer</title>         
-        <!-- Bootstrap core CSS -->         
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"/> 
-        <!-- Custom styles for this template -->         
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/> 
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"/> 
-        <link rel="stylesheet" href="static/styles.css"/> 
-    </head>     
-    <body class="bg-dark"> 
-        <div class="nyc-bg d-print-none"> 
-            <div class="nyc-bg-2"> 
-                <div class="navbar box-shadow"> 
-                    <div class="container d-flex"> <a href="https://www.msb.dev" class="navbar-brand nyc-bg-text d-flex align-items-center"> <strong>msb</strong>.dev</a> 
-                    </div>                     
-                </div>                 
-                <div class="nyc-bg-3"> 
-                    <div class="d-print-none nyc-bg-text text-center"> 
-                        <div class="container-fluid"> 
-                            <div class="row"> 
-                                <div class="col-12"> 
-                                    <h1 class="mt-3">Matthew Smith Burlage</h1> 
-                                    <h4 class="collapse-div collapse show">Leading Software Engineering Teams</h4> 
-                                    <p class="lead"> 
-                                Focused on creating secure and intuitive web systems. </p> 
-                                    <ul class="nav justify-content-center collapse-div collapse"> 
-                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" onclick='print(); return false;' href="#"> 
-                                        Print Me </a> 
-                                        </li>                                         
-                                        <li class="nav-item"> 
-</li>                                         <a class="nav-link text-info nyc-bg-link" onclick="toggleResume(); return false;" href="#"> 
-                                    Back </a> 
-                                    </ul>                                     
-                                    <ul class="nav justify-content-center collapse-div collapse show"> 
-                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" href="#aboutme">About Me</a> 
-                                        </li>                                         
-                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" onclick="toggleResume(); return false;" href="#"> 
-                                        My Resume </a> 
-                                        </li>                                         
-                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" href="#mywork">My Work</a> 
-                                        </li>                                         
-                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" href="#principles">Principles</a> 
-                                        </li>                                         
-                                        <li class="nav-item"> <a class="nav-link text-info nyc-bg-link" href="#contactme">Contact Me</a> 
-                                        </li>                                         
-                                    </ul>                                     
-                                </div>                                 
-                            </div>                             
-                        </div>                         
-                    </div>                     
-                    <div class="arrow-div"> 
-                        <div class="arrow bounce collapse show"> <i class="fa fa-arrow-down fa-2x"></i> 
-                        </div>                         
-                    </div>                     
-                </div>                 
-            </div>             
-        </div>         
-        <div class="d-none d-print-block"> 
-            <div class="container pt-5 pb-5"> 
-                <div class="row"> 
-                    <div class="col-12"> 
-                        <h1 class="display-4 text-center">Matthew Smith Burlage</h1> 
-                        <p class="lead text-center collapse"><b>Software Engineer</b></p> 
-                        <p class="lead text-center">Matthew is a software engineer focused on creating secure, powerful, efficient, and intuitive web systems.</p> 
-                    </div>                     
-                </div>                 
-            </div>             
-        </div>         
-        <section class="jumbotron jumbotron-fluid hide-horiz-overflow text-center mb-0 collapse show" id='aboutme'> 
-            <div class="container"> 
-                <div class="row"> 
-                    <div class="col-12 mb-5 mb-md-0 col-md-4" data-aos="fade-left"> 
-                        <img class="rounded-circle headshot" src="static/me2.jpg" alt="Me"/> 
-                    </div>                     
-                    <div class="col-12 col-md-8" data-aos="fade-right"> 
-                        <h4 class="jumbotron-heading mb-3">Hello World, I'm Matthew.</h4> 
-                        <ul class="list-unstyled"> 
-                            <li> 
-                                I am a software engineer focused on<a href="#" class="link-discreet" onclick="addlInfoSection('improvelives'); return false;"> 
-                            improving people’s lives through technology. </a> 
-                                Even before becoming an engineer, I always focused on<a href="#" class="link-discreet" onclick="addlInfoSection('otherjobs'); return false;"> 
-                            improving efficiency through technology in every job </a> 
-                                I have ever had.
-                                As an engineer, it has been my focus to build secure software
-                                that removes<a href="#" class="link-discreet" onclick="addlInfoSection('duplicatework'); return false;"> 
-                            duplicate work, </a> <a href="#" class="link-discreet" onclick="addlInfoSection('badprocess'); return false;"> 
-                            bad processes, </a> and<a href="#" class="link-discreet" onclick="addlInfoSection('waste'); return false;"> 
-                            waste. </a> 
-                                Take a look at my<a class="link-discreet" onclick="toggleResume()" href="#">resume</a>,<a href="#mywork" class="link-discreet">previous work</a>, or<a href="#principles" class="link-discreet">development principles</a> 
-                                to learn more about me. Or<a href="#contactme" class="link-discreet">reach out</a> 
-                                and see what I can do for your organization!
-                            </li>                             
-                        </ul>                         
-                        <div class="mt-3 collapse addl-info" id="addl-info-improvelives"> 
-                            <h5>Improving people's lives with technology</h5> 
-                            The ultimate purpose for technology and software is to improve the lives of the user.
-                            But I’m sure I’m not the only one who has said the phrase “it’s great when it works”
-                            when an app has seemed to be more trouble than it was worth.
-                            My philosophy with software is that it should just work.
-                            You shouldn’t need to attend a training to use a piece of software.
-                            Instead, it should be intuitive enough to be used with limited instruction
-                            and should be self-documenting when a more complicated interface is needed.
-                        </div>                         
-                        <div class="mt-3 collapse addl-info" id="addl-info-otherjobs"> 
-                            <h5>Using Technology in My Past Jobs</h5> 
-                            I have always used technology to make processes easier,
-                            even when my job had nothing to do with software development.
-                            As the 19-year-old stage manager at the<a class="link-unstyled" href="https://www.youtube.com/watch?v=7uJ1tRRrF3c" target="_blank"> 
-                        magic department </a> 
-                            for a children's performance arts sleep-away camp, I developed
-                            an Access database to handle the organization of 100+ children
-                            across six magic shows to make sure that visitors could watch
-                            their kids saw their friends and half or whatever other crazy
-                            routine they had come up with. When I worked as a manager and
-                            bartender for a couple of NYC restaurants and bars, I was always
-                            the go-to for POS integration, website maintenance, and all other
-                            technology needs. I have a passion for automation and process
-                            simplification and am always evaluating if there are better ways
-                            to do things.
-                        </div>                         
-                        <div class="mt-3 collapse addl-info" id="addl-info-duplicatework"> 
-                            <h5>Eliminating Duplicate Work</h5> 
-                            When I was a PC Technician, I would always be on the lookout for
-                            ways to reduce duplicate work. If I had to do the same task more
-                            than a few times, I would always evaluate if there was a way to
-                            script or otherwise automate it, and often there was. A piece of
-                            software that we had to install on each computer required running
-                            seven different MSI file as well as some registry edits and other
-                            configuration steps. I was able to script that down to five clicks
-                            of the mouse.
-                        </div>                         
-                        <div class="mt-3 collapse addl-info" id="addl-info-badprocess"> 
-                            <h5>Eliminating Bad Processes</h5> 
-                            My first task as Software Developer in my current role was to improve
-                            the process of IT Access form submission, which had a terrible compliance
-                            rate with the then-current method of emailing a PDF.  I created a system to
-                            handle this process as well as automate many of the user creation steps
-                            required by our Active Directory environment. In addition, we found that
-                            the entire process of on-boarding new employees required entering the same
-                            information seven different times. I was able to expand the system to handle
-                            this which now only requires a single point of data entry for HR.
-                        </div>                         
-                        <div class="mt-3 collapse addl-info" id="addl-info-waste"> 
-                            <h5>Eliminating Waste</h5> 
-                            Before my work as a software developer, the HR department for my current
-                            organization used emailing PDFs around for their approval workflow. In addition,
-                            each user would typically print the PDF for their own records, creating possibly 7
-                            different paper copies of the same document, leading to wasted time, money, and
-                            environmental harm for no good reason. The system I build them now acts as the source
-                            of truth requiring no printing whatsoever to archive the records in perpetuity.
-                        </div>                         
-                    </div>                     
-                </div>                 
-                <div class="row"> 
-                    <div class="col-12 collapse addl-info"> 
-                        Additional Info about other jobs
-</div>                     
-                    <div class="col-12 collapse addl-info"> 
-</div>                     
-                </div>                 
-            </div>             
-        </section>         
-        <div class="album py-5 bg-light collapse show" id='mywork'> 
-            <div class="container"> 
-                <div class="row text-center mb-3"> 
-                    <div class="col-12" data-aos="zoom-in" data-aos-anchor="#card1"> 
-                        <h4 class="jumbotron-heading text-center">My Work</h4> 
-                    </div>                     
-                </div>                 
-                <div class="row"> 
-                    <div id="card1" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
-                        <div class="card mb-4 box-shadow"> 
-                            <div class="card-body"> 
-                                <div class="card-text"> <strong>Agenda Management</strong> <br/> <span class="text-muted small">React, Django, PostgreSQL, IIS</span> 
-                                    <div>The Agenda Management software helps local governments stay on top of their meetings, including approval workflows and minutes capture.</div>                                     
-                                </div>                                 
-                            </div>                             
-                        </div>                         
-                    </div>                     
-                    <div id="card2" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
-                        <div class="card mb-4 box-shadow"> 
-                            <div class="card-body"> 
-                                <div class="card-text"> <strong>Five Star Ordering</strong> <br/> <span class="text-muted small">React, Django, PostgreSQL, PythonAnywhere</span> 
-                                    <div>The Five Star ordering system allows restaurants to receive delivery and pickup orders and handles payments thru Stripe. Additional restaurants and locations can be quickly added.</div>                                     
-                                </div>                                 
-                            </div>                             
-                        </div>                         
-                    </div>                     
-                    <div id="card3" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
-                        <div class="card mb-4 box-shadow"> 
-                            <div class="card-body"> 
-                                <div class="card-text"> <strong>create-django-react-app</strong> <a class="small text-muted ml-2" target="_blank" href="https://pypi.org/project/create-django-react-app/"> <i class="fas fa-external-link-alt"></i> </a> <br/> <span class="text-muted small">Python</span> 
-                                    <div>This open source python module enables users to easily create a Django and React based application, including JWT based authentication.</div>                                     
-                                </div>                                 
-                            </div>                             
-                        </div>                         
-                    </div>                     
-                    <div id="card4" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
-                        <div class="card mb-4 box-shadow"> 
-                            <div class="card-body"> 
-                                <div class="card-text"> <strong>Position Control</strong> <br/> <span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span> 
-                                    <div>Allows Human Resources to keep track of budgeted positions and employee records easily and allows Finance departments to easily forcast labor budgets.</div>                                     
-                                </div>                                 
-                            </div>                             
-                        </div>                         
-                    </div>                     
-                    <div id="card5" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
-                        <div class="card mb-4 box-shadow"> 
-                            <div class="card-body"> 
-                                <div class="card-text"> <strong>SmartBackup</strong> <a class="small text-muted ml-2" target="_blank" href="https://github.com/mattburlage/smart_backup"> <i class="fas fa-external-link-alt"></i> </a> <br/> <span class="text-muted small">Bootstrap, Django, SQLite, IIS</span> 
-                                    <div>SmartBackup helps Database administrators keep backups automated and dependable while keeping file sizes low.</div>                                     
-                                </div>                                 
-                            </div>                             
-                        </div>                         
-                    </div>                     
-                    <div id="card6" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
-                        <div class="card mb-4 box-shadow"> 
-                            <div class="card-body"> 
-                                <div class="card-text"> <strong>IT Access Control</strong> <br/> <span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span> 
-                                    <div>Allows departments to submit access requests to IT resources and automatically creates and sets up Active Directory accounts for new users.</div>                                     
-                                </div>                                 
-                            </div>                             
-                        </div>                         
-                    </div>                     
-                    <div id="card7" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
-                        <div class="card mb-4 box-shadow"> 
-                            <div class="card-body"> 
-                                <div class="card-text"> <strong>NertzBoard</strong> <br/> <span class="text-muted small">React, Django, MySQL, PythonAnywhere</span> 
-                                    <div>NertzBoard is a scoreboard keeping app for a multiplayer solitaire card game called Nertz. With live score updates, scoring history, and multiple game rooms, players can keep their head in the game.</div>                                     
-                                </div>                                 
-                            </div>                             
-                        </div>                         
-                    </div>                     
-                    <div id="card8" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
-                        <div class="card mb-4 box-shadow"> 
-                            <div class="card-body"> 
-                                <div class="card-text"> <strong>Financial Documents App</strong> <br/> <span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span> 
-                                    <div>Helps the Finance department manage travel reimbursment as well as recurring billing items, and reminds the user in question when they are up for renewal.</div>                                     
-                                </div>                                 
-                            </div>                             
-                        </div>                         
-                    </div>                     
-                    <div id="card9" class="col-12 col-md-6 col-lg-4 cards" data-aos="fade-up" data-aos-delay="0"> 
-                        <div class="card mb-4 box-shadow"> 
-                            <div class="card-body"> 
-                                <div class="card-text"> <strong>Administrative Policy</strong> <br/> <span class="text-muted small">Bootstrap, Django, SQL Server, IIS</span> 
-                                    <div>Allows administration to create, approve, and display policies for the organization including expiration notifications and version control.</div>                                     
-                                </div>                                 
-                            </div>                             
-                        </div>                         
-                    </div>                     
-                </div>                 
-            </div>             
-        </div>         
-        <section class="jumbotron hide-horiz-overflow jumbotron-fluid text-center mb-0 collapse show" id='principles'> 
-            <div class="container"> 
-                <h4 class="jumbotron-heading" data-aos="zoom-in" data-aos-anchor="#prin2">My Development Principles</h4> 
-                <ul class="list-unstyled" data-aos="fade-right" data-aos-anchor="#prin2" id="prin1"> 
-                    <li> 
-                        <h6 class="mt-3">Security First </h6> 
-                        In today's world, the value of data is ever-increasing. With this in mind, any software
-                        system should consider security from the outset. From design through implementation and
-                        maintenance, security should be front and center.  No system is worth a penny if it is insecure.
-                    </li>                     
-                </ul>                 
-                <ul class="list-unstyled" data-aos="fade-left" id="prin2"> 
-                    <li> 
-                        <h6>Ease of Use </h6> 
-                        The number one goal of any system should, outside security, be to create a wonderful
-                        user experience for end users and admins alike.  Users should be able to focus on their work,
-                        not on learning new systems. This can be accomplished by focusing the experience around the tasks
-                        that your users need to complete. All a user needs to know is what their end goal is, and the
-                        system should take care of putting the information they need in front of them or whoever needs it.
-                    </li>                     
-                </ul>                 
-                <ul class="list-unstyled" data-aos="fade-right" data-aos-anchor="#prin2" id="prin3"> 
-                    <li> 
-                        <h6>Embrace and Prepare for Change </h6> 
-                        Business needs change regularly, and any successful enterprise must have software that
-                        can adjust with them. Software solutions, therefore, must be customizable and built to handle
-                        changing needs.  This includes building them from day one in a way that makes later upgrades a breeze.
-                    </li>                     
-                </ul>                 
-            </div>             
-        </section>         
-        <section class="jumbotron hide-horiz-overflow bg-light jumbotron-fluid mb-0 collapse show" id='contactme'> 
-            <div class="container"> 
-                <div class="card bg-light pt-5 pb-5" data-aos="flip-up" data-aos-offset="200"> 
-                    <div class="row text-center"> 
-                        <div class="col"> 
-                            <h4 class="jumbotron-heading">So Now What?</h4> 
-                            <div class="lead">Reach out to me!</div>                             
-                            <div>If you think that I can help your project or organization, feel free to reach out!</div>                             
-                        </div>                         
-                    </div>                     
-                    <div class="row mt-2"> 
-                        <div class="col-12 col-md-8 offset-md-2"> 
-                            <form class="s5-contact-form" method="post" data-form-key="d2ff6e16-1bb9-4595-aeb9-bcf27d26fc6b"> 
-                                <label for="id_name" class="font-weight-bold mt-1"> 
-                                    Name
-</label>                                 
-                                <input type="name" required id="id_name" class="form-control"/> 
-                                <label for="id_email" class="font-weight-bold mt-1"> 
-                                    Email
-</label>                                 
-                                <input type="email" required id="id_email" class="form-control"/> 
-                                <label for="id_message" class="font-weight-bold mt-2"> 
-                                    Comments
-</label>                                 
-                                <textarea name="message" required rows="5" id="id_message" class="form-control"></textarea> 
-                                <button id="sub_btn" type="submit" class="btn btn-outline-primary mt-2">Send Message</button>                                 
-                            </form>                             
-                        </div>                         
-                    </div>                     
-                </div>                 
-            </div>             
-        </section>         
-        <div class="collapse bg-light pt-5 pb-5" id="resume"> 
-            <div class="container"> 
-                <div class="row"> 
-                    <div class="col-md-8"> 
-                        <h5>Work Experience</h5> 
-                        <div class="mb-2"> 
-                            Senior Software Developer,<span class="font-weight-bold">Hall County Government</span> <span class="text-muted small">2019 - Current</span> 
-                        </div>                         
-                        <div> 
-                            <ul class="small-md"> 
-                                <li>Started new Enterprise Application Development division from the ground up.</li>                                 
-                                <li>Manages development of internal and external systems to manage day to day business needs.</li>                                 
-                                <li>Management systems include Agenda, Personnel, Fleet, Finance, Policies, and IT Access.</li>                                 
-                                <li>Manages and guides non-senior developers towards business and career goals.</li>                                 
-                                <li>Manages implementation of entire development lifecycle, including design and prototyping.</li>                                 
-                                <li>Manages support process for all internally developed software applications.</li>                                 
-                                <li>Oversees project timelines, deadlines, goals, and sprints for scrum development.</li>                                 
-                                <li>Makes foundational decisions on tools, design paradigms, methodology, and stack.</li>                                 
-                                <li>Implements thorough and robust error, tracking, and development lifecycle tools.</li>                                 
-                                <li>Maintains thorough documentation for users, admins, and future developers through comments.</li>                                 
-                                <li>Installs, configures, and manages CI/CD for development, staging, and production servers.</li>                                 
-                            </ul>                             
-                        </div>                         
-                        <div class="mb-2"> 
-                            Systems Technician,<span class="font-weight-bold">Hall County Government</span> <span class="text-muted small">2018</span> 
-                        </div>                         
-                        <div> 
-                            <ul class="small-md"> 
-                                <li>Co-managed enterprise Active Directory environment with 1300 end units plus other hardware.</li>                                 
-                            </ul>                             
-                        </div>                         
-                        <div class="mb-2"> 
-                            Remote and In Store Repair Technician and Leader,<span class="font-weight-bold">Geek Squad</span> <span class="text-muted small">2014 - 2017</span> 
-                        </div>                         
-                        <div> 
-                            <ul class="small-md"> 
-                                <li>Assisted clients remotely with repairs, including malware and Windows and macOS issues.</li>                                 
-                                <li>Acted as Sales Floor Leader. Regularly handles delicate issues throughout store.</li>                                 
-                            </ul>                             
-                        </div>                         
-                        <hr/> 
-                        <h5>Projects & Experience</h5> 
-                        <div> 
-                            <div class="mb-2"> <span class="font-weight-bold">Agenda Management</span>&nbsp;&nbsp;<span class="text-muted small">React, Django, PostgreSQL, IIS</span> 
-                            </div>                             
-                            <div class="mb-4"> 
-                                The Agenda Management software is designed to assist governments of all sizes in the preparation,
-                                approval, creation, publishing, recording, and archiving of official Board meetings. The system
-                                allows for an organization to allow different departments to enter their desired agenda items,
-                                which then flow through a completely customizable workflow for needed approvals.
-                                The system allows for the production of PDFs for each agenda item, the agenda list, the minutes,
-                                any supporting documents, and conversion of any attachments to PDF. Those PDFs and agendas
-                                are also uploaded to a public site to comply with any publication requirements that may exist.
-</div>                             
-                        </div>                         
-                        <div class="mb-2"> <span class="font-weight-bold">Forms Portal</span>&nbsp;&nbsp;<span class="text-muted small">React, Django, PostgreSQL, IIS</span> 
-                        </div>                         
-                        <div class="mb-4"> 
-                            The Forms Portal is a form creation platform on which IT can create and host various
-                            digital dynamic forms for completion by end users. This includes a dynamic workflow system
-                            where the data entered can alter the workflow based on the needs of the business.  This allows
-                            the Application Development team to spin up a new form-based application in a matter of hours
-                            as opposed to weeks writing a brand-new app. It also means all apps look and work the same
-                            and can be more easily administered.
-</div>                         
-                        <div class="mb-2"> <span class="font-weight-bold">Position Control</span>&nbsp;&nbsp;<span class="text-muted small">Django, React, Microsoft SQL, IIS</span> 
-                        </div>                         
-                        <div class="mb-4"> 
-                            The Position Control system is designed to handle the tracking and paperwork for all employee
-                            records. It handles all paperwork including new hires, job changes, termination, and more.
-                            It also handles the creation and budgeting of new positions. It allows approval on both the
-                            department and administration level. It also handles automatic creation
-                            of Active Directory user accounts and uses Active Directory for user authentication.
-                            The Finance department can use the system to calculate labor costs for individual departments or
-                            the whole county, and projects future budgets.
-</div>                         
-                    </div>                     
-                    <div class="col-md-4"> 
-                        <div class="text-center mb-5"> 
-                            <img src="static/favicon.png" alt="" class="img-responsive" style="max-width: 100px"/> 
-                        </div>                         
-                        <h5>Contact Information</h5> 
-                        <ul class="list-unstyled"> 
-                            <li> <a class="link-unstyled" href="tel:6463970112" target="_blank">  <i class="fas fa-phone pr-2" aria-hidden="true"></i>(646) 397-0112 </a> 
-                            </li>                             
-                            <li> <a class="link-unstyled" href="https://www.msb.dev" target="_blank">  <i class="fas fa-globe pr-2" aria-hidden="true"></i>www.msb.dev </a> 
-                            </li>                             
-                            <li> <a class="link-unstyled" href="mailto:matt@msb.dev">  <i class="fas fa-at pr-2" aria-hidden="true"></i>matt@msb.dev </a> 
-                            </li>                             
-                            <!--                    <li>-->                             
-                            <!--                        <a class="link-unstyled" href="https://www.linkedin.com/in/matthew-burlage" target="_blank">-->                             
-                            <!--                            <i class="fab fa-linkedin pr-2" aria-hidden="true"></i>/matthew-burlage </a>-->                             
-                            <!--                    </li>-->                             
-                            <li> <a class="link-unstyled" href="https://github.com/mattburlage" target="_blank">  <i class="fab fa-github pr-2" aria-hidden="true"></i>/mattburlage </a> 
-                            </li>                             
-                        </ul>                         
-                        <h5>Skills</h5> 
-                        <ul class="list-unstyled"> 
-                            <li> <i class="fab fa-react" aria-hidden="true"></i>&nbsp;&nbsp;React.js, Redux, React Router
-                            </li>                             
-                            <li> <i class="fab fa-python" aria-hidden="true"></i>&nbsp;&nbsp;Python, Django, DRF, Flask
-                            </li>                             
-                            <li> <i class="fab fa-node-js" aria-hidden="true"></i>&nbsp;&nbsp;Angular, Webpack, NPM
-                            </li>                             
-                            <li> <i class="fas fa-database" aria-hidden="true"></i>&nbsp;&nbsp;PostgreSQL, MS SQL, MySQL
-                            </li>                             
-                            <li> <i class="fas fa-server" aria-hidden="true"></i>&nbsp;&nbsp;IIS, Docker, wfastcgi
-                            </li>                             
-                            <li> <i class="fas fa-wrench" aria-hidden="true"></i>&nbsp;&nbsp;Git, GitHub, Jira, Sentry
-                            </li>                             
-                            <li> <i class="fas fa-ellipsis-h"></i>&nbsp;&nbsp;PHP, Java, JSON
-                            </li>                             
-                        </ul>                         
-                        <h5>Education</h5> 
-                        <ul class="list-unstyled small"> 
-                            <li> <i class="fas fa-university" aria-hidden="true"></i>&nbsp;&nbsp;BS, Computer Science, Univ. of North Georgia
-                            </li>                             
-                            <li> <i class="fas fa-university" aria-hidden="true"></i>&nbsp;&nbsp;TA, Software Engineering, 2020
-                            </li>                             
-                        </ul>                         
-                        <hr/> 
-                        <h5>Open Source Projects</h5> 
-                        <p class="small text-muted">Here are a few open source things I have built.</p> 
-                        <h6>create-django-react-app</h6> 
-                        <p> 
-                    A python package designed to help users set up a Django and React based app,
-                    including the REST framework, JWT based login, and CORS header handling. <span class="text-muted small">  <a class="text-muted" target="_blank" href="https://pypi.org/project/create-django-react-app/">PyPi</a> - <a class="text-muted" target="_blank" href="https://github.com/mattburlage/create-django-react-app">GitHub</a> </span>  </p> 
-                        <h6>SmartBackup</h6> 
-                        <p> 
-                    SmartBackup is an open source PostgresSQL backup manager and automation tool,
-                    allowing recurring backups and dynamic consolidation. <span class="text-muted small">  <a class="text-muted" target="_blank" href="https://github.com/mattburlage/smart_backup">GitHub</a> </span>  </p> 
-                        <h6>NertzBoard</h6> 
-                        <p> 
-                    NertzBoard is a scoreboard for a multiplayer solitaire game called Nertz. NertzBoard handles the calculations for scoring and
-                    updates the other players in real time to see who is ahead. <span class="text-muted small"> <a class="text-muted" target="_blank" href="https://www.nertzboard.com">View</a> - <a class="text-muted" target="_blank" href="https://github.com/mattburlage/nertzboard">GitHub</a> </span>  </p> 
-                    </div>                     
-                </div>                 
-            </div>             
-        </div>         
-        <footer class="text-muted pb-3 pt-4 bg-dark d-print-none"> 
-            <div class="container"> 
-                <p class="float-right"> <a href="#" class="text-light small">Back to top</a> </p> 
-                <p class="text-white small">Thank you for visiting my site!</p> 
-                <p class="text-white small">&copy; 2022 Matt Smith Burlage</p> 
-            </div>             
-        </footer>         
-        <!-- Bootstrap core JavaScript
-================================================== -->         
-        <!-- Placed at the end of the document so the pages load faster -->         
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>         
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>         
-        <script type="module" src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.mjs"></script>         
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>         
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>         
-        <script type='text/javascript' src="https://sites.studio5.dev/components/contact_form/contact_form.js"></script>         
-        <script type='text/javascript' src="static/msb.js"></script>         
-        <!--<script>-->         
-        <!--    document.addEventListener('DOMContentLoaded', () => {-->         
-        <!--        toggleResume()-->         
-        <!--    })-->         
-        <!--</script>-->         
-    </body>     
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Matthew Smith Burlage — Senior Software Engineer &amp; Team Leader"/>
+    <meta name="author" content="Matthew Smith Burlage"/>
+    <link rel="shortcut icon" href="static/favicon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon.png"/>
+    <meta name="theme-color" content="#050507"/>
+    <title>Matthew Smith Burlage: Senior Software Engineer &amp; Team Leader</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: {
+                            950: '#050507', 900: '#0b0b10', 800: '#13131b', 700: '#1e1e2a',
+                            500: '#3a3a4d', 400: '#7c7c94', 200: '#c4c4d4', 100: '#ececf2',
+                        },
+                        volt: { DEFAULT: 'var(--accent)', dim: 'var(--accent-dim)' },
+                        syn: { kw: '#c084fc', str: 'var(--accent)', fn: '#7dd3fc', num: '#fbbf24', cm: '#4b5568' },
+                    },
+                    fontFamily: {
+                        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --accent: #a3e635;
+            --accent-dim: #65a30d;
+            --accent-rgb: 163, 230, 53;
+        }
+        html { scroll-behavior: smooth; }
+        ::selection { background: var(--accent); color: #050507; }
+        section, header { scroll-margin-top: 4.5rem; }
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-thumb { background: #1e1e2a; border-radius: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(12px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.3s ease-out forwards;
+        }
+        .animate-slide-up {
+            animation: slide-up 0.4s ease-out forwards;
+        }
+
+        #nav.scrolled { top: 0.5rem; }
+
+        .dot-grid {
+            position: relative;
+            z-index: 1;
+            background-image: radial-gradient(rgba(var(--accent-rgb), 0.18) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .spot { position: relative; overflow: hidden; }
+        .spot::after {
+            content: '';
+            position: absolute; inset: 0; pointer-events: none;
+            opacity: var(--spot-o, 0);
+            transition: opacity 0.4s ease;
+            background: radial-gradient(circle 240px at var(--spot-x, 50%) var(--spot-y, 50%), rgba(var(--accent-rgb), 0.12), transparent 80%);
+        }
+
+        .sec-num {
+            font-size: clamp(4rem, 10vw, 7rem);
+            line-height: 1; font-weight: 700; color: transparent;
+            -webkit-text-stroke: 1px #3a3a4d; user-select: none;
+        }
+
+        .marquee {
+            overflow: hidden; position: relative;
+            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+        }
+        .marquee-track { display: flex; gap: 1rem; width: max-content; animation: marquee 30s linear infinite; }
+        .marquee:hover .marquee-track { animation-play-state: paused; }
+        @keyframes marquee { to { transform: translateX(calc(-50% - 0.5rem)); } }
+
+        .caret::after { content: '_'; animation: blink 1s steps(1) infinite; color: var(--accent); }
+        .caret-block::after { content: '▋'; color: var(--accent); animation: blink 1.1s steps(1) infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .ide-btn-gradient {
+            background-image: linear-gradient(135deg, #0b0b10, rgba(var(--accent-rgb), 0.35), #0b0b10);
+            background-size: 200% 200%;
+            animation: gradientShift 5s ease-in-out infinite alternate;
+        }
+        .ide-btn-gradient:hover { background-image: linear-gradient(135deg, #0b0b10, rgba(var(--accent-rgb), 0.6), #0b0b10); }
+        @keyframes gradientShift { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+
+        .m-reveal { opacity: 0; }
+        .reduced-motion .m-reveal { opacity: 1; }
+
+        #progress {
+            position: fixed; top: 0; left: 0; right: 0; height: 2px;
+            background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); z-index: 60;
+        }
+
+        a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+        /* ---------- IDE mode transition ---------- */
+        #ide {
+            position: fixed; inset: 0; z-index: 100;
+            visibility: hidden; opacity: 0;
+            transform: scale(0.96);
+            transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        visibility 0s linear 0.45s;
+        }
+        body.ide-mode #ide {
+            visibility: visible; opacity: 1; transform: scale(1);
+            transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                        visibility 0s;
+        }
+        /* staggered chrome: title bar drops, sidebar slides, terminal rises */
+        #ide .ide-titlebar { transform: translateY(-100%); transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.15s; }
+        #ide .ide-sidebar  { transform: translateX(-16px); opacity: 0; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.25s, opacity 0.4s ease 0.25s; }
+        #ide .ide-terminal { transform: translateY(100%); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.3s; }
+        body.ide-mode #ide .ide-titlebar { transform: translateY(0); }
+        body.ide-mode #ide .ide-sidebar  { transform: translateX(0); opacity: 1; }
+        body.ide-mode #ide .ide-terminal { transform: translateY(0); }
+        body.ide-mode { overflow: hidden; }
+        body.ide-mode #site { filter: blur(6px); pointer-events: none; user-select: none; }
+        #site { transition: filter 0.45s ease; }
+
+        .file-pane { display: none; }
+        .file-pane.active { display: block; }
+        .tree-item.active { background: #13131b; color: #c4c4d4; }
+        .tree-item.active .tree-name { color: var(--accent); }
+        .tab.active { background: #050507; color: #c4c4d4; border-top: 2px solid var(--accent); }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .marquee-track, .caret::after, .caret-block::after, .ide-btn-gradient { animation: none; }
+            .m-reveal { opacity: 1; }
+            #glow { display: none; }
+            #ide, #ide .ide-titlebar, #ide .ide-sidebar, #ide .ide-terminal, #site { transition: none; }
+        }
+    </style>
+    <script>
+        // Apply saved accent color before first paint to avoid a flash of the default color.
+        (function () {
+            try {
+                var saved = JSON.parse(localStorage.getItem('msb-accent') || 'null');
+                if (saved && saved.hex) {
+                    var root = document.documentElement.style;
+                    root.setProperty('--accent', saved.hex);
+                    root.setProperty('--accent-dim', saved.dim);
+                    root.setProperty('--accent-rgb', saved.rgb);
+                }
+            } catch (e) {}
+        })();
+    </script>
+</head>
+<body class="bg-void-950 text-void-200 font-display antialiased">
+    <div class="noise" aria-hidden="true"></div>
+    <div id="progress" aria-hidden="true"></div>
+
+<!-- ==================== NORMAL SITE ==================== -->
+<div id="site" class="relative z-10">
+
+    <!-- Nav: floating pill -->
+    <nav id="nav" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300">
+        <div class="flex items-center gap-1 sm:gap-2 px-3 py-1.5 rounded-full border border-void-700/80 bg-void-900/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.45)]">
+            <a href="#top" class="px-3 py-1.5 font-mono text-sm font-semibold cursor-pointer text-void-100 hover:text-volt transition-colors">
+                <span class="text-volt">~/</span>msb
+            </a>
+            <span class="w-px h-4 bg-void-700 mx-1" aria-hidden="true"></span>
+            <a href="#experience" class="px-3 py-1.5 font-mono text-xs text-void-400 hover:text-void-100 transition-colors cursor-pointer">work</a>
+            <a href="#projects" class="px-3 py-1.5 font-mono text-xs text-void-400 hover:text-void-100 transition-colors cursor-pointer">builds</a>
+            <a href="#contact" class="px-3 py-1.5 font-mono text-xs text-void-400 hover:text-void-100 transition-colors cursor-pointer hidden sm:inline">contact</a>
+            <span class="w-px h-4 bg-void-700 mx-1" aria-hidden="true"></span>
+            <div class="relative group pb-3 -mb-3">
+                <button data-ide-open class="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-mono text-xs bg-volt text-void-950 font-semibold hover:bg-volt-dim transition-colors cursor-pointer">
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M5.3 3.3 1.6 7l3.7 3.7 1-1L3.6 7l2.7-2.7-1-1zm5.4 0-1 1L12.4 7l-2.7 2.7 1 1L14.4 7l-3.7-3.7z"/></svg>
+                    <span class="hidden sm:inline">dev mode</span>
+                </button>
+                <div id="accent-picker" class="absolute top-full right-0 w-max p-2 rounded-lg bg-void-900 border border-void-700 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 grid grid-cols-5 gap-1.5 z-50 pointer-events-none group-hover:pointer-events-auto">
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="lime"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #a3e635" title="lime" aria-label="Set accent color to lime"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="blue"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #3b82f6" title="blue" aria-label="Set accent color to blue"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="purple"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #a855f7" title="purple" aria-label="Set accent color to purple"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="pink"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #ec4899" title="pink" aria-label="Set accent color to pink"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="red"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #ef4444" title="red" aria-label="Set accent color to red"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="orange"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #f97316" title="orange" aria-label="Set accent color to orange"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="amber"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #f59e0b" title="amber" aria-label="Set accent color to amber"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="emerald"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #10b981" title="emerald" aria-label="Set accent color to emerald"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="teal"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #14b8a6" title="teal" aria-label="Set accent color to teal"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="cyan"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #06b6d4" title="cyan" aria-label="Set accent color to cyan"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="indigo"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #6366f1" title="indigo" aria-label="Set accent color to indigo"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="violet"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #8b5cf6" title="violet" aria-label="Set accent color to violet"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="rose"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #f43f5e" title="rose" aria-label="Set accent color to rose"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="sky"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #0ea5e9" title="sky" aria-label="Set accent color to sky"></button></div>
+                    <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="slate"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #94a3b8" title="slate" aria-label="Set accent color to slate"></button></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header id="top" class="relative z-10">
+        <div class="dot-grid absolute inset-0" aria-hidden="true"></div>
+        <div class="max-w-6xl mx-auto px-5 pt-28 pb-12 sm:pt-40 sm:pb-16 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+                <!-- Left column: text -->
+                <div>
+                    <p class="font-mono text-volt text-sm mb-6 m-reveal" data-hero>Hello World, I'm Matthew.</p>
+                    <h1 class="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-void-100 leading-[0.95] m-reveal" data-hero>
+                        <span id="scramble-1" data-text="SENIOR">SENIOR</span><br/>
+                        <span id="scramble-2" data-text="SOFTWARE">SOFTWARE</span><br/>
+                        <span class="text-volt" id="scramble-3" data-text="ENGINEER">ENGINEER</span>
+                    </h1>
+                    <p class="mt-4 text-3xl sm:text-4xl text-void-300 font-medium m-reveal" data-hero>&amp; Team Leader</p>
+                    <div class="mt-8 m-reveal" data-hero>
+                        <p class="max-w-md text-void-400 leading-relaxed mb-8">
+                            I build secure software and lead teams that ship it.
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="#contact" id="magnetic" class="inline-block px-6 py-3 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer will-change-transform">Get in touch</a>
+                            <a href="#experience" class="inline-block px-6 py-3 border border-void-700 text-void-200 rounded hover:border-volt hover:text-void-100 transition-colors cursor-pointer">See the work</a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right column: code window + stats -->
+                <div class="lg:mt-12 m-reveal" data-hero>
+                    <!-- Teaser code window: the door to dev mode -->
+                    <div class="border border-void-700 rounded-lg bg-void-900/80 backdrop-blur-sm overflow-hidden sticky top-8">
+                        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-void-700">
+                            <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
+                            <span class="ml-2 font-mono text-xs text-void-400">msb.ts</span>
+                            <button data-ide-open class="ide-btn-gradient ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded font-mono text-[11px] text-volt border border-void-700 hover:border-volt transition-colors cursor-pointer">
+                                <svg width="9" height="9" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2l10 6-10 6V2z"/></svg>
+                                open in IDE
+                            </button>
+                        </div>
+                        <pre class="p-8 font-mono text-sm sm:text-base leading-relaxed"><code><span class="text-syn-kw">import</span> { msb } <span class="text-syn-kw">from</span> <span class="text-syn-str">"./career"</span>;
+
+<span class="text-void-100">msb</span>.role;  <span class="text-syn-cm">// Senior Software Engineer</span>
+<span class="text-void-100">msb</span>.since; <span class="text-syn-cm">// 2019</span>
+<span class="text-void-100">msb</span>.frontend; <span class="text-syn-cm">// ["React", "Vue", "React Native"]</span>
+<span class="text-void-100">msb</span>.backend; <span class="text-syn-cm">// ["Django", "Node"]</span>
+<span class="text-void-100">msb</span>.db; <span class="text-syn-cm">// ["PostgreSQL", "SQL Server", "Hasura"]</span>
+<span class="text-void-100">msb</span>.contact(); <span class="text-syn-cm">// matt@msb.dev</span></code></pre>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="mt-8 max-w-xl m-reveal" data-hero>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span id="years-count">0</span><span class="text-volt">+</span></p>
+                                <p class="text-xs font-mono text-void-400 mt-1">years</p>
+                            </div>
+                            <div>
+                                <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span data-count="12">0</span><span class="text-volt">+</span></p>
+                                <p class="text-xs font-mono text-void-400 mt-1">production systems</p>
+                            </div>
+                            <div>
+                                <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span data-count="7">0</span><span class="text-volt">+</span></p>
+                                <p class="text-xs font-mono text-void-400 mt-1">integrations shipped</p>
+                            </div>
+                        </div>
+                        <!-- Bento Row (fading, single row) -->
+                        <div id="bento-row" class="mt-4">
+                            <div id="bento-row-content" class="grid grid-cols-3 gap-3 auto-rows-[132px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+
+        <!-- Experience -->
+        <section id="experience" class="border-t border-void-800">
+            <div class="max-w-6xl mx-auto px-5 py-20 sm:py-28">
+                <div class="flex items-baseline gap-6 mb-14">
+                    <span class="sec-num m-reveal">01</span>
+                    <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">Where I've been<span class="caret"></span></h2>
+                </div>
+
+                <div class="space-y-6" data-stagger>
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 m-reveal">
+                        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                            <h3 class="text-xl font-bold text-void-100">Incyte Studios</h3>
+                            <span class="font-mono text-sm text-volt">Senior Software Engineer</span>
+                            <span class="font-mono text-xs text-void-400 ml-auto">2021</span>
+                        </div>
+                        <ul class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-void-200 leading-relaxed">
+                            <li>Second in command for a team of five developers.</li>
+                            <li>Added Okta to the client login system.</li>
+                            <li>Led the kickoff for a Salesforce integration with our ERP service.</li>
+                            <li>Solo maintenance and feature dev for a technician dispatching web &amp; mobile app.</li>
+                        </ul>
+                    </div>
+
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 m-reveal">
+                        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                            <h3 class="text-xl font-bold text-void-100">Hall County Government</h3>
+                            <span class="font-mono text-sm text-volt">Senior Software Developer</span>
+                            <span class="font-mono text-xs text-void-400 ml-auto">2019</span>
+                        </div>
+                        <ul class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-void-200 leading-relaxed">
+                            <li>Started a new Enterprise Application Development division from the ground up.</li>
+                            <li>Led development of systems for Agenda, Personnel, Fleet, Finance, Policies, and IT Access.</li>
+                            <li>Managed and guided non-senior developers toward business and career goals.</li>
+                            <li>Made foundational decisions on tools, design paradigms, methodology, and stack.</li>
+                            <li>Oversaw timelines, goals, and sprints for scrum development.</li>
+                            <li>Installed, configured, and managed CI/CD across dev, staging, and production.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects: bento grid -->
+        <section id="projects" class="border-t border-void-800">
+            <div class="max-w-6xl mx-auto px-5 py-20 sm:py-28">
+                <div class="flex items-baseline gap-6 mb-14">
+                    <span class="sec-num m-reveal">02</span>
+                    <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">Things I've built<span class="caret"></span></h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-4" data-stagger>
+                    <div class="spot md:col-span-4 border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 m-reveal">
+                        <p class="font-mono text-xs text-volt mb-2">FEATURED · WEB &amp; MOBILE</p>
+                        <h3 class="text-xl font-bold text-void-100">Technician Dispatch App</h3>
+                        <p class="text-sm text-void-400 mt-3 leading-relaxed max-w-lg">Dispatching platform for field technicians. Solely responsible for maintenance and new feature development — from bug triage to shipping entire features end to end.</p>
+                    </div>
+
+                    <div class="spot md:col-span-2 border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-xs text-volt mb-2">REACT · DJANGO · POSTGRES</p>
+                        <h3 class="font-bold text-void-100">Agenda Management</h3>
+                        <p class="text-sm text-void-400 mt-2 leading-relaxed">Meeting workflows, approvals, and minutes capture for local governments.</p>
+                    </div>
+
+                    <div class="spot md:col-span-2 border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-xs text-volt mb-2">REACT · DJANGO · POSTGRES</p>
+                        <h3 class="font-bold text-void-100">Forms Portal</h3>
+                        <p class="text-sm text-void-400 mt-2 leading-relaxed">Dynamic form platform — new form-based apps in hours instead of weeks.</p>
+                    </div>
+
+                    <div class="spot md:col-span-2 border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-xs text-volt mb-2">REACT · DJANGO · SQL SERVER</p>
+                        <h3 class="font-bold text-void-100">Position Control</h3>
+                        <p class="text-sm text-void-400 mt-2 leading-relaxed">Budgeted positions, employee records, and labor budget forecasting.</p>
+                    </div>
+
+                    <div class="spot md:col-span-2 border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <div class="flex items-start justify-between gap-2">
+                            <p class="font-mono text-xs text-volt mb-2">OPEN SOURCE · PYTHON</p>
+                            <span class="flex gap-2 font-mono text-xs">
+                                <a class="text-void-400 hover:text-volt transition-colors cursor-pointer" target="_blank" rel="noopener" href="https://pypi.org/project/create-django-react-app/">pypi</a>
+                                <a class="text-void-400 hover:text-volt transition-colors cursor-pointer" target="_blank" rel="noopener" href="https://github.com/mattburlage/create-django-react-app">gh</a>
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-void-100">create-django-react-app</h3>
+                        <p class="text-sm text-void-400 mt-2 leading-relaxed">Django + React scaffolding with DRF, JWT login, and CORS handling.</p>
+                    </div>
+
+                    <div class="spot md:col-span-2 border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <div class="flex items-start justify-between gap-2">
+                            <p class="font-mono text-xs text-volt mb-2">OPEN SOURCE · PYTHON</p>
+                            <span class="flex gap-2 font-mono text-xs">
+                                <a class="text-void-400 hover:text-volt transition-colors cursor-pointer" target="_blank" rel="noopener" href="https://github.com/mattburlage/smart_backup">gh</a>
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-void-100">SmartBackup</h3>
+                        <p class="text-sm text-void-400 mt-2 leading-relaxed">PostgreSQL backup automation with recurring backups and dynamic consolidation.</p>
+                    </div>
+
+                    <div class="spot md:col-span-2 border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <div class="flex items-start justify-between gap-2">
+                            <p class="font-mono text-xs text-volt mb-2">REACT · DJANGO · MYSQL</p>
+                            <span class="flex gap-2 font-mono text-xs">
+                                <a class="text-void-400 hover:text-volt transition-colors cursor-pointer" target="_blank" rel="noopener" href="https://www.nertzboard.com">live</a>
+                                <a class="text-void-400 hover:text-volt transition-colors cursor-pointer" target="_blank" rel="noopener" href="https://github.com/mattburlage/nertzboard">gh</a>
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-void-100">NertzBoard</h3>
+                        <p class="text-sm text-void-400 mt-2 leading-relaxed">Real-time scoreboard for the card game Nertz, with score history and game rooms.</p>
+                    </div>
+
+                    <div class="spot md:col-span-2 border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-xs text-volt mb-2">REACT · DJANGO · STRIPE</p>
+                        <h3 class="font-bold text-void-100">Five Star Ordering</h3>
+                        <p class="text-sm text-void-400 mt-2 leading-relaxed">Restaurant delivery &amp; pickup ordering with Stripe payments.</p>
+                    </div>
+
+                    <div class="spot md:col-span-2 border border-void-700 rounded-xl bg-void-900 p-6 m-reveal flex flex-col justify-center items-start">
+                        <p class="font-mono text-sm text-void-400">More on</p>
+                        <a href="https://github.com/mattburlage" target="_blank" rel="noopener" class="font-bold text-volt hover:underline cursor-pointer">github.com/mattburlage →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills marquee -->
+        <section id="skills" class="border-t border-void-800 py-10">
+            <div class="marquee" aria-label="Skills: React, Redux, Python, Django, DRF, Flask, PostgreSQL, MS SQL, MySQL, Okta, JWT, Active Directory, Docker, IIS, CI/CD, Git, Jira, Sentry">
+                <div class="marquee-track font-mono text-sm" aria-hidden="true" id="marquee-track">
+                    <!-- populated by JS (two copies for seamless loop) -->
+                </div>
+            </div>
+            <p class="text-center mt-6 font-mono text-xs text-void-400">BS, Computer Science — University of North Georgia</p>
+        </section>
+
+        <!-- Principles -->
+        <section id="principles" class="border-t border-void-800">
+            <div class="max-w-6xl mx-auto px-5 py-20 sm:py-28">
+                <div class="flex items-baseline gap-6 mb-14">
+                    <span class="sec-num m-reveal">03</span>
+                    <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">How I build<span class="caret"></span></h2>
+                </div>
+                <div class="grid gap-4 md:grid-cols-3" data-stagger>
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-volt text-xs mb-3">[01]</p>
+                        <h3 class="font-bold text-void-100 mb-2">Security First</h3>
+                        <p class="text-sm text-void-400 leading-relaxed">The value of data is ever-increasing. Any system should consider security from the outset — from design through implementation and maintenance. No system is worth a penny if it is insecure.</p>
+                    </div>
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-volt text-xs mb-3">[02]</p>
+                        <h3 class="font-bold text-void-100 mb-2">Ease of Use</h3>
+                        <p class="text-sm text-void-400 leading-relaxed">Users should be able to focus on their work, not on learning new systems. All a user needs to know is their end goal — the system should put the right information in front of whoever needs it.</p>
+                    </div>
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-volt text-xs mb-3">[03]</p>
+                        <h3 class="font-bold text-void-100 mb-2">Prepare for Change</h3>
+                        <p class="text-sm text-void-400 leading-relaxed">Business needs change regularly. Solutions must be customizable and built from day one in a way that makes later upgrades a breeze.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="border-t border-void-800">
+            <div class="max-w-6xl mx-auto px-5 py-24 sm:py-32 text-center">
+                <p class="font-mono text-volt text-sm mb-4 m-reveal">so now what?</p>
+                <h2 class="text-4xl sm:text-6xl font-bold text-void-100 tracking-tight m-reveal">Let's build something<br/><span class="text-volt">worth shipping.</span></h2>
+                <p class="mt-6 text-void-400 max-w-md mx-auto m-reveal">If you think I can help your project or organization, reach out!</p>
+                <div class="mt-10 flex flex-wrap justify-center gap-4 m-reveal">
+                    <a href="mailto:matt@msb.dev" class="px-7 py-3.5 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">matt@msb.dev</a>
+                    <a href="https://github.com/mattburlage" target="_blank" rel="noopener" class="px-7 py-3.5 border border-void-700 text-void-200 rounded hover:border-volt/50 hover:text-void-100 transition-colors cursor-pointer">github.com/mattburlage</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-void-800 relative z-10">
+        <div class="max-w-6xl mx-auto px-5 py-8 flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-void-400">
+            <p>&copy; 2026 Matt Smith Burlage</p>
+            <button data-ide-open class="text-volt hover:underline cursor-pointer">$ enter dev mode</button>
+        </div>
+    </footer>
+</div>
+
+<!-- ==================== IDE MODE ==================== -->
+<div id="ide" class="font-mono text-sm bg-void-950 relative z-10" role="dialog" aria-modal="true" aria-label="Developer mode: IDE view of this site">
+    <div class="h-full flex flex-col">
+
+        <!-- Title bar -->
+        <div class="ide-titlebar flex items-center gap-3 px-4 h-10 bg-void-900 border-b border-void-700 shrink-0">
+            <div class="flex gap-1.5">
+                <button data-ide-close class="w-3 h-3 rounded-full bg-[#ff5f57] hover:brightness-125 cursor-pointer" title="Exit dev mode" aria-label="Close dev mode"></button>
+                <button data-ide-close class="w-3 h-3 rounded-full bg-[#febc2e] hover:brightness-125 cursor-pointer" title="Exit dev mode" aria-label="Minimize dev mode"></button>
+                <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true"></span>
+            </div>
+            <p class="flex-1 text-center text-xs text-void-400 truncate">matthew smith burlage</p>
+            <a href="mailto:matt@msb.dev" class="text-xs text-volt hover:underline cursor-pointer hidden sm:inline">matt@msb.dev</a>
+        </div>
+
+        <!-- Workbench -->
+        <div class="flex-1 flex min-h-0">
+            <aside class="ide-sidebar w-52 lg:w-60 bg-void-900 border-r border-void-700 shrink-0 hidden md:flex flex-col" aria-label="File explorer">
+                <p class="px-4 pt-4 pb-2 text-[10px] tracking-widest text-void-400">EXPLORER</p>
+                <p class="px-4 pb-1 text-xs text-void-400 flex items-center gap-1.5">
+                    <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 4l4 4-4 4V4z" transform="rotate(90 8 8)"/></svg>
+                    MATTHEW
+                </p>
+                <nav id="tree" class="flex-1 overflow-y-auto pb-4">
+                    <button data-file="readme" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-syn-fn">M↓</span><span class="tree-name">README.md</span>
+                    </button>
+                    <button data-file="experience" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-syn-fn">TS</span><span class="tree-name">experience.ts</span>
+                    </button>
+                    <button data-file="projects" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-syn-fn">M↓</span><span class="tree-name">projects.md</span>
+                    </button>
+                    <button data-file="skills" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-syn-num">{}</span><span class="tree-name">skills.json</span>
+                    </button>
+                    <button data-file="principles" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-syn-fn">M↓</span><span class="tree-name">principles.md</span>
+                    </button>
+                    <button data-file="contact" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-volt">$</span><span class="tree-name">contact.sh</span>
+                    </button>
+                </nav>
+                <div class="px-4 py-3 border-t border-void-700 text-[10px] text-void-500 leading-relaxed">
+                    try <span class="text-volt">help</span> in the terminal below
+                </div>
+            </aside>
+
+            <div class="flex-1 flex flex-col min-w-0">
+                <div id="tabs" class="flex bg-void-900 border-b border-void-700 overflow-x-auto shrink-0" role="tablist">
+                    <button data-file="readme" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">README.md</button>
+                    <button data-file="experience" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">experience.ts</button>
+                    <button data-file="projects" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">projects.md</button>
+                    <button data-file="skills" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">skills.json</button>
+                    <button data-file="principles" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">principles.md</button>
+                    <button data-file="contact" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">contact.sh</button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto min-h-0" id="editor">
+
+                    <article id="pane-readme" class="file-pane active max-w-3xl px-6 sm:px-10 py-8 font-display">
+                        <h1 class="text-3xl font-bold text-void-100">Matthew Smith Burlage</h1>
+                        <p class="mt-1 text-volt font-mono text-sm">Senior Software Engineer &amp; Team Leader</p>
+                        <hr class="my-6 border-void-700"/>
+                        <p class="leading-relaxed text-void-200">
+                            I build secure software that removes duplicate work, bad processes, and waste —
+                            and I lead the teams that ship it.
+                        </p>
+                        <p class="mt-4 leading-relaxed text-void-400">
+                            Most recently, I served as second in command for a team of five developers at
+                            Incyte Studios, where I added Okta to our client login, led the kickoff for a
+                            Salesforce integration with our ERP service, and handled the maintenance and
+                            feature development for a technician dispatching web and mobile app. Before that,
+                            I built Hall County Government's Enterprise Application Development division from
+                            the ground up.
+                        </p>
+                        <div class="mt-8 flex flex-wrap gap-3 font-mono text-xs">
+                            <button data-open="experience" class="px-4 py-2 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">open experience.ts</button>
+                            <button data-open="projects" class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">open projects.md</button>
+                            <button data-open="contact" class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">open contact.sh</button>
+                        </div>
+                    </article>
+
+                    <div id="pane-experience" class="file-pane px-6 sm:px-10 py-8">
+                        <pre class="text-xs sm:text-sm leading-[1.8] overflow-x-auto"><code><span class="text-syn-cm">// experience.ts — reverse chronological</span>
+
+<span class="text-syn-kw">export const</span> incyteStudios = {
+  role: <span class="text-syn-str">"Senior Software Engineer"</span>,
+  since: <span class="text-syn-num">2021</span>,
+  highlights: [
+    <span class="text-syn-str">"Second in command for a team of five developers"</span>,
+    <span class="text-syn-str">"Added Okta to the client login system"</span>,
+    <span class="text-syn-str">"Led the kickoff for a Salesforce integration with our ERP service"</span>,
+    <span class="text-syn-str">"Solo maintenance + feature dev for a technician dispatching web & mobile app"</span>,
+  ],
+};
+
+<span class="text-syn-kw">export const</span> hallCounty = {
+  role: <span class="text-syn-str">"Senior Software Developer"</span>,
+  since: <span class="text-syn-num">2019</span>,
+  highlights: [
+    <span class="text-syn-str">"Started a new Enterprise Application Development division from the ground up"</span>,
+    <span class="text-syn-str">"Led development of systems for Agenda, Personnel, Fleet, Finance, Policies, and IT Access"</span>,
+    <span class="text-syn-str">"Managed and guided non-senior developers toward business and career goals"</span>,
+    <span class="text-syn-str">"Made foundational decisions on tools, design paradigms, methodology, and stack"</span>,
+    <span class="text-syn-str">"Oversaw timelines, goals, and sprints for scrum development"</span>,
+    <span class="text-syn-str">"Installed, configured, and managed CI/CD across dev, staging, and production"</span>,
+  ],
+};</code></pre>
+                        <p class="mt-6 text-xs text-syn-cm">// try <button data-run='msb.experience()' class="text-volt hover:underline cursor-pointer">msb.experience()</button> in the terminal below</p>
+                    </div>
+
+                    <article id="pane-projects" class="file-pane max-w-3xl px-6 sm:px-10 py-8 font-display">
+                        <h1 class="text-2xl font-bold text-void-100 mb-6">Projects</h1>
+                        <div class="space-y-6">
+                            <div class="border-l-2 border-volt pl-4">
+                                <h2 class="font-semibold text-void-100">Technician Dispatch App <span class="font-mono text-xs text-void-400 ml-1">web · mobile</span></h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Dispatching platform for field technicians. Solely responsible for maintenance and new feature development — from bug triage to shipping entire features end to end.</p>
+                            </div>
+                            <div class="border-l-2 border-void-700 pl-4">
+                                <h2 class="font-semibold text-void-100">Agenda Management <span class="font-mono text-xs text-void-400 ml-1">React · Django · PostgreSQL</span></h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Helps local governments manage meetings: approval workflows, minutes capture, and publication.</p>
+                            </div>
+                            <div class="border-l-2 border-void-700 pl-4">
+                                <h2 class="font-semibold text-void-100">Forms Portal <span class="font-mono text-xs text-void-400 ml-1">React · Django · PostgreSQL</span></h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Dynamic form platform with configurable workflows — new form-based apps in hours instead of weeks.</p>
+                            </div>
+                            <div class="border-l-2 border-void-700 pl-4">
+                                <h2 class="font-semibold text-void-100">Position Control <span class="font-mono text-xs text-void-400 ml-1">React · Django · SQL Server</span></h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Budgeted positions, employee records, and labor budget forecasting for HR and Finance.</p>
+                            </div>
+                            <div class="border-l-2 border-void-700 pl-4">
+                                <h2 class="font-semibold text-void-100">create-django-react-app
+                                    <a class="font-mono text-xs text-syn-fn hover:underline ml-1 cursor-pointer" target="_blank" rel="noopener" href="https://pypi.org/project/create-django-react-app/">pypi</a>
+                                    <a class="font-mono text-xs text-syn-fn hover:underline ml-1 cursor-pointer" target="_blank" rel="noopener" href="https://github.com/mattburlage/create-django-react-app">github</a>
+                                </h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Open-source scaffolding for Django + React apps with DRF, JWT login, and CORS handling.</p>
+                            </div>
+                            <div class="border-l-2 border-void-700 pl-4">
+                                <h2 class="font-semibold text-void-100">SmartBackup
+                                    <a class="font-mono text-xs text-syn-fn hover:underline ml-1 cursor-pointer" target="_blank" rel="noopener" href="https://github.com/mattburlage/smart_backup">github</a>
+                                </h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Open-source PostgreSQL backup manager: recurring backups with dynamic consolidation.</p>
+                            </div>
+                            <div class="border-l-2 border-void-700 pl-4">
+                                <h2 class="font-semibold text-void-100">NertzBoard
+                                    <a class="font-mono text-xs text-syn-fn hover:underline ml-1 cursor-pointer" target="_blank" rel="noopener" href="https://www.nertzboard.com">live</a>
+                                    <a class="font-mono text-xs text-syn-fn hover:underline ml-1 cursor-pointer" target="_blank" rel="noopener" href="https://github.com/mattburlage/nertzboard">github</a>
+                                </h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Real-time scoreboard for the card game Nertz — live scores, history, and game rooms.</p>
+                            </div>
+                            <div class="border-l-2 border-void-700 pl-4">
+                                <h2 class="font-semibold text-void-100">Five Star Ordering <span class="font-mono text-xs text-void-400 ml-1">React · Django · Stripe</span></h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Restaurant delivery and pickup ordering with Stripe payments; new locations added quickly.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <div id="pane-skills" class="file-pane px-6 sm:px-10 py-8">
+                        <pre class="text-xs sm:text-sm leading-[1.8] overflow-x-auto"><code>{
+  <span class="text-syn-fn">"frontend"</span>:  [<span class="text-syn-str">"React"</span>, <span class="text-syn-str">"Redux"</span>, <span class="text-syn-str">"React Router"</span>],
+  <span class="text-syn-fn">"backend"</span>:   [<span class="text-syn-str">"Python"</span>, <span class="text-syn-str">"Django"</span>, <span class="text-syn-str">"DRF"</span>, <span class="text-syn-str">"Flask"</span>],
+  <span class="text-syn-fn">"data"</span>:      [<span class="text-syn-str">"PostgreSQL"</span>, <span class="text-syn-str">"MS SQL"</span>, <span class="text-syn-str">"MySQL"</span>],
+  <span class="text-syn-fn">"auth"</span>:      [<span class="text-syn-str">"Okta"</span>, <span class="text-syn-str">"JWT"</span>, <span class="text-syn-str">"Active Directory"</span>],
+  <span class="text-syn-fn">"infra"</span>:     [<span class="text-syn-str">"Docker"</span>, <span class="text-syn-str">"IIS"</span>, <span class="text-syn-str">"CI/CD"</span>],
+  <span class="text-syn-fn">"tools"</span>:     [<span class="text-syn-str">"Git"</span>, <span class="text-syn-str">"Jira"</span>, <span class="text-syn-str">"Sentry"</span>],
+  <span class="text-syn-fn">"education"</span>: <span class="text-syn-str">"BS, Computer Science — University of North Georgia"</span>
+}</code></pre>
+                        <p class="mt-6 text-xs text-syn-cm">// deep-dive any of these: <button data-run='msb.reveal()' class="text-volt hover:underline cursor-pointer">msb.reveal()</button></p>
+                    </div>
+
+                    <article id="pane-principles" class="file-pane max-w-3xl px-6 sm:px-10 py-8 font-display">
+                        <h1 class="text-2xl font-bold text-void-100 mb-6">How I build</h1>
+                        <div class="space-y-6">
+                            <div>
+                                <h2 class="font-semibold text-void-100"><span class="text-volt font-mono">1.</span> Security First</h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">The value of data is ever-increasing. Any system should consider security from the outset — from design through implementation and maintenance. No system is worth a penny if it is insecure.</p>
+                            </div>
+                            <div>
+                                <h2 class="font-semibold text-void-100"><span class="text-volt font-mono">2.</span> Ease of Use</h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Users should be able to focus on their work, not on learning new systems. All a user needs to know is their end goal — the system should put the right information in front of whoever needs it.</p>
+                            </div>
+                            <div>
+                                <h2 class="font-semibold text-void-100"><span class="text-volt font-mono">3.</span> Embrace and Prepare for Change</h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Business needs change regularly. Solutions must be customizable and built from day one in a way that makes later upgrades a breeze.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <div id="pane-contact" class="file-pane px-6 sm:px-10 py-8">
+                        <pre class="text-xs sm:text-sm leading-[1.8] overflow-x-auto"><code><span class="text-syn-cm">#!/bin/sh</span>
+<span class="text-syn-cm"># if you think I can help your project or organization, reach out</span>
+
+<span class="text-syn-fn">echo</span> <span class="text-syn-str">"email:  matt@msb.dev"</span>
+<span class="text-syn-fn">echo</span> <span class="text-syn-str">"github: github.com/mattburlage"</span>
+<span class="text-syn-fn">echo</span> <span class="text-syn-str">"web:    www.msb.dev"</span></code></pre>
+                        <div class="mt-8 flex flex-wrap gap-3 font-mono text-xs">
+                            <a href="mailto:matt@msb.dev" class="px-4 py-2 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">matt@msb.dev</a>
+                            <a href="https://github.com/mattburlage" target="_blank" rel="noopener" class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">github.com/mattburlage</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal -->
+        <div class="ide-terminal h-48 sm:h-52 bg-void-900 border-t border-void-700 shrink-0 flex flex-col">
+            <div class="flex items-center gap-4 px-4 py-1.5 border-b border-void-700 text-[10px] tracking-widest text-void-400 shrink-0">
+                <span class="text-void-200 border-b border-volt pb-1 -mb-[7px]">TERMINAL</span>
+                <span class="ml-auto flex flex-wrap gap-1.5">
+                    <button data-run="msb.reveal()" class="px-2 py-0.5 rounded border border-void-700 text-void-400 hover:text-volt hover:border-volt/40 transition-colors cursor-pointer normal-case tracking-normal font-mono">msb.reveal()</button>
+                    <button data-run="ls()" class="px-2 py-0.5 rounded border border-void-700 text-void-400 hover:text-volt hover:border-volt/40 transition-colors cursor-pointer normal-case tracking-normal font-mono">ls()</button>
+                    <button data-run="help" class="px-2 py-0.5 rounded border border-void-700 text-void-400 hover:text-volt hover:border-volt/40 transition-colors cursor-pointer normal-case tracking-normal font-mono">help</button>
+                </span>
+            </div>
+            <div id="repl-out" class="flex-1 overflow-y-auto px-4 py-2 text-xs leading-relaxed" aria-live="polite"></div>
+            <div class="flex items-center gap-2 px-4 py-2 border-t border-void-700 shrink-0">
+                <span class="text-xs text-volt select-none" aria-hidden="true">msb.dev &gt;</span>
+                <input id="repl-in" type="text" autocomplete="off" spellcheck="false"
+                    class="flex-1 bg-transparent text-xs text-void-100 placeholder-void-500 focus:outline-none"
+                    placeholder='msb.reveal() — or "help"' aria-label="Interactive JavaScript console. Type help for commands."/>
+            </div>
+        </div>
+
+        <!-- Status bar -->
+        <div class="flex items-center gap-4 px-4 h-6 bg-void-900 border-t border-void-700 text-[10px] text-void-400 shrink-0 overflow-x-auto">
+            <span class="flex items-center gap-1 text-volt whitespace-nowrap">
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 3 2.122V6A2.5 2.5 0 0 1 10 8.5H6a1 1 0 0 0-1 1v1.128a2.251 2.251 0 1 1-1.5 0V5.372a2.25 2.25 0 1 1 1.5 0v1.836A2.493 2.493 0 0 1 6 7h4a1 1 0 0 0 1-1v-.628A2.25 2.25 0 0 1 9.5 3.25Zm-6 0a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Zm.75 8.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z"/></svg>
+                main
+            </span>
+            <span id="status-file" class="whitespace-nowrap">README.md</span>
+            <span class="ml-auto whitespace-nowrap">UTF-8</span>
+            <span class="whitespace-nowrap">zero build step</span>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { animate, inView, stagger, scroll } from "https://cdn.jsdelivr.net/npm/motion@10.18.0/+esm";
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fine = window.matchMedia('(pointer: fine)').matches;
+
+    // ---------- Skills marquee (built from one list, duplicated for the loop) ----------
+    const SKILL_TAGS = ['React', 'Redux', 'Python', 'Django', 'DRF', 'Flask', 'PostgreSQL', 'MS SQL', 'MySQL',
+        'Okta', 'JWT', 'Active Directory', 'Docker', 'IIS', 'CI/CD', 'Git', 'Jira', 'Sentry'];
+    const track = document.getElementById('marquee-track');
+    if (track) {
+        for (let copy = 0; copy < 2; copy++) {
+            SKILL_TAGS.forEach((s) => {
+                const el = document.createElement('span');
+                el.className = 'px-4 py-2 border border-void-700 rounded bg-void-900 whitespace-nowrap';
+                el.textContent = s;
+                track.appendChild(el);
+            });
+        }
+    }
+
+    // ---------- Accent color picker ----------
+    const ACCENTS = [
+        { name: 'lime', hex: '#a3e635', dim: '#65a30d', rgb: '163, 230, 53' },
+        { name: 'blue', hex: '#3b82f6', dim: '#2563eb', rgb: '59, 130, 246' },
+        { name: 'purple', hex: '#a855f7', dim: '#9333ea', rgb: '168, 85, 247' },
+        { name: 'pink', hex: '#ec4899', dim: '#db2777', rgb: '236, 72, 153' },
+        { name: 'red', hex: '#ef4444', dim: '#dc2626', rgb: '239, 68, 68' },
+        { name: 'orange', hex: '#f97316', dim: '#ea580c', rgb: '249, 115, 22' },
+        { name: 'amber', hex: '#f59e0b', dim: '#d97706', rgb: '245, 158, 11' },
+        { name: 'emerald', hex: '#10b981', dim: '#059669', rgb: '16, 185, 129' },
+        { name: 'teal', hex: '#14b8a6', dim: '#0d9488', rgb: '20, 184, 166' },
+        { name: 'cyan', hex: '#06b6d4', dim: '#0891b2', rgb: '6, 182, 212' },
+        { name: 'indigo', hex: '#6366f1', dim: '#4f46e5', rgb: '99, 102, 241' },
+        { name: 'violet', hex: '#8b5cf6', dim: '#7c3aed', rgb: '139, 92, 246' },
+        { name: 'rose', hex: '#f43f5e', dim: '#e11d48', rgb: '244, 63, 94' },
+        { name: 'sky', hex: '#0ea5e9', dim: '#0284c7', rgb: '14, 165, 233' },
+        { name: 'slate', hex: '#94a3b8', dim: '#64748b', rgb: '148, 163, 184' },
+    ];
+
+    const accentPicker = document.getElementById('accent-picker');
+
+    function setAccent(accent) {
+        document.documentElement.style.setProperty('--accent', accent.hex);
+        document.documentElement.style.setProperty('--accent-dim', accent.dim);
+        document.documentElement.style.setProperty('--accent-rgb', accent.rgb);
+        localStorage.setItem('msb-accent', JSON.stringify(accent));
+    }
+
+    // Wire up static picker buttons
+    if (accentPicker) {
+        accentPicker.querySelectorAll('[data-accent]').forEach((wrapper) => {
+            const accentName = wrapper.dataset.accent;
+            const accent = ACCENTS.find((a) => a.name === accentName);
+            if (!accent) return;
+
+            const btn = wrapper.querySelector('button');
+            btn.addEventListener('click', () => setAccent(accent));
+        });
+    }
+
+    // Load saved accent (also re-applied here in case the head-script pre-paint pass was skipped)
+    try {
+        const saved = JSON.parse(localStorage.getItem('msb-accent') || 'null');
+        const accent = saved && ACCENTS.find((a) => a.name === saved.name);
+        if (accent) setAccent(accent);
+    } catch (e) {}
+
+    // ---------- IDE mode toggle ----------
+    const body = document.body;
+    function enterIDE() {
+        body.classList.add('ide-mode');
+        localStorage.setItem('msb-mode', 'ide');
+        setTimeout(() => document.getElementById('repl-in').focus(), reduced ? 0 : 550);
+    }
+    function exitIDE() {
+        body.classList.remove('ide-mode');
+        localStorage.setItem('msb-mode', 'site');
+    }
+    document.querySelectorAll('[data-ide-open]').forEach((el) => el.addEventListener('click', enterIDE));
+    document.querySelectorAll('[data-ide-close]').forEach((el) => el.addEventListener('click', exitIDE));
+    window.addEventListener('keydown', (e) => {
+        if (e.key === '.' && !e.ctrlKey && !e.metaKey && !e.altKey && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+            body.classList.contains('ide-mode') ? exitIDE() : enterIDE();
+            e.preventDefault();
+        }
+        if (e.key === 'Escape' && body.classList.contains('ide-mode')) exitIDE();
+    });
+    if (localStorage.getItem('msb-mode') === 'ide') body.classList.add('ide-mode');
+
+    // ---------- IDE: files ----------
+    const FILE_NAMES = {
+        readme: 'README.md', experience: 'experience.ts', projects: 'projects.md',
+        skills: 'skills.json', principles: 'principles.md', contact: 'contact.sh',
+    };
+    function openFile(id) {
+        if (!FILE_NAMES[id]) return false;
+        document.querySelectorAll('.file-pane').forEach((p) => p.classList.toggle('active', p.id === 'pane-' + id));
+        document.querySelectorAll('#tabs .tab, #tree .tree-item').forEach((el) =>
+            el.classList.toggle('active', el.dataset.file === id));
+        document.getElementById('status-file').textContent = FILE_NAMES[id];
+        document.getElementById('editor').scrollTop = 0;
+        return true;
+    }
+    document.querySelectorAll('[data-file]').forEach((el) =>
+        el.addEventListener('click', () => openFile(el.dataset.file)));
+    document.querySelectorAll('[data-open]').forEach((el) =>
+        el.addEventListener('click', () => openFile(el.dataset.open)));
+    openFile('readme');
+
+    // ---------- Terminal: real JS console ----------
+    const SKILLS = {
+        okta: { tag: 'auth / SSO', text: 'At Incyte Studios I added Okta to the client login — bringing single sign-on to the client portal and tightening the authentication story without disrupting existing users.' },
+        react: { tag: 'frontend', text: 'React has been my front end of choice since 2019 — agenda management for local government, a dynamic forms platform, and a technician dispatch app all shipped on React (plus Redux and React Router).' },
+        django: { tag: 'backend', text: 'Django and DRF sit behind almost everything I have shipped: government agenda workflows, HR position control, form platforms, and REST APIs consumed by web and mobile clients.' },
+        databases: { tag: 'data', text: 'PostgreSQL, MS SQL, and MySQL in production. I also wrote SmartBackup, an open-source PostgreSQL backup manager that automates recurring backups with dynamic consolidation.' },
+        leadership: { tag: 'teams', text: 'Second in command for a team of five devs at Incyte Studios. Before that I started Hall County\'s Enterprise Application Development division from the ground up and mentored its developers.' },
+        mobile: { tag: 'web + mobile', text: 'I handled maintenance and feature development solo for a technician dispatching app across web and mobile — triage, architecture, and shipping features end to end.' },
+        integrations: { tag: 'systems', text: 'Led the kickoff for a Salesforce integration with our ERP service at Incyte — scoping, architecture, and getting the project moving. Earlier: deep Active Directory automation at Hall County.' },
+        cicd: { tag: 'devops', text: 'Installed, configured, and managed CI/CD across development, staging, and production environments — plus Docker, IIS deployments, and Sentry for error tracking.' },
+        automation: { tag: 'philosophy', text: 'My favorite thing to kill is duplicate work. The forms platform I built lets the team spin up a new form-based app in hours instead of weeks. If a process is done twice, I automate it.' },
+    };
+
+    const out = document.getElementById('repl-out');
+    const input = document.getElementById('repl-in');
+    if (!out || !input) {
+        // IDE elements don't exist, skip IDE initialization
+    } else {
+    let lastReveal = null;
+    let history = [];
+    let histIdx = -1;
+
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+    function print(html, cls = 'text-void-200') {
+        const line = document.createElement('div');
+        line.className = cls + ' whitespace-pre-wrap break-words py-0.5';
+        out.appendChild(line);
+        if (reduced) {
+            line.innerHTML = html;
+            out.scrollTop = out.scrollHeight;
+        } else {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            const full = tmp.textContent;
+            let i = 0;
+            const step = () => {
+                i += 3;
+                line.textContent = full.slice(0, i);
+                out.scrollTop = out.scrollHeight;
+                if (i < full.length) requestAnimationFrame(step);
+                else { line.innerHTML = html; out.scrollTop = out.scrollHeight; }
+            };
+            step();
+        }
+    }
+
+    window.msb = {
+        name: 'Matthew Smith Burlage',
+        role: 'Senior Software Engineer & Team Leader',
+        since: 2019,
+        systems: 10,
+        frontend: ['React', 'Vue', 'React Native'],
+        backend: ['Django', 'Node'],
+        db: ['PostgreSQL', 'SQL Server', 'Hasura'],
+        securityFirst: true,
+        skills() { return Object.keys(SKILLS); },
+        contact() { return 'matt@msb.dev · github.com/mattburlage'; },
+        reveal(skill) {
+            let k = skill && SKILLS[skill] ? skill : null;
+            if (!k) {
+                const keys = Object.keys(SKILLS).filter((s) => s !== lastReveal);
+                k = keys[Math.floor(Math.random() * keys.length)];
+            }
+            lastReveal = k;
+            print('<b class="text-volt">' + k + '</b> <span class="text-void-500">[' + SKILLS[k].tag + ']</span> ' + esc(SKILLS[k].text));
+        },
+        experience() {
+            return [
+                { company: 'Incyte Studios', role: 'Senior Software Engineer', since: 2021 },
+                { company: 'Hall County Government', role: 'Senior Software Developer', since: 2019 },
+            ];
+        },
+        contact() {
+            print('<a class="text-volt underline cursor-pointer" href="mailto:matt@msb.dev">matt@msb.dev</a> · <a class="text-volt underline cursor-pointer" target="_blank" rel="noopener" href="https://github.com/mattburlage">github.com/mattburlage</a>');
+        },
+    };
+    window.ls = () => Object.values(FILE_NAMES);
+    function resolveFile(f) {
+        return Object.keys(FILE_NAMES).find((k) => FILE_NAMES[k] === f || k === String(f).replace(/\.\w+$/, ''));
+    }
+    window.openTab = (f) => {
+        const id = resolveFile(f);
+        if (id) { openFile(id); return FILE_NAMES[id]; }
+        throw new Error('openTab(file) — try one of: ' + Object.values(FILE_NAMES).join(', '));
+    };
+    window.open_ = window.open;
+    window.open = (f) => {
+        if (typeof f === 'string') {
+            const id = resolveFile(f);
+            if (id) { openFile(id); return FILE_NAMES[id]; }
+            if (/^https?:\/\//.test(f)) return window.open_(f);
+        }
+        throw new Error('open(file) — try one of: ' + Object.values(FILE_NAMES).join(', '));
+    };
+
+    function format(v) {
+        if (v === undefined) return '<span class="text-void-500">undefined</span>';
+        if (v === null) return '<span class="text-void-500">null</span>';
+        if (typeof v === 'string') return '<span class="text-syn-str">\'' + esc(v) + '\'</span>';
+        if (typeof v === 'number' || typeof v === 'boolean') return '<span class="text-syn-num">' + v + '</span>';
+        if (typeof v === 'function') return '<span class="text-void-400">ƒ ' + esc(v.name || 'anonymous') + '()</span>';
+        try { return esc(JSON.stringify(v, null, 1).replace(/\n\s*/g, ' ')); }
+        catch { return esc(String(v)); }
+    }
+
+    function run(raw) {
+        const cmd = raw.trim();
+        if (!cmd) return;
+        print('<span class="text-volt">&gt;</span> <span class="text-void-400">' + esc(cmd) + '</span>', 'text-void-400');
+        history.unshift(cmd);
+        histIdx = -1;
+
+        const bare = cmd.toLowerCase().replace(/[();\s]/g, '');
+        if (bare === 'help' || bare === '?') {
+            print('msb.reveal()          <span class="text-void-500">// random deep-dive on a skill</span>');
+            print('msb.reveal("react")   <span class="text-void-500">// a specific one</span>');
+            print('msb.experience()      <span class="text-void-500">// work history</span>');
+            print('msb.contact()         <span class="text-void-500">// matt@msb.dev · github.com/mattburlage</span>');
+            print('ls()                        <span class="text-void-500">// list files</span>');
+            print('open("experience.ts")       <span class="text-void-500">// open a file in the editor</span>');
+            print('exit                      <span class="text-void-500">// back to the normal site</span>');
+            print('<span class="text-void-500">...or any JavaScript. This is a real console.</span>', 'text-void-500');
+            return;
+        }
+        if (bare === 'clear' || bare === 'cls') { out.innerHTML = ''; return; }
+        if (bare === 'exit' || bare === 'quit' || bare === 'q') { exitIDE(); return; }
+
+        const fmtArgs = (args) => args.map((a) => typeof a === 'string' ? esc(a) : format(a)).join(' ');
+        const replConsole = {
+            ...window.console,
+            log: (...a) => { window.console.log(...a); print(fmtArgs(a)); },
+            info: (...a) => { window.console.info(...a); print(fmtArgs(a)); },
+            warn: (...a) => { window.console.warn(...a); print(fmtArgs(a), 'text-yellow-400'); },
+            error: (...a) => { window.console.error(...a); print(fmtArgs(a), 'text-red-400'); },
+        };
+        try {
+            const result = new Function('console', '"use strict"; return (' + cmd + ');')(replConsole);
+            print(format(result));
+        } catch (e1) {
+            try {
+                const result = new Function('console', '"use strict"; ' + cmd)(replConsole);
+                print(format(result));
+            } catch (e2) {
+                print('<span class="text-red-400">' + esc(e2.name) + ':</span> ' + esc(e2.message), 'text-void-400');
+            }
+        }
+    }
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { run(input.value); input.value = ''; }
+        else if (e.key === 'ArrowUp') {
+            if (histIdx < history.length - 1) { histIdx++; input.value = history[histIdx]; }
+            e.preventDefault();
+        } else if (e.key === 'ArrowDown') {
+            if (histIdx > 0) { histIdx--; input.value = history[histIdx]; }
+            else { histIdx = -1; input.value = ''; }
+            e.preventDefault();
+        }
+    });
+    document.querySelectorAll('[data-run]').forEach((el) =>
+        el.addEventListener('click', () => { run(el.dataset.run); input.focus(); }));
+
+    print('<span class="text-void-500">Type</span> <b class="text-volt">help</b> <span class="text-void-500">for commands, or</span> <b class="text-volt">exit</b> <span class="text-void-500">to leave.</span>', 'text-void-500');
+    }
+
+    // ---------- Normal-site animations ----------
+    if (reduced) {
+        document.documentElement.classList.add('reduced-motion');
+    } else {
+        try {
+            animate('[data-hero]', { opacity: [0, 1], y: [28, 0] },
+                { duration: 0.7, delay: stagger(0.13), easing: [0.22, 1, 0.36, 1] });
+        } catch (e) {
+            console.warn('Hero animation error:', e);
+        }
+
+        const CHARS = '!<>-_\\/[]{}—=+*^?#ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        function scramble(el, delay = 0) {
+            if (!el) return;
+            const target = el.dataset.text;
+            let frame = 0;
+            const totalFrames = target.length * 3 + 12;
+            setTimeout(() => {
+                const tick = () => {
+                    let o = '';
+                    for (let i = 0; i < target.length; i++) {
+                        const revealAt = i * 3 + 8;
+                        o += frame >= revealAt ? target[i] : CHARS[Math.floor(Math.random() * CHARS.length)];
+                    }
+                    el.textContent = o;
+                    if (frame++ < totalFrames) requestAnimationFrame(tick);
+                    else el.textContent = target;
+                };
+                tick();
+            }, delay);
+        }
+        scramble(document.getElementById('scramble-1'), 150);
+        scramble(document.getElementById('scramble-2'), 350);
+        scramble(document.getElementById('scramble-3'), 550);
+
+        document.querySelectorAll('[data-count]').forEach((el) => {
+            try {
+                const target = parseInt(el.dataset.count, 10);
+                animate(0, target, {
+                    duration: 1.4,
+                    delay: 0.8,
+                    ease: [0.22, 1, 0.36, 1],
+                    onUpdate: (latest) => { el.textContent = Math.round(latest); }
+                });
+            } catch (e) {
+                console.warn('Count animation error:', e);
+            }
+        });
+
+        // Stat card interactions
+        const statData = {
+            all: [
+                { name: 'Position Control', weight: 85 },
+                { name: 'IT Access Management', weight: 80 },
+                { name: 'Agenda Publishing', weight: 75 },
+                { name: 'Technician Dispatch', weight: 88 },
+                { name: 'Service Orders & ERP', weight: 92 },
+                { name: 'Request for Proposals', weight: 70 },
+                { name: 'Video Production Suite', weight: 78 },
+                { name: 'Incident Management', weight: 82 },
+                { name: 'Time & Attendance', weight: 85 },
+                { name: 'Financial Records', weight: 90 },
+                { name: 'Invoice Lifecycle Management', weight: 88 },
+                { name: 'Contract Lifecycle Management', weight: 86 },
+                { name: 'Okta', weight: 75 },
+                { name: 'Entra SSO', weight: 78 },
+                { name: 'Technician Risk Management', weight: 72 },
+                { name: 'SalesForce', weight: 80 },
+                { name: 'Enterprise Resource Planning', weight: 95 },
+                { name: 'Video Post Production', weight: 70 },
+                { name: 'Employee Onboarding', weight: 82 }
+            ],
+            systems: [
+                { name: 'Position Control', weight: 85 },
+                { name: 'IT Access Management', weight: 80 },
+                { name: 'Agenda Publishing', weight: 75 },
+                { name: 'Technician Dispatch', weight: 88 },
+                { name: 'Service Orders & ERP', weight: 92 },
+                { name: 'Request for Proposals', weight: 70 },
+                { name: 'Video Production Suite', weight: 78 },
+                { name: 'Incident Management', weight: 82 },
+                { name: 'Time & Attendance', weight: 85 },
+                { name: 'Financial Records', weight: 90 },
+                { name: 'Invoice Lifecycle Management', weight: 88 },
+                { name: 'Contract Lifecycle Management', weight: 86 }
+            ],
+            integrations: [
+                { name: 'Okta', weight: 75 },
+                { name: 'Entra SSO', weight: 78 },
+                { name: 'Technician Risk Management', weight: 72 },
+                { name: 'SalesForce', weight: 80 },
+                { name: 'Enterprise Resource Planning', weight: 95 },
+                { name: 'Video Post Production', weight: 70 },
+                { name: 'Employee Onboarding', weight: 82 }
+            ]
+        };
+
+        // Calculate years since 2019
+        const yearsSince2019 = new Date().getFullYear() - 2019;
+        const yearsCount = document.getElementById('years-count');
+        if (yearsCount) {
+            yearsCount.textContent = yearsSince2019;
+        }
+
+        const bentoRowContent = document.getElementById('bento-row-content');
+        if (!bentoRowContent) {
+            // Skip bento row logic if element doesn't exist
+        } else {
+            let bentoRowTimers = [];
+
+            const BENTO_ROW_VISIBLE = 3;
+
+            function clearBentoRowTimers() {
+                bentoRowTimers.forEach((t) => clearTimeout(t));
+                bentoRowTimers = [];
+            }
+
+            function fillBentoFace(face, item, number) {
+                face.querySelector('[data-num]').textContent = String(number).padStart(2, '0');
+                face.querySelector('[data-name]').textContent = item.name;
+            }
+
+            // Each slot holds two stacked faces and crossfades between them:
+            // the incoming item fades in while the outgoing item fades out
+            // simultaneously, on the slot's own randomized schedule.
+            function scheduleBentoSlot(slot, items) {
+                const nextDelay = () => 2200 + Math.random() * 3800; // 2.2s–6s between swaps
+
+                const tick = () => {
+                    // Advance this slot to its next item (each slot walks the list by step)
+                    slot.pointer = (slot.pointer + BENTO_ROW_VISIBLE) % items.length;
+                    const item = items[slot.pointer];
+
+                    const incoming = slot.faces[1 - slot.active];
+                    const outgoing = slot.faces[slot.active];
+
+                    fillBentoFace(incoming, item, slot.pointer + 1);
+                    // Partial crossfade: start the outgoing fade first, then bring the
+                    // incoming in after a short offset so there's a subtle dip between
+                    // items rather than a perfectly seamless dissolve.
+                    outgoing.style.opacity = '0';
+                    bentoRowTimers.push(setTimeout(() => {
+                        incoming.style.opacity = '1';
+                    }, 300));
+                    slot.active = 1 - slot.active;
+
+                    bentoRowTimers.push(setTimeout(tick, nextDelay()));
+                };
+
+                bentoRowTimers.push(setTimeout(tick, nextDelay()));
+            }
+
+            function updateBentoRow(stat) {
+                clearBentoRowTimers();
+                const items = statData[stat];
+
+                const faceClass = 'absolute inset-0 rounded-xl bg-void-900/95 backdrop-blur-sm border border-void-700/50 p-4 flex flex-col justify-between opacity-0 transition-opacity duration-[1200ms] ease-in-out';
+
+                // Build the fixed slots once, each with two stacked faces
+                bentoRowContent.innerHTML = Array.from({ length: BENTO_ROW_VISIBLE }, () => `
+                    <div class="relative">
+                        <div data-face class="${faceClass}">
+                            <div data-num class="text-volt text-xs font-mono"></div>
+                            <div data-name class="font-medium text-void-200 leading-snug"></div>
+                        </div>
+                        <div data-face class="${faceClass}">
+                            <div data-num class="text-volt text-xs font-mono"></div>
+                            <div data-name class="font-medium text-void-200 leading-snug"></div>
+                        </div>
+                    </div>
+                `).join('');
+
+                const slots = Array.from(bentoRowContent.children);
+                slots.forEach((slotEl, i) => {
+                    const faces = Array.from(slotEl.querySelectorAll('[data-face]'));
+                    const slot = { pointer: i % items.length, faces, active: 0 };
+                    fillBentoFace(faces[0], items[slot.pointer], slot.pointer + 1);
+                    // Randomized initial fade-in
+                    bentoRowTimers.push(setTimeout(() => {
+                        faces[0].style.opacity = '1';
+                    }, Math.round(Math.random() * 700)));
+
+                    if (items.length > BENTO_ROW_VISIBLE) {
+                        scheduleBentoSlot(slot, items);
+                    }
+                });
+
+                updateBentoRow('all');
+            }
+        }
+
+        document.querySelectorAll('[data-stagger]').forEach((group) => {
+            try {
+                inView(group, () => {
+                    animate(group.querySelectorAll('.m-reveal'),
+                        { opacity: [0, 1], y: [22, 0] },
+                        { duration: 0.55, delay: stagger(0.08), easing: [0.22, 1, 0.36, 1] });
+                }, { amount: 0.1 });
+            } catch (e) {
+                console.warn('Stagger animation error:', e);
+            }
+        });
+        document.querySelectorAll('.m-reveal:not([data-hero])').forEach((el) => {
+            if (el.closest('[data-stagger]')) return;
+            try {
+                inView(el, () => {
+                    animate(el, { opacity: [0, 1], y: [22, 0] }, { duration: 0.55, easing: [0.22, 1, 0.36, 1] });
+                }, { amount: 0.2 });
+            } catch (e) {
+                console.warn('Reveal animation error:', e);
+            }
+        });
+
+        const progress = document.getElementById('progress');
+        if (progress) {
+            try {
+                scroll(animate('#progress', { scaleX: [0, 1] }));
+            } catch (e) {
+                console.warn('Scroll animation error:', e);
+            }
+        }
+
+        const nav = document.getElementById('nav');
+        if (nav) {
+            window.addEventListener('scroll', () => {
+                nav.classList.toggle('scrolled', window.scrollY > 60);
+            }, { passive: true });
+        }
+
+        if (fine) {
+            document.querySelectorAll('.spot').forEach((card) => {
+                card.addEventListener('pointermove', (e) => {
+                    const r = card.getBoundingClientRect();
+                    card.style.setProperty('--spot-x', (e.clientX - r.left) + 'px');
+                    card.style.setProperty('--spot-y', (e.clientY - r.top) + 'px');
+                    card.style.setProperty('--spot-o', '1');
+                }, { passive: true });
+                card.addEventListener('pointerleave', () => card.style.setProperty('--spot-o', '0'));
+            });
+
+            const mag = document.getElementById('magnetic');
+            if (mag) {
+                mag.addEventListener('pointermove', (e) => {
+                    const r = mag.getBoundingClientRect();
+                    mag.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.25}px, ${(e.clientY - r.top - r.height / 2) * 0.35}px)`;
+                }, { passive: true });
+                mag.addEventListener('pointerleave', () => {
+                    mag.style.transform = '';
+                    mag.style.transition = 'transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)';
+                    setTimeout(() => mag.style.transition = '', 350);
+                });
+            }
+        }
+    }
+</script>
+<noscript>
+    <style>
+        .m-reveal { opacity: 1; }
+        [data-ide-open] { display: none; }
+    </style>
+</noscript>
+</body>
 </html>
