@@ -627,7 +627,9 @@ const bento = {
                 const overscrollT = isOverscroll ? Math.min(-scrollY / 250, 1) : 0;
                 const overscrollEased = overscrollT * (2 - overscrollT); // easeOutQuad
 
-                const scatterDist = scrollT * SCATTER_DISTANCE;
+                // Ease into the explosion so it starts slowly and accelerates as the user scrolls.
+                const easedScrollT = scrollT * scrollT;
+                const scatterDist = easedScrollT * SCATTER_DISTANCE;
                 const pullDist = -overscrollEased * 130;
 
                 for (const dot of dots) {
@@ -639,8 +641,8 @@ const bento = {
                     if (alpha <= 0.01) continue;
 
                     // "Toward the viewer" scaling on normal scroll; slight contraction on overscroll.
-                    const approach = scrollT * dot.depth;
-                    const scale = (1 + approach * 2.2) * (1 - overscrollEased * 0.35);
+                    const approach = easedScrollT * dot.depth;
+                    const scale = (1 + approach * 100.0) * (1 - overscrollEased * 0.35);
                     const explosionFactor = 1 + dot.distFromCenter * 0.003;
                     const displacement = (scatterDist * explosionFactor * scale) + pullDist;
                     const x = dot.x + dot.dirX * displacement;
