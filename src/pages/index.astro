@@ -569,7 +569,7 @@ const bento = {
             const ctx = dotCanvas.getContext('2d');
             const SPACING = 28;
             const BASE_RADIUS = 1.5;
-            const SCATTER_RANGE = 1400; // px of scroll over which dots fully disperse + fade
+            const SCATTER_RANGE = 1900; // px of scroll over which dots fully disperse + fade
             const SCATTER_DISTANCE = 220; // max px a dot drifts from its grid position
             const dpr = Math.min(window.devicePixelRatio || 1, 2);
             let width = 0, height = 0, dots = [];
@@ -696,7 +696,7 @@ const bento = {
                 e.preventDefault();
                 const startY = window.scrollY;
                 const endY = Math.min(target.getBoundingClientRect().top + startY, document.documentElement.scrollHeight - window.innerHeight);
-                const duration = Math.min(3000, 600 + Math.abs(endY - startY) * 0.5);
+                const duration = Math.min(4500, 600 + Math.abs(endY - startY) * 0.75);
                 const t0 = performance.now();
                 let cancelled = false;
                 const cancel = () => { cancelled = true; };
