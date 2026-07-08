@@ -184,7 +184,7 @@ const bento = {
 
         <!-- Experience -->
         <section id="experience" class="border-t border-void-800">
-            <div class="max-w-6xl mx-auto px-5 py-20 sm:py-28">
+            <div class="max-w-6xl mx-auto px-5 pt-20 sm:pt-28 pb-10 sm:pb-16">
                 <div class="flex items-baseline gap-6 mb-14">
                     <span class="sec-num m-reveal">01</span>
                     <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">Where I've been<span class="caret"></span></h2>
@@ -262,8 +262,9 @@ const bento = {
         </section>
 
         <!-- Projects: bento grid -->
-        <section id="projects" class="border-t border-void-800">
-            <div class="max-w-6xl mx-auto px-5 py-20 sm:py-28">
+        <section id="projects" class="relative overflow-hidden">
+            <div id="projects-code" aria-hidden="true"></div>
+            <div class="max-w-6xl mx-auto px-5 pt-10 sm:pt-16 pb-20 sm:pb-28">
                 <div class="flex items-baseline gap-6 mb-14">
                     <span class="sec-num m-reveal">02</span>
                     <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">Things I've built<span class="caret"></span></h2>
@@ -1109,6 +1110,38 @@ const bento = {
                 scroll(animate('#progress', { scaleX: [0, 1] }));
             } catch (e) {
                 console.warn('Scroll animation error:', e);
+            }
+        }
+
+        // ---------- Projects section: rendered HTML code texture ----------
+        const codeContainer = document.getElementById('projects-code');
+        if (codeContainer) {
+            const width = codeContainer.offsetWidth;
+            const height = codeContainer.offsetHeight;
+            const lineHeight = 18;
+            const charWidth = 6.5;
+            const charsPerLine = Math.max(80, Math.ceil(width / charWidth));
+            const lineCount = Math.max(12, Math.floor(height / lineHeight));
+
+            const rawHtml = document.documentElement.outerHTML;
+            // Strip mailto: links and bare email addresses to avoid exposing them in the texture,
+            // then collapse all whitespace so the texture is a continuous stream of markup.
+            const cleanedHtml = rawHtml
+                .replace(/mailto:[^"'\s<>]+/g, 'mailto:hello@example.com')
+                .replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, 'hello@example.com')
+                .replace(/\s+/g, '');
+
+            const chunks = [];
+            for (let i = 0; i < cleanedHtml.length; i += charsPerLine) {
+                chunks.push(cleanedHtml.slice(i, i + charsPerLine));
+            }
+
+            for (let row = 0; row < lineCount; row++) {
+                const line = document.createElement('div');
+                line.className = 'code-line';
+                line.style.top = (row * lineHeight) + 'px';
+                line.textContent = chunks[row % chunks.length];
+                codeContainer.appendChild(line);
             }
         }
 
