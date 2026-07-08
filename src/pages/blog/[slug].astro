@@ -1,0 +1,113 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+
+<Layout
+  title={`${post.data.title} — Matthew Smith Burlage`}
+  description={post.data.description}
+  image={post.data.heroImage ?? '/static/favicon.png'}
+>
+  <div id="site" class="relative z-10">
+    <Nav page="blog" />
+
+    <article class="max-w-3xl mx-auto px-5 py-24 sm:py-32">
+      <a href="/blog" class="inline-block font-mono text-xs text-void-400 hover:text-volt transition-colors mb-10">← back to writing</a>
+
+      <header class="mb-12">
+        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-4">
+          <time datetime={post.data.pubDate.toISOString()} class="font-mono text-xs text-void-400">
+            {fmtDate(post.data.pubDate)}
+          </time>
+          {post.data.updatedDate && (
+            <span class="font-mono text-xs text-void-500">
+              Updated {fmtDate(post.data.updatedDate)}
+            </span>
+          )}
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-bold text-void-100 mb-4">{post.data.title}</h1>
+        <p class="text-lg text-void-400 leading-relaxed">{post.data.description}</p>
+
+        {post.data.tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mt-4">
+            {post.data.tags.map((tag) => (
+              <span class="font-mono text-xs text-volt">#{tag}</span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <div class="prose prose-invert prose-lg max-w-none">
+        <Content />
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style>
+  .prose {
+    --tw-prose-body: theme('colors.void.200');
+    --tw-prose-headings: theme('colors.void.100');
+    --tw-prose-links: var(--accent);
+    --tw-prose-bold: theme('colors.void.100');
+    --tw-prose-code: var(--accent);
+    --tw-prose-pre-code: theme('colors.void.200');
+    --tw-prose-pre-bg: theme('colors.void.900');
+    --tw-prose-strong: theme('colors.void.100');
+    --tw-prose-quotes: theme('colors.void.400');
+    --tw-prose-quote-borders: var(--accent);
+    --tw-prose-hr: theme('colors.void.700');
+    --tw-prose-bullets: theme('colors.void.500');
+    --tw-prose-counters: theme('colors.void.400');
+  }
+
+  .prose :global(h2),
+  .prose :global(h3),
+  .prose :global(h4) {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .prose :global(img) {
+    border-radius: 0.5rem;
+    border: 1px solid theme('colors.void.700');
+  }
+
+  .prose :global(pre) {
+    background: theme('colors.void.900');
+    border: 1px solid theme('colors.void.700');
+    border-radius: 0.5rem;
+  }
+
+  .prose :global(code) {
+    background: theme('colors.void.800');
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+  }
+
+  .prose :global(pre code) {
+    background: transparent;
+    padding: 0;
+  }
+</style>

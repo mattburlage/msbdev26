@@ -1,0 +1,1069 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import { getCollection } from 'astro:content';
+
+// Latest blog posts, surfaced in the "How I build" section.
+const recentPosts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+const fmtDate = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+
+// Email obfuscation - simple encoding to protect from scrapers
+const EMAIL = 'hello@msb.dev';
+const ENCODED_EMAIL = EMAIL.split('').map(c => c.charCodeAt(0)).join(',');
+
+// Code-window contents are passed through set:html because they contain literal
+// { } which Astro would otherwise parse as expressions. The class names still
+// live in this file's source text, so Tailwind's content scanner picks them up.
+const heroCode = `<span class="text-syn-kw">import</span> { msb } <span class="text-syn-kw">from</span> <span class="text-syn-str">"./career"</span>;
+
+<span class="text-void-100">msb</span>.role;  <span class="text-syn-cm">// Senior Software Engineer</span>
+<span class="text-void-100">msb</span>.since; <span class="text-syn-cm">// 2019</span>
+<span class="text-void-100">msb</span>.frontend; <span class="text-syn-cm">// ["Vue", "React", "Angular", "Nuxt"]</span>
+<span class="text-void-100">msb</span>.backend; <span class="text-syn-cm">// ["Django", "WebSockets"]</span>
+<span class="text-void-100">msb</span>.db; <span class="text-syn-cm">// ["PostgreSQL", "SQL Server", "Hasura"]</span>
+<span class="text-void-100">msb</span>.contact(); <span class="text-syn-cm">// hello@msb.dev</span>`;
+
+const experienceCode = `<span class="text-syn-cm">// experience.ts — reverse chronological</span>
+
+<span class="text-syn-kw">export const</span> incyteStudios = {
+  role: <span class="text-syn-str">"Senior Software Engineer"</span>,
+  since: <span class="text-syn-num">2021</span>,
+  highlights: [
+    <span class="text-syn-str">"Go-to for novel, ambiguous problems on a mission-critical equipment-tracking system"</span>,
+    <span class="text-syn-str">"Replaced legacy Django auth with Okta SSO for client logins"</span>,
+    <span class="text-syn-str">"Integrated a client's Entra ID with Okta; server-to-server token negotiation"</span>,
+    <span class="text-syn-str">"Solo-modernized a legacy technician-dispatch web & mobile app"</span>,
+  ],
+};
+
+<span class="text-syn-kw">export const</span> hallCounty = {
+  role: <span class="text-syn-str">"Senior Applications Developer"</span>,
+  since: <span class="text-syn-num">2019</span>,
+  highlights: [
+    <span class="text-syn-str">"Founded and built the Enterprise Application Development division from the ground up"</span>,
+    <span class="text-syn-str">"Led mission-critical systems across Agenda, Personnel, Fleet, Finance, Policies, and IT Access"</span>,
+    <span class="text-syn-str">"Built a no-code CRUD platform, adopted across county departments"</span>,
+    <span class="text-syn-str">"Deep Active Directory automation; owned the division's full SDLC"</span>,
+    <span class="text-syn-str">"Mentored non-senior developers; owned sprints, timelines, and goals"</span>,
+    <span class="text-syn-str">"Installed, configured, and managed CI/CD across dev, staging, and production"</span>,
+  ],
+};`;
+
+const skillsCode = `{
+  <span class="text-syn-fn">"frontend"</span>:  [<span class="text-syn-str">"Vue"</span>, <span class="text-syn-str">"React"</span>, <span class="text-syn-str">"Angular"</span>, <span class="text-syn-str">"Nuxt"</span>],
+  <span class="text-syn-fn">"backend"</span>:   [<span class="text-syn-str">"Python"</span>, <span class="text-syn-str">"Django"</span>, <span class="text-syn-str">"WebSockets"</span>],
+  <span class="text-syn-fn">"data"</span>:      [<span class="text-syn-str">"PostgreSQL"</span>, <span class="text-syn-str">"SQL Server"</span>, <span class="text-syn-str">"Hasura"</span>, <span class="text-syn-str">"Redis"</span>],
+  <span class="text-syn-fn">"identity"</span>:  [<span class="text-syn-str">"Okta"</span>, <span class="text-syn-str">"Entra ID"</span>, <span class="text-syn-str">"Active Directory"</span>],
+  <span class="text-syn-fn">"infra"</span>:     [<span class="text-syn-str">"Docker"</span>, <span class="text-syn-str">"Jenkins"</span>, <span class="text-syn-str">"GitHub Actions"</span>, <span class="text-syn-str">"Cloudflare"</span>],
+  <span class="text-syn-fn">"cloud"</span>:     [<span class="text-syn-str">"DigitalOcean"</span>, <span class="text-syn-str">"GCP"</span>],
+  <span class="text-syn-fn">"education"</span>: <span class="text-syn-str">"BS, Computer Science — University of North Georgia"</span>
+}`;
+
+// Single source of truth for "things I've built" — drives the hero bento cards
+// (name + sub) and, next, Section 2 + the IDE projects pane (name + sub + content).
+// type: 'system' | 'integration'. content is the longer description (to be filled in).
+const builds = [
+  { type: 'system', name: 'Position Control', sub: 'Employee Paperwork Automation', content: 'Budgeted positions, employee records, and labor-budget forecasting for HR and Finance.' },
+  { type: 'system', name: 'IT Access Management', sub: 'Onboarding Automation w/ Active Directory', content: 'Automates employee access provisioning and onboarding through Active Directory.' },
+  { type: 'system', name: 'Agenda Publishing', sub: 'Data collection, document creation and publishing', content: 'Meeting workflows for local governments: data collection, document generation, and publishing.' },
+  { type: 'system', name: 'Technician Dispatch', sub: 'Safety and qualification management', content: 'A technician-dispatch platform across web and mobile that I solo-modernized, with safety and qualification checks before dispatch.' },
+  { type: 'system', name: 'Service Orders & ERP', sub: 'Enterprise-scale order and asset tracking', content: 'Order and asset tracking built to handle enterprise volume.' },
+  { type: 'system', name: 'Request for Proposals', sub: 'Handle requirements for public bids', content: 'Manages requirements and submissions for public procurement bids.' },
+  { type: 'system', name: 'Video Production Suite', sub: 'Automated video editing and organization', content: 'Automates video editing and asset organization across the production pipeline.' },
+  { type: 'system', name: 'Incident Management', sub: 'Maintain incident records and signatures', content: 'Maintains incident records and captures the sign-offs and signatures that go with them.' },
+  { type: 'system', name: 'Time & Attendance', sub: 'Custom Attendance mechanism made simple', content: 'A custom time-and-attendance system that keeps tracking simple for staff.' },
+  { type: 'system', name: 'Financial Records', sub: 'Recurring expenses, linked to each employee', content: 'Tracks recurring expenses and financial records linked to each employee.' },
+  { type: 'system', name: 'Invoice Lifecycle Management', sub: 'Coordination between billing and ERP systems', content: 'Coordinates the invoice lifecycle between billing and ERP systems.' },
+  { type: 'system', name: 'Contract Lifecycle Management', sub: 'Track contracts and renewals', content: 'Tracks contracts through their full lifecycle, including renewals.' },
+  { type: 'integration', name: 'Okta integration', sub: 'Moved away from local auth to SSO', content: '' },
+  { type: 'integration', name: 'Entra Server to Server', sub: 'Secure integration between systems', content: '' },
+  { type: 'integration', name: 'Technician Risk Management', sub: 'Check Training system before dispatching', content: '' },
+  { type: 'integration', name: 'Salesforce', sub: 'Massive integration of internal billing system', content: '' },
+  { type: 'integration', name: 'Enterprise Resource Planning', sub: 'Track inventory and shipments across systems', content: '' },
+  { type: 'integration', name: 'Video Post Production', sub: 'Automate graphics, footage organization', content: '' },
+  { type: 'integration', name: 'Employee Onboarding', sub: 'Automatically create and provision new accounts', content: '' },
+];
+
+// Lightweight projection injected into the client-side bento script (name + sub only).
+const bento = {
+  all: builds.map((b) => ({ name: b.name, sub: b.sub })),
+  systems: builds.filter((b) => b.type === 'system').map((b) => ({ name: b.name, sub: b.sub })),
+  integrations: builds.filter((b) => b.type === 'integration').map((b) => ({ name: b.name, sub: b.sub })),
+};
+---
+
+<Layout>
+<!-- ==================== NORMAL SITE ==================== -->
+<div id="site" class="relative z-10">
+
+    <Nav page="home" />
+
+    <!-- Hero -->
+    <header id="top" class="relative z-10">
+        <div class="dot-grid absolute inset-0" aria-hidden="true"></div>
+        <canvas id="dot-canvas" class="dot-canvas absolute inset-0" aria-hidden="true"></canvas>
+        <div class="max-w-6xl mx-auto px-5 pt-28 pb-12 sm:pt-40 sm:pb-16 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+                <!-- Left column: text -->
+                <div>
+                    <p class="font-mono text-volt text-sm mb-6 m-reveal" data-hero>Hello World, I'm Matthew.</p>
+                    <h1 class="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-void-100 leading-[0.95] m-reveal" data-hero>
+                        <span id="scramble-1" data-text="SENIOR">SENIOR</span><br/>
+                        <span id="scramble-2" data-text="SOFTWARE">SOFTWARE</span><br/>
+                        <span class="text-volt" id="scramble-3" data-text="ENGINEER">ENGINEER</span>
+                    </h1>
+                    <p class="mt-4 text-3xl sm:text-4xl text-void-300 font-medium m-reveal" data-hero>Leader &amp; Systems Architect</p>
+                    <div class="mt-8 m-reveal" data-hero>
+                        <p class="max-w-md text-void-400 leading-relaxed mb-8">
+                            I design, build, and scale secure, mission-critical software while mentoring those around me.
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="#contact" id="magnetic" class="inline-block px-6 py-3 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer will-change-transform">Get in touch</a>
+                            <a href="#experience" class="inline-block px-6 py-3 border border-void-700 text-void-200 rounded hover:border-volt hover:text-void-100 transition-colors cursor-pointer">See the work</a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right column: code window + stats -->
+                <div class="lg:mt-12 m-reveal sticky top-8" data-hero>
+                    <!-- Teaser code window: the door to dev mode -->
+                    <div class="border border-void-700 rounded-lg bg-void-900 overflow-hidden">
+                        <div class="flex items-center gap-2 px-4 py-2.5 border-b border-void-700">
+                            <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
+                            <span class="ml-2 font-mono text-xs text-void-400">msb.ts</span>
+                            <button data-ide-open class="ide-btn-gradient ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded font-mono text-[11px] text-volt border border-void-700 hover:border-volt transition-colors cursor-pointer">
+                                <svg width="9" height="9" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2l10 6-10 6V2z"/></svg>
+                                open in IDE
+                            </button>
+                        </div>
+                        <pre class="p-8 font-mono text-sm sm:text-base leading-relaxed"><code set:html={heroCode}></code></pre>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="mt-8 max-w-xl m-reveal" data-hero>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span id="years-count">0</span><span class="text-volt">+</span></p>
+                                <p class="text-xs font-mono text-void-400 mt-1">years</p>
+                            </div>
+                            <div>
+                                <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span data-count="12">0</span><span class="text-volt">+</span></p>
+                                <p class="text-xs font-mono text-void-400 mt-1">production systems</p>
+                            </div>
+                            <div>
+                                <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span data-count="7">0</span><span class="text-volt">+</span></p>
+                                <p class="text-xs font-mono text-void-400 mt-1">integrations shipped</p>
+                            </div>
+                        </div>
+                        <!-- Bento Row (fading, single row) -->
+                        <div id="bento-row" class="mt-4">
+                            <div id="bento-row-content" class="grid grid-cols-3 gap-3 auto-rows-[168px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+
+        <!-- Experience -->
+        <section id="experience" class="border-t border-void-800">
+            <div class="max-w-6xl mx-auto px-5 py-20 sm:py-28">
+                <div class="flex items-baseline gap-6 mb-14">
+                    <span class="sec-num m-reveal">01</span>
+                    <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">Where I've been<span class="caret"></span></h2>
+                </div>
+
+                <div class="space-y-6" data-stagger>
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 m-reveal">
+                        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                            <h3 class="text-xl font-bold text-void-100">Incyte Studios</h3>
+                            <span class="font-mono text-sm text-volt">Senior Software Engineer</span>
+                            <span class="font-mono text-xs text-void-400 ml-auto">2021</span>
+                        </div>
+                        <ul class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-void-200 leading-relaxed">
+                            <li>The team's go-to for novel, ambiguous problems on a mission-critical equipment-tracking system for a Fortune 200 client.</li>
+                            <li>Implemented Okta SSO end-to-end, replacing legacy local auth.</li>
+                            <li>Integrated a client's Entra tenant with Okta for SSO.</li>
+                            <li>Spearheaded a Salesforce integration with existing systems, including server-to-server Entra token negotiation.</li>
+                            <li>Solo-modernized a legacy technician-dispatch web &amp; mobile app.</li>
+                            <li>Built a driver-safety feature integrated with company-wide training tracking.</li>
+                        </ul>
+                    </div>
+
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 m-reveal">
+                        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                            <h3 class="text-xl font-bold text-void-100">Hall County Government</h3>
+                            <span class="font-mono text-sm text-volt">Senior Applications Developer</span>
+                            <span class="font-mono text-xs text-void-400 ml-auto">2019</span>
+                        </div>
+                        <ul class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-void-200 leading-relaxed">
+                            <li>Founded and built the Enterprise Application Development division from the ground up.</li>
+                            <li>Led development of mission-critical systems across Agenda, Personnel, Fleet, Finance, Policies, and IT Access automation.</li>
+                            <li>Built a no-code CRUD application platform, adopted for new apps across county departments.</li>
+                            <li>Defined the division's full SDLC: tools, design paradigms, methodology, and stack.</li>
+                            <li>Mentored non-senior developers; owned sprints, timelines, and goals.</li>
+                            <li>Installed, configured, and managed CI/CD across dev, staging, and production.</li>
+                        </ul>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" data-stagger>
+                        <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                            <div class="flex flex-col gap-y-1">
+                                <div class="flex items-baseline justify-between">
+                                    <h3 class="text-lg font-bold text-void-100">Hall County Government</h3>
+                                    <span class="font-mono text-xs text-void-400">2017</span>
+                                </div>
+                                <span class="font-mono text-xs text-volt">PC Technician</span>
+                            </div>
+                            <p class="mt-4 text-sm text-void-200 leading-relaxed">Handled hardware and software support for county systems.</p>
+                        </div>
+
+                        <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                            <div class="flex flex-col gap-y-1">
+                                <div class="flex items-baseline justify-between">
+                                    <h3 class="text-lg font-bold text-void-100">Geek Squad</h3>
+                                    <span class="font-mono text-xs text-void-400">2013</span>
+                                </div>
+                                <span class="font-mono text-xs text-volt">Advanced Repair Agent</span>
+                            </div>
+                            <p class="mt-4 text-sm text-void-200 leading-relaxed">Repaired computers and consumer electronics.</p>
+                        </div>
+
+                        <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                            <div class="flex flex-col gap-y-1">
+                                <div class="flex items-baseline justify-between">
+                                    <h3 class="text-lg font-bold text-void-100">French Woods Festival</h3>
+                                    <span class="font-mono text-xs text-void-400">2007</span>
+                                </div>
+                                <span class="font-mono text-xs text-volt">Stage Manager, Magic Department</span>
+                            </div>
+                            <p class="mt-4 text-sm text-void-200 leading-relaxed">Managed a theater, taught kids to cut each other in half.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects: bento grid -->
+        <section id="projects" class="border-t border-void-800">
+            <div class="max-w-6xl mx-auto px-5 py-20 sm:py-28">
+                <div class="flex items-baseline gap-6 mb-14">
+                    <span class="sec-num m-reveal">02</span>
+                    <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">Things I've built<span class="caret"></span></h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" data-stagger>
+                    {builds.filter((b) => b.type === 'system').map((b) => (
+                        <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                            <h3 class="font-bold text-void-100">{b.name}</h3>
+                            <p class="font-mono text-xs text-volt mt-1">{b.sub}</p>
+                            {b.content && <p class="text-sm text-void-400 mt-3 leading-relaxed">{b.content}</p>}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills marquee -->
+        <section id="skills" class="border-t border-void-800 py-10">
+            <div class="marquee" aria-label="Skills: Vue, React, Angular, Nuxt, TypeScript, Python, Django, WebSockets, Okta, Entra ID, Active Directory, PostgreSQL, SQL Server, Hasura, Redis, Docker, Jenkins, GitHub Actions, DigitalOcean, GCP, Cloudflare, Stripe">
+                <div class="marquee-track font-mono text-sm" aria-hidden="true" id="marquee-track">
+                    <!-- populated by JS (two copies for seamless loop) -->
+                </div>
+            </div>
+            <p class="text-center mt-6 font-mono text-xs text-void-400">BS, Computer Science · University of North Georgia</p>
+        </section>
+
+        <!-- Principles -->
+        <section id="principles" class="border-t border-void-800">
+            <div class="max-w-6xl mx-auto px-5 py-20 sm:py-28">
+                <div class="flex items-baseline gap-6 mb-4">
+                    <span class="sec-num m-reveal">03</span>
+                    <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">How I build<span class="caret"></span></h2>
+                </div>
+                <p class="font-mono text-volt text-sm mb-12 m-reveal">The hard part is the fun part.</p>
+
+                <div class="grid gap-4 sm:grid-cols-2" data-stagger>
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-volt text-xs mb-3">[01]</p>
+                        <h3 class="font-bold text-void-100 mb-2">Self-sufficient</h3>
+                        <p class="text-sm text-void-400 leading-relaxed">I'm at my best taking on a task, understanding the why behind it along with the constraints and expectations, then executing.</p>
+                    </div>
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-volt text-xs mb-3">[02]</p>
+                        <h3 class="font-bold text-void-100 mb-2">Fast on the sure calls, consensus on the big ones</h3>
+                        <p class="text-sm text-void-400 leading-relaxed">On familiar ground I decide quickly and move. When a call is high-stakes or genuinely ambiguous, I slow down on purpose and bring in the people it affects the most.</p>
+                    </div>
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-volt text-xs mb-3">[03]</p>
+                        <h3 class="font-bold text-void-100 mb-2">Collaboration where it counts</h3>
+                        <p class="text-sm text-void-400 leading-relaxed">I reach for collaboration where it moves the work: code review, training, and untangling a genuinely hard problem together. Otherwise I'm heads-down and shipping.</p>
+                    </div>
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <p class="font-mono text-volt text-xs mb-3">[04]</p>
+                        <h3 class="font-bold text-void-100 mb-2">Clear, then committed</h3>
+                        <p class="text-sm text-void-400 leading-relaxed">I raise concerns and tradeoffs early, so calls get made with the full picture. Once we land on a direction, I follow through.</p>
+                    </div>
+                </div>
+
+                {recentPosts.length > 0 && (
+                    <div class="mt-16 m-reveal">
+                        <div class="flex items-baseline justify-between mb-6">
+                            <h3 class="font-mono text-xs text-void-400 uppercase tracking-widest">Recent writing</h3>
+                            <a href="/blog" class="font-mono text-xs text-volt hover:underline cursor-pointer">all posts →</a>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            {recentPosts.map((post) => (
+                                <a href={`/blog/${post.slug}`} class="spot block border border-void-700 rounded-xl bg-void-900 p-5 hover:border-volt/50 transition-colors">
+                                    <time datetime={post.data.pubDate.toISOString()} class="font-mono text-xs text-void-400">{fmtDate(post.data.pubDate)}</time>
+                                    <h4 class="font-bold text-void-100 mt-2 leading-snug">{post.data.title}</h4>
+                                    <p class="text-sm text-void-400 mt-2 leading-relaxed">{post.data.description}</p>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="border-t border-void-800">
+            <div class="max-w-6xl mx-auto px-5 py-24 sm:py-32 text-center">
+                <p class="font-mono text-volt text-sm mb-4 m-reveal">so now what?</p>
+                <h2 class="text-4xl sm:text-6xl font-bold text-void-100 tracking-tight m-reveal">Let's build something<br/><span class="text-volt">worth shipping.</span></h2>
+                <p class="mt-6 text-void-400 max-w-md mx-auto m-reveal">If you think I can help your project or organization, reach out!</p>
+                <div class="mt-10 flex flex-wrap justify-center gap-4 m-reveal">
+                    <a href="#" data-email class="px-7 py-3.5 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">hello@msb.dev</a>
+                    <a href="https://github.com/mattburlage" target="_blank" rel="noopener" class="px-7 py-3.5 border border-void-700 text-void-200 rounded hover:border-volt/50 hover:text-void-100 transition-colors cursor-pointer">github.com/mattburlage</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-void-800 relative z-10">
+        <div class="max-w-6xl mx-auto px-5 py-8 flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-void-400">
+            <p>&copy; 2026 Matt Smith Burlage</p>
+            <button data-ide-open class="text-volt hover:underline cursor-pointer">$ enter dev mode</button>
+        </div>
+    </footer>
+</div>
+
+<!-- ==================== IDE MODE ==================== -->
+<div id="ide" class="font-mono text-sm bg-void-950 relative z-10" role="dialog" aria-modal="true" aria-label="Developer mode: IDE view of this site">
+    <div class="h-full flex flex-col">
+
+        <!-- Title bar -->
+        <div class="ide-titlebar flex items-center gap-3 px-4 h-10 bg-void-900 border-b border-void-700 shrink-0">
+            <div class="flex gap-1.5">
+                <button data-ide-close class="w-3 h-3 rounded-full bg-[#ff5f57] hover:brightness-125 cursor-pointer" title="Exit dev mode" aria-label="Close dev mode"></button>
+                <button data-ide-close class="w-3 h-3 rounded-full bg-[#febc2e] hover:brightness-125 cursor-pointer" title="Exit dev mode" aria-label="Minimize dev mode"></button>
+                <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true"></span>
+            </div>
+            <p class="flex-1 text-center text-xs text-void-400 truncate">matthew smith burlage</p>
+            <a href="#" data-email class="text-xs text-volt hover:underline cursor-pointer hidden sm:inline">hello@msb.dev</a>
+        </div>
+
+        <!-- Workbench -->
+        <div class="flex-1 flex min-h-0">
+            <aside class="ide-sidebar w-52 lg:w-60 bg-void-900 border-r border-void-700 shrink-0 hidden md:flex flex-col" aria-label="File explorer">
+                <p class="px-4 pt-4 pb-2 text-[10px] tracking-widest text-void-400">EXPLORER</p>
+                <p class="px-4 pb-1 text-xs text-void-400 flex items-center gap-1.5">
+                    <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 4l4 4-4 4V4z" transform="rotate(90 8 8)"/></svg>
+                    MATTHEW
+                </p>
+                <nav id="tree" class="flex-1 overflow-y-auto pb-4">
+                    <button data-file="readme" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-syn-fn">M↓</span><span class="tree-name">README.md</span>
+                    </button>
+                    <button data-file="experience" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-syn-fn">TS</span><span class="tree-name">experience.ts</span>
+                    </button>
+                    <button data-file="projects" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-syn-fn">M↓</span><span class="tree-name">projects.md</span>
+                    </button>
+                    <button data-file="skills" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-syn-num">{}</span><span class="tree-name">skills.json</span>
+                    </button>
+                    <button data-file="principles" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-syn-fn">M↓</span><span class="tree-name">principles.md</span>
+                    </button>
+                    <button data-file="contact" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <span class="text-volt">$</span><span class="tree-name">contact.sh</span>
+                    </button>
+                </nav>
+                <div class="px-4 py-3 border-t border-void-700 text-[10px] text-void-500 leading-relaxed">
+                    try <span class="text-volt">help</span> in the terminal below
+                </div>
+            </aside>
+
+            <div class="flex-1 flex flex-col min-w-0">
+                <div id="tabs" class="flex bg-void-900 border-b border-void-700 overflow-x-auto shrink-0" role="tablist">
+                    <button data-file="readme" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">README.md</button>
+                    <button data-file="experience" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">experience.ts</button>
+                    <button data-file="projects" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">projects.md</button>
+                    <button data-file="skills" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">skills.json</button>
+                    <button data-file="principles" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">principles.md</button>
+                    <button data-file="contact" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">contact.sh</button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto min-h-0" id="editor">
+
+                    <article id="pane-readme" class="file-pane active max-w-3xl px-6 sm:px-10 py-8 font-display">
+                        <h1 class="text-3xl font-bold text-void-100">Matthew Smith Burlage</h1>
+                        <p class="mt-1 text-volt font-mono text-sm">Senior Software Engineer &amp; Systems Architect</p>
+                        <hr class="my-6 border-void-700"/>
+                        <p class="leading-relaxed text-void-200">
+                            I architect and build secure, full-stack systems that remove duplicate work,
+                            bad process, and waste — and I help the teams around me ship them.
+                        </p>
+                        <p class="mt-4 leading-relaxed text-void-400">
+                            At Incyte Studios I was the team's go-to for novel, ambiguous problems on a
+                            mission-critical equipment-tracking system for a Fortune 200 client — bringing
+                            Okta SSO to client logins, wiring a client's Entra ID into Okta with
+                            server-to-server token negotiation, and solo-modernizing a legacy
+                            technician-dispatch web and mobile app. Before that, I founded Hall County
+                            Government's Enterprise Application Development division from the ground up.
+                        </p>
+                        <div class="mt-8 flex flex-wrap gap-3 font-mono text-xs">
+                            <button data-open="experience" class="px-4 py-2 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">open experience.ts</button>
+                            <button data-open="projects" class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">open projects.md</button>
+                            <button data-open="contact" class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">open contact.sh</button>
+                        </div>
+                    </article>
+
+                    <div id="pane-experience" class="file-pane px-6 sm:px-10 py-8">
+                        <pre class="text-xs sm:text-sm leading-[1.8] overflow-x-auto"><code set:html={experienceCode}></code></pre>
+                        <p class="mt-6 text-xs text-syn-cm">// try <button data-run='msb.experience()' class="text-volt hover:underline cursor-pointer">msb.experience()</button> in the terminal below</p>
+                    </div>
+
+                    <article id="pane-projects" class="file-pane max-w-3xl px-6 sm:px-10 py-8 font-display">
+                        <h1 class="text-2xl font-bold text-void-100 mb-6">Projects</h1>
+                        <div class="space-y-6">
+                            {builds.filter((b) => b.type === 'system').map((b) => (
+                                <div class="border-l-2 border-void-700 pl-4">
+                                    <h2 class="font-semibold text-void-100">{b.name} <span class="font-mono text-xs text-void-400 ml-1">{b.sub}</span></h2>
+                                    {b.content && <p class="text-sm text-void-400 mt-1 leading-relaxed">{b.content}</p>}
+                                </div>
+                            ))}
+                        </div>
+                    </article>
+
+                    <div id="pane-skills" class="file-pane px-6 sm:px-10 py-8">
+                        <pre class="text-xs sm:text-sm leading-[1.8] overflow-x-auto"><code set:html={skillsCode}></code></pre>
+                        <p class="mt-6 text-xs text-syn-cm">// deep-dive any of these: <button data-run='msb.reveal()' class="text-volt hover:underline cursor-pointer">msb.reveal()</button></p>
+                    </div>
+
+                    <article id="pane-principles" class="file-pane max-w-3xl px-6 sm:px-10 py-8 font-display">
+                        <h1 class="text-2xl font-bold text-void-100 mb-6">How I build</h1>
+                        <div class="space-y-6">
+                            <div>
+                                <h2 class="font-semibold text-void-100"><span class="text-volt font-mono">1.</span> Security First</h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">The value of data is ever-increasing. Any system should consider security from the outset — from design through implementation and maintenance. No system is worth a penny if it is insecure.</p>
+                            </div>
+                            <div>
+                                <h2 class="font-semibold text-void-100"><span class="text-volt font-mono">2.</span> Ease of Use</h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Users should be able to focus on their work, not on learning new systems. All a user needs to know is their end goal — the system should put the right information in front of whoever needs it.</p>
+                            </div>
+                            <div>
+                                <h2 class="font-semibold text-void-100"><span class="text-volt font-mono">3.</span> Embrace and Prepare for Change</h2>
+                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Business needs change regularly. Solutions must be customizable and built from day one in a way that makes later upgrades a breeze.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <div id="pane-contact" class="file-pane px-6 sm:px-10 py-8">
+                        <pre class="text-xs sm:text-sm leading-[1.8] overflow-x-auto"><code><span class="text-syn-cm">#!/bin/sh</span>
+<span class="text-syn-cm"># if you think I can help your project or organization, reach out</span>
+
+<span class="text-syn-fn">echo</span> <span class="text-syn-str">"email:  hello@msb.dev"</span>
+<span class="text-syn-fn">echo</span> <span class="text-syn-str">"github: github.com/mattburlage"</span>
+<span class="text-syn-fn">echo</span> <span class="text-syn-str">"web:    www.msb.dev"</span></code></pre>
+                        <div class="mt-8 flex flex-wrap gap-3 font-mono text-xs">
+                            <a href="#" data-email class="px-4 py-2 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">hello@msb.dev</a>
+                            <a href="https://github.com/mattburlage" target="_blank" rel="noopener" class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">github.com/mattburlage</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal -->
+        <div class="ide-terminal h-48 sm:h-52 bg-void-900 border-t border-void-700 shrink-0 flex flex-col">
+            <div class="flex items-center gap-4 px-4 py-1.5 border-b border-void-700 text-[10px] tracking-widest text-void-400 shrink-0">
+                <span class="text-void-200 border-b border-volt pb-1 -mb-[7px]">TERMINAL</span>
+                <span class="ml-auto flex flex-wrap gap-1.5">
+                    <button data-run="msb.reveal()" class="px-2 py-0.5 rounded border border-void-700 text-void-400 hover:text-volt hover:border-volt/40 transition-colors cursor-pointer normal-case tracking-normal font-mono">msb.reveal()</button>
+                    <button data-run="ls()" class="px-2 py-0.5 rounded border border-void-700 text-void-400 hover:text-volt hover:border-volt/40 transition-colors cursor-pointer normal-case tracking-normal font-mono">ls()</button>
+                    <button data-run="help" class="px-2 py-0.5 rounded border border-void-700 text-void-400 hover:text-volt hover:border-volt/40 transition-colors cursor-pointer normal-case tracking-normal font-mono">help</button>
+                </span>
+            </div>
+            <div id="repl-out" class="flex-1 overflow-y-auto px-4 py-2 text-xs leading-relaxed" aria-live="polite"></div>
+            <div class="flex items-center gap-2 px-4 py-2 border-t border-void-700 shrink-0">
+                <span class="text-xs text-volt select-none" aria-hidden="true">msb.dev &gt;</span>
+                <input id="repl-in" type="text" autocomplete="off" spellcheck="false"
+                    class="flex-1 bg-transparent text-xs text-void-100 placeholder-void-500 focus:outline-none"
+                    placeholder='msb.reveal() — or "help"' aria-label="Interactive JavaScript console. Type help for commands."/>
+            </div>
+        </div>
+
+        <!-- Status bar -->
+        <div class="flex items-center gap-4 px-4 h-6 bg-void-900 border-t border-void-700 text-[10px] text-void-400 shrink-0 overflow-x-auto">
+            <span class="flex items-center gap-1 text-volt whitespace-nowrap">
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 3 2.122V6A2.5 2.5 0 0 1 10 8.5H6a1 1 0 0 0-1 1v1.128a2.251 2.251 0 1 1-1.5 0V5.372a2.25 2.25 0 1 1 1.5 0v1.836A2.493 2.493 0 0 1 6 7h4a1 1 0 0 0 1-1v-.628A2.25 2.25 0 0 1 9.5 3.25Zm-6 0a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Zm.75 8.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z"/></svg>
+                main
+            </span>
+            <span id="status-file" class="whitespace-nowrap">README.md</span>
+            <span class="ml-auto whitespace-nowrap">UTF-8</span>
+            <span class="whitespace-nowrap">zero build step</span>
+        </div>
+    </div>
+</div>
+
+<script define:vars={{ bento, ENCODED_EMAIL }}>window.__BENTO__ = bento; window.__EMAIL__ = ENCODED_EMAIL;</script>
+<script is:inline type="module">
+    import { animate, inView, stagger, scroll } from "https://cdn.jsdelivr.net/npm/motion@10.18.0/+esm";
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Email obfuscation - decode the email from character codes
+    const decodeEmail = (encoded) => {
+        return encoded.split(',').map(code => String.fromCharCode(parseInt(code))).join('');
+    };
+
+    const realEmail = decodeEmail(window.__EMAIL__);
+
+    // Set up email link click handlers
+    document.querySelectorAll('[data-email]').forEach(link => {
+        link.textContent = realEmail;
+        link.href = 'mailto:' + realEmail;
+    });
+    const fine = window.matchMedia('(pointer: fine)').matches;
+
+    // ---------- Hero dot-grid: ambient shimmer + scatter-and-fade on scroll ----------
+    // .dot-grid (static CSS) stays as the reduced-motion fallback; this replaces it when allowed.
+    if (!reduced) {
+        const dotCanvas = document.getElementById('dot-canvas');
+        const dotGrid = document.querySelector('.dot-grid');
+        if (dotCanvas && dotGrid) {
+            const ctx = dotCanvas.getContext('2d');
+            const SPACING = 28;
+            const BASE_RADIUS = 1.5;
+            const SCATTER_RANGE = 600; // px of scroll over which dots fully disperse + fade
+            const SCATTER_DISTANCE = 90; // max px a dot drifts from its grid position
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            let width = 0, height = 0, dots = [];
+            let scrollY = window.scrollY;
+
+            function buildGrid() {
+                const rect = dotCanvas.getBoundingClientRect();
+                width = rect.width;
+                height = rect.height;
+                dotCanvas.width = Math.round(width * dpr);
+                dotCanvas.height = Math.round(height * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                dots = [];
+                const cols = Math.ceil(width / SPACING);
+                const rows = Math.ceil(height / SPACING);
+                for (let i = 0; i <= cols; i++) {
+                    for (let j = 0; j <= rows; j++) {
+                        const angle = Math.random() * Math.PI * 2;
+                        dots.push({
+                            x: i * SPACING,
+                            y: j * SPACING,
+                            phase: Math.random() * Math.PI * 2,
+                            dirX: Math.cos(angle),
+                            dirY: Math.sin(angle),
+                        });
+                    }
+                }
+            }
+
+            window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+
+            let accentRGB = '163, 230, 53';
+            function draw(time) {
+                accentRGB = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || accentRGB;
+                ctx.clearRect(0, 0, width, height);
+
+                const scatterT = Math.min(1, scrollY / SCATTER_RANGE);
+                const scatterDist = scatterT * SCATTER_DISTANCE;
+
+                for (const dot of dots) {
+                    const shimmer = 0.5 + 0.5 * Math.sin(time * 0.0006 + dot.phase);
+                    const alpha = (0.2 + shimmer * 0.35) * (1 - scatterT);
+                    if (alpha <= 0.01) continue;
+
+                    const x = dot.x + dot.dirX * scatterDist;
+                    const y = dot.y + dot.dirY * scatterDist;
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, BASE_RADIUS, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${accentRGB}, ${alpha})`;
+                    ctx.fill();
+                }
+
+                requestAnimationFrame(draw);
+            }
+
+            dotGrid.style.display = 'none';
+            dotCanvas.style.display = 'block';
+            buildGrid();
+            window.addEventListener('resize', buildGrid, { passive: true });
+            // Web fonts loading async can reflow the header's height after the first measurement
+            if (document.fonts) document.fonts.ready.then(buildGrid);
+            requestAnimationFrame(draw);
+        }
+    }
+
+    // ---------- Skills marquee (built from one list, duplicated for the loop) ----------
+    const SKILL_TAGS = ['Vue', 'React', 'Angular', 'Nuxt', 'TypeScript', 'Python', 'Django', 'WebSockets',
+        'Okta', 'Entra ID', 'Active Directory', 'PostgreSQL', 'SQL Server', 'Hasura', 'Redis',
+        'Docker', 'Jenkins', 'GitHub Actions', 'DigitalOcean', 'GCP', 'Cloudflare', 'Stripe'];
+    const track = document.getElementById('marquee-track');
+    if (track) {
+        for (let copy = 0; copy < 2; copy++) {
+            SKILL_TAGS.forEach((s) => {
+                const el = document.createElement('span');
+                el.className = 'px-4 py-2 border border-void-700 rounded bg-void-900 whitespace-nowrap';
+                el.textContent = s;
+                track.appendChild(el);
+            });
+        }
+    }
+
+    // ---------- IDE mode toggle ----------
+    const body = document.body;
+    function enterIDE() {
+        body.classList.add('ide-mode');
+        localStorage.setItem('msb-mode', 'ide');
+        setTimeout(() => document.getElementById('repl-in').focus(), reduced ? 0 : 550);
+    }
+    function exitIDE() {
+        body.classList.remove('ide-mode');
+        localStorage.setItem('msb-mode', 'site');
+    }
+    document.querySelectorAll('[data-ide-open]').forEach((el) => el.addEventListener('click', enterIDE));
+    document.querySelectorAll('[data-ide-close]').forEach((el) => el.addEventListener('click', exitIDE));
+    window.addEventListener('keydown', (e) => {
+        if (e.key === '.' && !e.ctrlKey && !e.metaKey && !e.altKey && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+            body.classList.contains('ide-mode') ? exitIDE() : enterIDE();
+            e.preventDefault();
+        }
+        if (e.key === 'Escape' && body.classList.contains('ide-mode')) exitIDE();
+    });
+    // Arriving from another page's "dev mode" link (e.g. /#ide from the blog nav)
+    if (localStorage.getItem('msb-mode') === 'ide' || location.hash === '#ide') enterIDE();
+
+    // ---------- IDE: files ----------
+    const FILE_NAMES = {
+        readme: 'README.md', experience: 'experience.ts', projects: 'projects.md',
+        skills: 'skills.json', principles: 'principles.md', contact: 'contact.sh',
+    };
+    function openFile(id) {
+        if (!FILE_NAMES[id]) return false;
+        document.querySelectorAll('.file-pane').forEach((p) => p.classList.toggle('active', p.id === 'pane-' + id));
+        document.querySelectorAll('#tabs .tab, #tree .tree-item').forEach((el) =>
+            el.classList.toggle('active', el.dataset.file === id));
+        document.getElementById('status-file').textContent = FILE_NAMES[id];
+        document.getElementById('editor').scrollTop = 0;
+        return true;
+    }
+    document.querySelectorAll('[data-file]').forEach((el) =>
+        el.addEventListener('click', () => openFile(el.dataset.file)));
+    document.querySelectorAll('[data-open]').forEach((el) =>
+        el.addEventListener('click', () => openFile(el.dataset.open)));
+    openFile('readme');
+
+    // ---------- Terminal: real JS console ----------
+    const SKILLS = {
+        okta: { tag: 'auth / SSO', text: 'At Incyte Studios I replaced legacy Django authentication with Okta SSO for client logins — single sign-on for the client portal without disrupting existing users.' },
+        entra: { tag: 'identity', text: 'Integrated a client\'s Microsoft Entra ID with Okta for SSO, and separately set up server-to-server Entra token negotiation for machine-to-machine access.' },
+        frontend: { tag: 'frontend', text: 'Vue, React, Angular, and Nuxt in production since 2019 — government agenda management, a no-code forms platform, and a technician-dispatch web & mobile app all shipped on this stack.' },
+        django: { tag: 'backend', text: 'Django sits behind almost everything I have shipped: government agenda workflows, HR position control, form platforms, and REST APIs consumed by web and mobile clients.' },
+        databases: { tag: 'data', text: 'PostgreSQL, SQL Server, Hasura, and Redis in production. I also wrote SmartBackup, an open-source PostgreSQL backup manager that automates recurring backups with dynamic consolidation.' },
+        leadership: { tag: 'teams', text: 'At Incyte Studios I was the team\'s go-to for novel, ambiguous problems. Before that I founded Hall County\'s Enterprise Application Development division from the ground up and mentored its developers.' },
+        mobile: { tag: 'web + mobile', text: 'I solo-modernized a legacy technician-dispatch application across web and mobile — triage, architecture, and shipping features end to end.' },
+        activedirectory: { tag: 'identity', text: 'Deep Active Directory automation at Hall County, plus Okta and Entra ID integration at Incyte — identity and access is a core part of what I do.' },
+        cicd: { tag: 'devops', text: 'Installed, configured, and managed CI/CD across development, staging, and production — Docker, Jenkins, and GitHub Actions, with Sentry for error tracking.' },
+        automation: { tag: 'philosophy', text: 'My favorite thing to kill is duplicate work. The no-code platform I built lets teams spin up a new form-based app in hours instead of weeks. If a process is done twice, I automate it.' },
+    };
+
+    const out = document.getElementById('repl-out');
+    const input = document.getElementById('repl-in');
+    if (!out || !input) {
+        // IDE elements don't exist, skip IDE initialization
+    } else {
+    let lastReveal = null;
+    let history = [];
+    let histIdx = -1;
+
+    const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+    function print(html, cls = 'text-void-200') {
+        const line = document.createElement('div');
+        line.className = cls + ' whitespace-pre-wrap break-words py-0.5';
+        out.appendChild(line);
+        if (reduced) {
+            line.innerHTML = html;
+            out.scrollTop = out.scrollHeight;
+        } else {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            const full = tmp.textContent;
+            let i = 0;
+            const step = () => {
+                i += 3;
+                line.textContent = full.slice(0, i);
+                out.scrollTop = out.scrollHeight;
+                if (i < full.length) requestAnimationFrame(step);
+                else { line.innerHTML = html; out.scrollTop = out.scrollHeight; }
+            };
+            step();
+        }
+    }
+
+    window.msb = {
+        name: 'Matthew Smith Burlage',
+        role: 'Senior Software Engineer & Systems Architect',
+        since: 2019,
+        systems: 12,
+        frontend: ['Vue', 'React', 'Angular', 'Nuxt'],
+        backend: ['Django', 'WebSockets'],
+        db: ['PostgreSQL', 'SQL Server', 'Hasura', 'Redis'],
+        securityFirst: true,
+        skills() { return Object.keys(SKILLS); },
+        contact() { return realEmail + ' · github.com/mattburlage'; },
+        reveal(skill) {
+            let k = skill && SKILLS[skill] ? skill : null;
+            if (!k) {
+                const keys = Object.keys(SKILLS).filter((s) => s !== lastReveal);
+                k = keys[Math.floor(Math.random() * keys.length)];
+            }
+            lastReveal = k;
+            print('<b class="text-volt">' + k + '</b> <span class="text-void-500">[' + SKILLS[k].tag + ']</span> ' + esc(SKILLS[k].text));
+        },
+        experience() {
+            return [
+                { company: 'Incyte Studios', role: 'Senior Software Engineer', since: 2021 },
+                { company: 'Hall County Government', role: 'Senior Applications Developer', since: 2019 },
+            ];
+        },
+        contact() {
+            print('<a class="text-volt underline cursor-pointer" href="mailto:' + realEmail + '">' + realEmail + '</a> · <a class="text-volt underline cursor-pointer" target="_blank" rel="noopener" href="https://github.com/mattburlage">github.com/mattburlage</a>');
+        },
+    };
+    window.ls = () => Object.values(FILE_NAMES);
+    function resolveFile(f) {
+        return Object.keys(FILE_NAMES).find((k) => FILE_NAMES[k] === f || k === String(f).replace(/\.\w+$/, ''));
+    }
+    window.openTab = (f) => {
+        const id = resolveFile(f);
+        if (id) { openFile(id); return FILE_NAMES[id]; }
+        throw new Error('openTab(file) — try one of: ' + Object.values(FILE_NAMES).join(', '));
+    };
+    window.open_ = window.open;
+    window.open = (f) => {
+        if (typeof f === 'string') {
+            const id = resolveFile(f);
+            if (id) { openFile(id); return FILE_NAMES[id]; }
+            if (/^https?:\/\//.test(f)) return window.open_(f);
+        }
+        throw new Error('open(file) — try one of: ' + Object.values(FILE_NAMES).join(', '));
+    };
+
+    function format(v) {
+        if (v === undefined) return '<span class="text-void-500">undefined</span>';
+        if (v === null) return '<span class="text-void-500">null</span>';
+        if (typeof v === 'string') return '<span class="text-syn-str">\'' + esc(v) + '\'</span>';
+        if (typeof v === 'number' || typeof v === 'boolean') return '<span class="text-syn-num">' + v + '</span>';
+        if (typeof v === 'function') return '<span class="text-void-400">ƒ ' + esc(v.name || 'anonymous') + '()</span>';
+        try { return esc(JSON.stringify(v, null, 1).replace(/\n\s*/g, ' ')); }
+        catch { return esc(String(v)); }
+    }
+
+    function run(raw) {
+        const cmd = raw.trim();
+        if (!cmd) return;
+        print('<span class="text-volt">&gt;</span> <span class="text-void-400">' + esc(cmd) + '</span>', 'text-void-400');
+        history.unshift(cmd);
+        histIdx = -1;
+
+        const bare = cmd.toLowerCase().replace(/[();\s]/g, '');
+        if (bare === 'help' || bare === '?') {
+            print('msb.reveal()          <span class="text-void-500">// random deep-dive on a skill</span>');
+            print('msb.reveal("okta")    <span class="text-void-500">// a specific one</span>');
+            print('msb.experience()      <span class="text-void-500">// work history</span>');
+            print('msb.contact()         <span class="text-void-500">// ' + realEmail + ' · github.com/mattburlage</span>');
+            print('ls()                        <span class="text-void-500">// list files</span>');
+            print('open("experience.ts")       <span class="text-void-500">// open a file in the editor</span>');
+            print('exit                      <span class="text-void-500">// back to the normal site</span>');
+            print('<span class="text-void-500">...or any JavaScript. This is a real console.</span>', 'text-void-500');
+            return;
+        }
+        if (bare === 'clear' || bare === 'cls') { out.innerHTML = ''; return; }
+        if (bare === 'exit' || bare === 'quit' || bare === 'q') { exitIDE(); return; }
+
+        const fmtArgs = (args) => args.map((a) => typeof a === 'string' ? esc(a) : format(a)).join(' ');
+        const replConsole = {
+            ...window.console,
+            log: (...a) => { window.console.log(...a); print(fmtArgs(a)); },
+            info: (...a) => { window.console.info(...a); print(fmtArgs(a)); },
+            warn: (...a) => { window.console.warn(...a); print(fmtArgs(a), 'text-yellow-400'); },
+            error: (...a) => { window.console.error(...a); print(fmtArgs(a), 'text-red-400'); },
+        };
+        try {
+            const result = new Function('console', '"use strict"; return (' + cmd + ');')(replConsole);
+            print(format(result));
+        } catch (e1) {
+            try {
+                const result = new Function('console', '"use strict"; ' + cmd)(replConsole);
+                print(format(result));
+            } catch (e2) {
+                print('<span class="text-red-400">' + esc(e2.name) + ':</span> ' + esc(e2.message), 'text-void-400');
+            }
+        }
+    }
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { run(input.value); input.value = ''; }
+        else if (e.key === 'ArrowUp') {
+            if (histIdx < history.length - 1) { histIdx++; input.value = history[histIdx]; }
+            e.preventDefault();
+        } else if (e.key === 'ArrowDown') {
+            if (histIdx > 0) { histIdx--; input.value = history[histIdx]; }
+            else { histIdx = -1; input.value = ''; }
+            e.preventDefault();
+        }
+    });
+    document.querySelectorAll('[data-run]').forEach((el) =>
+        el.addEventListener('click', () => { run(el.dataset.run); input.focus(); }));
+
+    print('<span class="text-void-500">Type</span> <b class="text-volt">help</b> <span class="text-void-500">for commands, or</span> <b class="text-volt">exit</b> <span class="text-void-500">to leave.</span>', 'text-void-500');
+    }
+
+    // ---------- Normal-site animations ----------
+    if (reduced) {
+        document.documentElement.classList.add('reduced-motion');
+    } else {
+        try {
+            animate('[data-hero]', { opacity: [0, 1], y: [28, 0] },
+                { duration: 0.7, delay: stagger(0.13), easing: [0.22, 1, 0.36, 1] });
+        } catch (e) {
+            console.warn('Hero animation error:', e);
+        }
+
+        const CHARS = '!<>-_\\/[]{}—=+*^?#ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        function scramble(el, delay = 0) {
+            if (!el) return;
+            const target = el.dataset.text;
+            let frame = 0;
+            const totalFrames = target.length * 3 + 12;
+            setTimeout(() => {
+                const tick = () => {
+                    let o = '';
+                    for (let i = 0; i < target.length; i++) {
+                        const revealAt = i * 3 + 8;
+                        o += frame >= revealAt ? target[i] : CHARS[Math.floor(Math.random() * CHARS.length)];
+                    }
+                    el.textContent = o;
+                    if (frame++ < totalFrames) requestAnimationFrame(tick);
+                    else el.textContent = target;
+                };
+                tick();
+            }, delay);
+        }
+        scramble(document.getElementById('scramble-1'), 150);
+        scramble(document.getElementById('scramble-2'), 350);
+        scramble(document.getElementById('scramble-3'), 550);
+
+        const countUp = (el, target, delay = 800, duration = 1400) => {
+            if (!el || Number.isNaN(target)) return;
+            const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+            setTimeout(() => {
+                const start = performance.now();
+                const tick = (now) => {
+                    const t = Math.min((now - start) / duration, 1);
+                    el.textContent = Math.round(easeOutCubic(t) * target);
+                    if (t < 1) requestAnimationFrame(tick);
+                    else el.textContent = target;
+                };
+                requestAnimationFrame(tick);
+            }, delay);
+        };
+
+        document.querySelectorAll('[data-count]').forEach((el) => {
+            countUp(el, parseInt(el.dataset.count, 10));
+        });
+
+        // Stat card interactions
+        // Injected from the shared `builds` array in the page frontmatter (see window.__BENTO__).
+        const statData = window.__BENTO__ || { all: [], systems: [], integrations: [] };
+
+        // Calculate years since 2019
+        const yearsSince2019 = new Date().getFullYear() - 2019;
+        countUp(document.getElementById('years-count'), yearsSince2019);
+
+        const bentoRowContent = document.getElementById('bento-row-content');
+        if (!bentoRowContent) {
+            // Skip bento row logic if element doesn't exist
+        } else {
+            let bentoRowTimers = [];
+
+            const BENTO_ROW_VISIBLE = 3;
+
+            function clearBentoRowTimers() {
+                bentoRowTimers.forEach((t) => clearTimeout(t));
+                bentoRowTimers = [];
+            }
+
+            function fillBentoFace(face, item, number) {
+                face.querySelector('[data-num]').textContent = String(number).padStart(2, '0');
+                face.querySelector('[data-name]').textContent = item.name;
+                const subEl = face.querySelector('[data-sub]');
+                if (subEl) subEl.textContent = item.sub || '';
+            }
+
+            // Each slot holds two stacked faces and crossfades between them:
+            // the incoming item fades in while the outgoing item fades out
+            // simultaneously, on the slot's own randomized schedule.
+            function scheduleBentoSlot(slot, items) {
+                const nextDelay = () => 2200 + Math.random() * 3800; // 2.2s–6s between swaps
+
+                const tick = () => {
+                    // Advance this slot to its next item (each slot walks the list by step)
+                    slot.pointer = (slot.pointer + BENTO_ROW_VISIBLE) % items.length;
+                    const item = items[slot.pointer];
+
+                    const incoming = slot.faces[1 - slot.active];
+                    const outgoing = slot.faces[slot.active];
+
+                    fillBentoFace(incoming, item, slot.pointer + 1);
+                    // Partial crossfade: start the outgoing fade first, then bring the
+                    // incoming in after a short offset so there's a subtle dip between
+                    // items rather than a perfectly seamless dissolve.
+                    outgoing.style.opacity = '0';
+                    bentoRowTimers.push(setTimeout(() => {
+                        incoming.style.opacity = '1';
+                    }, 300));
+                    slot.active = 1 - slot.active;
+
+                    bentoRowTimers.push(setTimeout(tick, nextDelay()));
+                };
+
+                bentoRowTimers.push(setTimeout(tick, nextDelay()));
+            }
+
+            function updateBentoRow(stat) {
+                clearBentoRowTimers();
+                const items = statData[stat];
+
+                const faceClass = 'absolute inset-0 rounded-xl bg-void-900/95 backdrop-blur-sm border border-void-700/50 p-4 flex flex-col justify-between opacity-0 overflow-hidden transition-opacity duration-[1200ms] ease-in-out';
+
+                // Build the fixed slots once, each with two stacked faces
+                bentoRowContent.innerHTML = Array.from({ length: BENTO_ROW_VISIBLE }, () => `
+                    <div class="relative">
+                        <div data-face class="${faceClass}">
+                            <div data-num class="text-volt text-xs font-mono"></div>
+                            <div>
+                                <div data-name class="font-medium text-void-200 leading-snug"></div>
+                                <div data-sub class="text-void-400 text-xs leading-snug mt-1"></div>
+                            </div>
+                        </div>
+                        <div data-face class="${faceClass}">
+                            <div data-num class="text-volt text-xs font-mono"></div>
+                            <div>
+                                <div data-name class="font-medium text-void-200 leading-snug"></div>
+                                <div data-sub class="text-void-400 text-xs leading-snug mt-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                const slots = Array.from(bentoRowContent.children);
+                slots.forEach((slotEl, i) => {
+                    const faces = Array.from(slotEl.querySelectorAll('[data-face]'));
+                    const slot = { pointer: i % items.length, faces, active: 0 };
+                    fillBentoFace(faces[0], items[slot.pointer], slot.pointer + 1);
+                    // Randomized initial fade-in
+                    bentoRowTimers.push(setTimeout(() => {
+                        faces[0].style.opacity = '1';
+                    }, Math.round(Math.random() * 700)));
+
+                    if (items.length > BENTO_ROW_VISIBLE) {
+                        scheduleBentoSlot(slot, items);
+                    }
+                });
+            }
+
+            updateBentoRow('all');
+        }
+
+        document.querySelectorAll('[data-stagger]').forEach((group) => {
+            try {
+                inView(group, () => {
+                    animate(group.querySelectorAll('.m-reveal'),
+                        { opacity: [0, 1], y: [22, 0] },
+                        { duration: 0.55, delay: stagger(0.08), easing: [0.22, 1, 0.36, 1] });
+                }, { amount: 0.1 });
+            } catch (e) {
+                console.warn('Stagger animation error:', e);
+            }
+        });
+        document.querySelectorAll('.m-reveal:not([data-hero])').forEach((el) => {
+            if (el.closest('[data-stagger]')) return;
+            try {
+                inView(el, () => {
+                    animate(el, { opacity: [0, 1], y: [22, 0] }, { duration: 0.55, easing: [0.22, 1, 0.36, 1] });
+                }, { amount: 0.2 });
+            } catch (e) {
+                console.warn('Reveal animation error:', e);
+            }
+        });
+
+        const progress = document.getElementById('progress');
+        if (progress) {
+            try {
+                scroll(animate('#progress', { scaleX: [0, 1] }));
+            } catch (e) {
+                console.warn('Scroll animation error:', e);
+            }
+        }
+
+        if (fine) {
+            document.querySelectorAll('.spot').forEach((card) => {
+                card.addEventListener('pointermove', (e) => {
+                    const r = card.getBoundingClientRect();
+                    card.style.setProperty('--spot-x', (e.clientX - r.left) + 'px');
+                    card.style.setProperty('--spot-y', (e.clientY - r.top) + 'px');
+                    card.style.setProperty('--spot-o', '1');
+                }, { passive: true });
+                card.addEventListener('pointerleave', () => card.style.setProperty('--spot-o', '0'));
+            });
+
+            const mag = document.getElementById('magnetic');
+            if (mag) {
+                mag.addEventListener('pointermove', (e) => {
+                    const r = mag.getBoundingClientRect();
+                    mag.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.25}px, ${(e.clientY - r.top - r.height / 2) * 0.35}px)`;
+                }, { passive: true });
+                mag.addEventListener('pointerleave', () => {
+                    mag.style.transform = '';
+                    mag.style.transition = 'transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)';
+                    setTimeout(() => mag.style.transition = '', 350);
+                });
+            }
+        }
+    }
+</script>
+<noscript set:html={`<style>.m-reveal { opacity: 1; } [data-ide-open] { display: none; }</style>`}></noscript>
+</Layout>

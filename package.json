@@ -1,0 +1,26 @@
+{
+  "name": "msbdev",
+  "version": "1.0.0",
+  "description": "Matthew Smith Burlage - Personal Portfolio",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "astro build && wrangler deploy",
+    "dev:tunnel": "astro dev & ngrok http 4025 --domain=msb.ngrok.app & sleep 3 && open https://msb.ngrok.app",
+    "stop": "lsof -ti:4025 | xargs kill && pkill -f 'ngrok http 4025'"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.0.2",
+    "@astrojs/tailwind": "^6.0.0",
+    "@tailwindcss/typography": "^0.5.20",
+    "astro": "^5.0.0",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "wrangler": "4.106.0"
+  }
+}

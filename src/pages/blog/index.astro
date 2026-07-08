@@ -1,0 +1,60 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+
+<Layout
+  title="Writing — Matthew Smith Burlage"
+  description="Notes on software, architecture, and the things I build — by Matthew Smith Burlage."
+>
+  <div id="site" class="relative z-10">
+    <Nav page="blog" />
+
+    <main class="max-w-4xl mx-auto px-5 py-24 sm:py-32">
+      <div class="flex items-baseline gap-6 mb-14">
+        <span class="sec-num">04</span>
+        <h1 class="text-2xl sm:text-4xl font-bold text-void-100">Writing<span class="caret"></span></h1>
+      </div>
+
+      {posts.length === 0 ? (
+        <p class="font-mono text-sm text-void-400">No posts yet. Check back soon.</p>
+      ) : (
+        <div class="space-y-8">
+          {posts.map((post) => (
+            <article class="spot border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 hover:border-volt/50 transition-colors">
+              <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
+                <time datetime={post.data.pubDate.toISOString()} class="font-mono text-xs text-void-400">
+                  {fmtDate(post.data.pubDate)}
+                </time>
+                {post.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {post.data.tags.map((tag) => (
+                      <span class="font-mono text-xs text-volt">#{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <h2 class="text-xl font-bold text-void-100 mb-2">
+                <a href={`/blog/${post.slug}`} class="hover:text-volt transition-colors">
+                  {post.data.title}
+                </a>
+              </h2>
+              <p class="text-sm text-void-400 leading-relaxed mb-4">{post.data.description}</p>
+              <a href={`/blog/${post.slug}`} class="inline-block font-mono text-xs text-volt hover:underline cursor-pointer">
+                Read more →
+              </a>
+            </article>
+          ))}
+        </div>
+      )}
+    </main>
+  </div>
+</Layout>

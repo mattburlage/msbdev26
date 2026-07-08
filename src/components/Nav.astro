@@ -1,0 +1,58 @@
+---
+interface Props {
+  page?: 'home' | 'blog';
+}
+
+const { page = 'home' } = Astro.props;
+const isHome = page === 'home';
+const anchor = (id: string) => (isHome ? `#${id}` : `/#${id}`);
+---
+
+<!-- Nav: floating pill -->
+<nav id="nav" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300">
+    <div class="flex items-center gap-1 sm:gap-2 px-3 py-1.5 rounded-full border border-void-700/80 bg-void-900/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.45)]">
+        <a href={isHome ? '#top' : '/'} class="px-3 py-1.5 font-mono text-sm font-semibold cursor-pointer text-void-100 hover:text-volt transition-colors">
+            <span class="text-volt">~/</span>msb
+        </a>
+        <span class="w-px h-4 bg-void-700 mx-1" aria-hidden="true"></span>
+        <a href={anchor('experience')} class="px-3 py-1.5 font-mono text-xs text-void-400 hover:text-void-100 transition-colors cursor-pointer">work</a>
+        <a href={anchor('projects')} class="px-3 py-1.5 font-mono text-xs text-void-400 hover:text-void-100 transition-colors cursor-pointer">builds</a>
+        <a href={anchor('contact')} class="px-3 py-1.5 font-mono text-xs text-void-400 hover:text-void-100 transition-colors cursor-pointer hidden sm:inline">contact</a>
+        <a
+            href="/blog"
+            aria-current={page === 'blog' ? 'page' : undefined}
+            class={`px-3 py-1.5 font-mono text-xs transition-colors cursor-pointer ${page === 'blog' ? 'text-volt' : 'text-void-400 hover:text-void-100'}`}
+        >writing</a>
+        <span class="w-px h-4 bg-void-700 mx-1" aria-hidden="true"></span>
+        <div class="relative group pb-3 -mb-3">
+            {isHome ? (
+                <button data-ide-open class="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-mono text-xs bg-volt text-void-950 font-semibold hover:bg-volt-dim transition-colors cursor-pointer">
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M5.3 3.3 1.6 7l3.7 3.7 1-1L3.6 7l2.7-2.7-1-1zm5.4 0-1 1L12.4 7l-2.7 2.7 1 1L14.4 7l-3.7-3.7z"/></svg>
+                    <span class="hidden sm:inline">dev mode</span>
+                </button>
+            ) : (
+                <a href="/#ide" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-mono text-xs bg-volt text-void-950 font-semibold hover:bg-volt-dim transition-colors cursor-pointer">
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M5.3 3.3 1.6 7l3.7 3.7 1-1L3.6 7l2.7-2.7-1-1zm5.4 0-1 1L12.4 7l-2.7 2.7 1 1L14.4 7l-3.7-3.7z"/></svg>
+                    <span class="hidden sm:inline">dev mode</span>
+                </a>
+            )}
+            <div id="accent-picker" class="absolute top-full right-0 w-max p-2 rounded-lg bg-void-900 border border-void-700 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 grid grid-cols-5 gap-1.5 z-50 pointer-events-none group-hover:pointer-events-auto">
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="lime"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #a3e635" title="lime" aria-label="Set accent color to lime"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="blue"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #3b82f6" title="blue" aria-label="Set accent color to blue"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="purple"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #a855f7" title="purple" aria-label="Set accent color to purple"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="pink"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #ec4899" title="pink" aria-label="Set accent color to pink"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="red"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #ef4444" title="red" aria-label="Set accent color to red"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="orange"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #f97316" title="orange" aria-label="Set accent color to orange"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="amber"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #f59e0b" title="amber" aria-label="Set accent color to amber"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="emerald"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #10b981" title="emerald" aria-label="Set accent color to emerald"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="teal"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #14b8a6" title="teal" aria-label="Set accent color to teal"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="cyan"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #06b6d4" title="cyan" aria-label="Set accent color to cyan"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="indigo"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #6366f1" title="indigo" aria-label="Set accent color to indigo"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="violet"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #8b5cf6" title="violet" aria-label="Set accent color to violet"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="rose"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #f43f5e" title="rose" aria-label="Set accent color to rose"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="sky"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #0ea5e9" title="sky" aria-label="Set accent color to sky"></button></div>
+                <div class="w-6 h-6 rounded-full cursor-pointer" data-accent="slate"><button class="w-full h-full rounded-full border border-void-700 hover:border-void-400 transition-colors" style="background: #94a3b8" title="slate" aria-label="Set accent color to slate"></button></div>
+            </div>
+        </div>
+    </div>
+</nav>

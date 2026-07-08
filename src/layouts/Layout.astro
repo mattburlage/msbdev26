@@ -1,0 +1,270 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = "Matthew Smith Burlage — Senior Software Engineer & Systems Architect",
+  description = "Matthew Smith Burlage — senior software engineer and systems architect. Full-stack development, architecture, and enterprise identity (Okta, Entra ID, Active Directory).",
+  image = "/static/favicon.png",
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content={description}/>
+  <meta name="author" content="Matthew Smith Burlage"/>
+  <link rel="shortcut icon" href="/static/favicon.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon.png"/>
+  <meta name="theme-color" content="#050507"/>
+  <title>{title}</title>
+
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content={title}/>
+  <meta property="og:description" content={description}/>
+  <meta property="og:image" content={image}/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:title" content={title}/>
+  <meta name="twitter:description" content={description}/>
+  <meta name="twitter:image" content={image}/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style is:global>
+    @import '../styles/global.css';
+    :root {
+      --accent: #a3e635;
+      --accent-dim: #65a30d;
+      --accent-rgb: 163, 230, 53;
+    }
+    html { scroll-behavior: smooth; }
+    ::selection { background: var(--accent); color: #050507; }
+    section, header { scroll-margin-top: 4.5rem; }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-thumb { background: #1e1e2a; border-radius: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(12px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.3s ease-out forwards;
+    }
+    .animate-slide-up {
+      animation: slide-up 0.4s ease-out forwards;
+    }
+
+    #nav.scrolled { top: 0.5rem; }
+
+    .dot-grid {
+      position: absolute;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(var(--accent-rgb), 0.18) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+    }
+
+    /* Animated replacement for .dot-grid, mounted by JS when motion is allowed.
+       .dot-grid stays in the DOM underneath as the no-JS / reduced-motion fallback. */
+    .dot-canvas {
+      display: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    .spot { position: relative; overflow: hidden; }
+    .spot::after {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      opacity: var(--spot-o, 0);
+      transition: opacity 0.4s ease;
+      background: radial-gradient(circle 240px at var(--spot-x, 50%) var(--spot-y, 50%), rgba(var(--accent-rgb), 0.12), transparent 80%);
+    }
+
+    .sec-num {
+      font-size: clamp(4rem, 10vw, 7rem);
+      line-height: 1; font-weight: 700; color: transparent;
+      -webkit-text-stroke: 1px #3a3a4d; user-select: none;
+    }
+
+    .marquee {
+      overflow: hidden; position: relative;
+      mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+    .marquee-track { display: flex; gap: 1rem; width: max-content; animation: marquee 30s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee { to { transform: translateX(calc(-50% - 0.5rem)); } }
+
+    .caret::after { content: '_'; animation: blink 1s steps(1) infinite; color: var(--accent); }
+    .caret-block::after { content: '▋'; color: var(--accent); animation: blink 1.1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .ide-btn-gradient {
+      background-image: linear-gradient(135deg, #0b0b10, rgba(var(--accent-rgb), 0.35), #0b0b10);
+      background-size: 200% 200%;
+      animation: gradientShift 5s ease-in-out infinite alternate;
+    }
+    .ide-btn-gradient:hover { background-image: linear-gradient(135deg, #0b0b10, rgba(var(--accent-rgb), 0.6), #0b0b10); }
+    @keyframes gradientShift { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+
+    .m-reveal { opacity: 0; }
+    .reduced-motion .m-reveal { opacity: 1; }
+
+    #progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); z-index: 60;
+    }
+
+    a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ---------- IDE mode transition ---------- */
+    #ide {
+      position: fixed; inset: 0; z-index: 100;
+      visibility: hidden; opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  visibility 0s linear 0.45s;
+    }
+    body.ide-mode #ide {
+      visibility: visible; opacity: 1; transform: scale(1);
+      transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  visibility 0s;
+    }
+    /* staggered chrome: title bar drops, sidebar slides, terminal rises */
+    #ide .ide-titlebar { transform: translateY(-100%); transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.15s; }
+    #ide .ide-sidebar  { transform: translateX(-16px); opacity: 0; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.25s, opacity 0.4s ease 0.25s; }
+    #ide .ide-terminal { transform: translateY(100%); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.3s; }
+    body.ide-mode #ide .ide-titlebar { transform: translateY(0); }
+    body.ide-mode #ide .ide-sidebar  { transform: translateX(0); opacity: 1; }
+    body.ide-mode #ide .ide-terminal { transform: translateY(0); }
+    body.ide-mode { overflow: hidden; }
+    body.ide-mode #site { filter: blur(6px); pointer-events: none; user-select: none; }
+    #site { transition: filter 0.45s ease; }
+
+    .file-pane { display: none; }
+    .file-pane.active { display: block; }
+    .tree-item.active { background: #13131b; color: #c4c4d4; }
+    .tree-item.active .tree-name { color: var(--accent); }
+    .tab.active { background: #050507; color: #c4c4d4; border-top: 2px solid var(--accent); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .marquee-track, .caret::after, .caret-block::after, .ide-btn-gradient { animation: none; }
+      .m-reveal { opacity: 1; }
+      #glow { display: none; }
+      #ide, #ide .ide-titlebar, #ide .ide-sidebar, #ide .ide-terminal, #site { transition: none; }
+    }
+  </style>
+
+  <script is:inline>
+    // Apply saved accent color before first paint to avoid a flash of the default color.
+    (function () {
+      try {
+        var saved = JSON.parse(localStorage.getItem('msb-accent') || 'null');
+        if (saved && saved.hex) {
+          var root = document.documentElement.style;
+          root.setProperty('--accent', saved.hex);
+          root.setProperty('--accent-dim', saved.dim);
+          root.setProperty('--accent-rgb', saved.rgb);
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="bg-void-950 text-void-200 font-display antialiased">
+  <div class="noise" aria-hidden="true"></div>
+  <div id="progress" aria-hidden="true"></div>
+
+  <slot />
+
+  <script is:inline>
+    // ---------- Nav: compact on scroll ----------
+    (function () {
+      var nav = document.getElementById('nav');
+      if (!nav) return;
+      window.addEventListener('scroll', function () {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+      }, { passive: true });
+    })();
+
+    // ---------- Accent color picker ----------
+    (function () {
+      var ACCENTS = [
+        { name: 'lime', hex: '#a3e635', dim: '#65a30d', rgb: '163, 230, 53' },
+        { name: 'blue', hex: '#3b82f6', dim: '#2563eb', rgb: '59, 130, 246' },
+        { name: 'purple', hex: '#a855f7', dim: '#9333ea', rgb: '168, 85, 247' },
+        { name: 'pink', hex: '#ec4899', dim: '#db2777', rgb: '236, 72, 153' },
+        { name: 'red', hex: '#ef4444', dim: '#dc2626', rgb: '239, 68, 68' },
+        { name: 'orange', hex: '#f97316', dim: '#ea580c', rgb: '249, 115, 22' },
+        { name: 'amber', hex: '#f59e0b', dim: '#d97706', rgb: '245, 158, 11' },
+        { name: 'emerald', hex: '#10b981', dim: '#059669', rgb: '16, 185, 129' },
+        { name: 'teal', hex: '#14b8a6', dim: '#0d9488', rgb: '20, 184, 166' },
+        { name: 'cyan', hex: '#06b6d4', dim: '#0891b2', rgb: '6, 182, 212' },
+        { name: 'indigo', hex: '#6366f1', dim: '#4f46e5', rgb: '99, 102, 241' },
+        { name: 'violet', hex: '#8b5cf6', dim: '#7c3aed', rgb: '139, 92, 246' },
+        { name: 'rose', hex: '#f43f5e', dim: '#e11d48', rgb: '244, 63, 94' },
+        { name: 'sky', hex: '#0ea5e9', dim: '#0284c7', rgb: '14, 165, 233' },
+        { name: 'slate', hex: '#94a3b8', dim: '#64748b', rgb: '148, 163, 184' },
+      ];
+
+      var accentPicker = document.getElementById('accent-picker');
+
+      function setAccent(accent) {
+        document.documentElement.style.setProperty('--accent', accent.hex);
+        document.documentElement.style.setProperty('--accent-dim', accent.dim);
+        document.documentElement.style.setProperty('--accent-rgb', accent.rgb);
+        localStorage.setItem('msb-accent', JSON.stringify(accent));
+      }
+
+      // Wire up static picker buttons
+      if (accentPicker) {
+        accentPicker.querySelectorAll('[data-accent]').forEach(function (wrapper) {
+          var accentName = wrapper.dataset.accent;
+          var accent = ACCENTS.find(function (a) { return a.name === accentName; });
+          if (!accent) return;
+
+          var btn = wrapper.querySelector('button');
+          btn.addEventListener('click', function () { setAccent(accent); });
+        });
+      }
+
+      // Load saved accent (also re-applied here in case the head-script pre-paint pass was skipped)
+      try {
+        var saved = JSON.parse(localStorage.getItem('msb-accent') || 'null');
+        var accent = saved && ACCENTS.find(function (a) { return a.name === saved.name; });
+        if (accent) setAccent(accent);
+      } catch (e) {}
+    })();
+  </script>
+</body>
+</html>

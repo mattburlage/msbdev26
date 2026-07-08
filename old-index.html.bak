@@ -66,6 +66,7 @@
         .dot-grid {
             position: relative;
             z-index: 1;
+            pointer-events: none;
             background-image: radial-gradient(rgba(var(--accent-rgb), 0.18) 1px, transparent 1px);
             background-size: 28px 28px;
             mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
@@ -255,7 +256,7 @@
                 <!-- Right column: code window + stats -->
                 <div class="lg:mt-12 m-reveal" data-hero>
                     <!-- Teaser code window: the door to dev mode -->
-                    <div class="border border-void-700 rounded-lg bg-void-900/80 backdrop-blur-sm overflow-hidden sticky top-8">
+                    <div class="border border-void-700 rounded-lg bg-void-900 overflow-hidden sticky top-8">
                         <div class="flex items-center gap-2 px-4 py-2.5 border-b border-void-700">
                             <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
                             <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
@@ -1037,18 +1038,23 @@
         scramble(document.getElementById('scramble-2'), 350);
         scramble(document.getElementById('scramble-3'), 550);
 
+        const countUp = (el, target, delay = 800, duration = 1400) => {
+            if (!el || Number.isNaN(target)) return;
+            const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+            setTimeout(() => {
+                const start = performance.now();
+                const tick = (now) => {
+                    const t = Math.min((now - start) / duration, 1);
+                    el.textContent = Math.round(easeOutCubic(t) * target);
+                    if (t < 1) requestAnimationFrame(tick);
+                    else el.textContent = target;
+                };
+                requestAnimationFrame(tick);
+            }, delay);
+        };
+
         document.querySelectorAll('[data-count]').forEach((el) => {
-            try {
-                const target = parseInt(el.dataset.count, 10);
-                animate(0, target, {
-                    duration: 1.4,
-                    delay: 0.8,
-                    ease: [0.22, 1, 0.36, 1],
-                    onUpdate: (latest) => { el.textContent = Math.round(latest); }
-                });
-            } catch (e) {
-                console.warn('Count animation error:', e);
-            }
+            countUp(el, parseInt(el.dataset.count, 10));
         });
 
         // Stat card interactions
@@ -1101,10 +1107,7 @@
 
         // Calculate years since 2019
         const yearsSince2019 = new Date().getFullYear() - 2019;
-        const yearsCount = document.getElementById('years-count');
-        if (yearsCount) {
-            yearsCount.textContent = yearsSince2019;
-        }
+        countUp(document.getElementById('years-count'), yearsSince2019);
 
         const bentoRowContent = document.getElementById('bento-row-content');
         if (!bentoRowContent) {
@@ -1188,9 +1191,9 @@
                         scheduleBentoSlot(slot, items);
                     }
                 });
-
-                updateBentoRow('all');
             }
+
+            updateBentoRow('all');
         }
 
         document.querySelectorAll('[data-stagger]').forEach((group) => {
