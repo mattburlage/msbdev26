@@ -282,7 +282,7 @@ const bento = {
         </section>
 
         <!-- Skills marquee -->
-        <section id="skills" class="border-t border-void-800 py-10">
+        <section id="skills" class="accent-band py-10">
             <div class="marquee" aria-label="Skills: Vue, React, Angular, Nuxt, TypeScript, Python, Django, WebSockets, Okta, Entra ID, Active Directory, PostgreSQL, SQL Server, Hasura, Redis, Docker, Jenkins, GitHub Actions, DigitalOcean, GCP, Cloudflare, Stripe">
                 <div class="marquee-track font-mono text-sm" aria-hidden="true" id="marquee-track">
                     <!-- populated by JS (two copies for seamless loop) -->
@@ -344,7 +344,7 @@ const bento = {
         </section>
 
         <!-- Contact -->
-        <section id="contact" class="border-t border-void-800">
+        <section id="contact" class="accent-band">
             <div class="max-w-6xl mx-auto px-5 py-24 sm:py-32 text-center">
                 <p class="font-mono text-volt text-sm mb-4 m-reveal">so now what?</p>
                 <h2 class="text-4xl sm:text-6xl font-bold text-void-100 tracking-tight m-reveal">Let's build something<br/><span class="text-volt">worth shipping.</span></h2>
@@ -682,6 +682,36 @@ const bento = {
                 track.appendChild(el);
             });
         }
+    }
+
+    // ---------- Slow scroll for in-page anchors ----------
+    // Native scroll-behavior: smooth has a fixed (fast) browser duration, so anchor
+    // clicks are animated by hand. Reduced motion keeps the CSS fallback (instant jump).
+    if (!reduced) {
+        const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+        document.querySelectorAll('a[href^="#"]:not([data-email])').forEach((a) => {
+            a.addEventListener('click', (e) => {
+                const target = document.getElementById(a.getAttribute('href').slice(1));
+                if (!target) return;
+                e.preventDefault();
+                const startY = window.scrollY;
+                const endY = Math.min(target.getBoundingClientRect().top + startY, document.documentElement.scrollHeight - window.innerHeight);
+                const duration = Math.min(3000, 600 + Math.abs(endY - startY) * 0.5);
+                const t0 = performance.now();
+                let cancelled = false;
+                const cancel = () => { cancelled = true; };
+                window.addEventListener('wheel', cancel, { once: true, passive: true });
+                window.addEventListener('touchstart', cancel, { once: true, passive: true });
+                const step = (now) => {
+                    if (cancelled) return;
+                    const t = Math.min(1, (now - t0) / duration);
+                    window.scrollTo({ top: startY + (endY - startY) * easeInOut(t), behavior: 'instant' });
+                    if (t < 1) requestAnimationFrame(step);
+                    else history.pushState(null, '', a.getAttribute('href'));
+                };
+                requestAnimationFrame(step);
+            });
+        });
     }
 
     // ---------- IDE mode toggle ----------
