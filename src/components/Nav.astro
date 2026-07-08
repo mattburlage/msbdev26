@@ -6,13 +6,14 @@ interface Props {
 const { page = 'home' } = Astro.props;
 const isHome = page === 'home';
 const anchor = (id: string) => (isHome ? `#${id}` : `/#${id}`);
+const isProd = import.meta.env.ENVIRONMENT === 'production';
 ---
 
 <!-- Nav: floating pill -->
 <nav id="nav" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300">
     <div class="flex items-center gap-1 sm:gap-2 px-3 py-1.5 rounded-full border border-void-700/80 bg-void-900/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.45)]">
-        <a href={isHome ? '#top' : '/'} class="px-3 py-1.5 font-mono text-sm font-semibold cursor-pointer text-void-100 hover:text-volt transition-colors">
-            <span class="text-volt">~/</span>msb
+        <a href={isHome ? '#top' : '/'} class={`px-3 py-1.5 font-mono text-sm font-semibold cursor-pointer transition-colors ${isProd ? 'text-void-100 hover:text-volt' : 'text-void-950 bg-orange-500 hover:bg-orange-400 rounded-full'}`}>
+            {isProd ? <><span class="text-volt">~/</span>msb</> : <><span class="opacity-70">~/</span>msb</>}
         </a>
         <span class="w-px h-4 bg-void-700 mx-1" aria-hidden="true"></span>
         <a href={anchor('experience')} class="px-3 py-1.5 font-mono text-xs text-void-400 hover:text-void-100 transition-colors cursor-pointer">work</a>

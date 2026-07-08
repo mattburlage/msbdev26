@@ -9,6 +9,8 @@ const recentPosts = (await getCollection('blog'))
   .slice(0, 3);
 const fmtDate = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 
+const isProd = import.meta.env.ENVIRONMENT === 'production';
+
 // Email obfuscation - simple encoding to protect from scrapers
 const EMAIL = 'hello@msb.dev';
 const ENCODED_EMAIL = EMAIL.split('').map(c => c.charCodeAt(0)).join(',');
@@ -367,7 +369,9 @@ const bento = {
                 <button data-ide-close class="w-3 h-3 rounded-full bg-[#febc2e] hover:brightness-125 cursor-pointer" title="Exit dev mode" aria-label="Minimize dev mode"></button>
                 <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true"></span>
             </div>
-            <p class="flex-1 text-center text-xs text-void-400 truncate">matthew smith burlage</p>
+            <p class="flex-1 text-center text-xs text-void-400 truncate">
+                {isProd ? 'matthew smith burlage' : <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-orange-500 text-void-950 font-semibold">matthew smith burlage</span>}
+            </p>
             <a href="#" data-email class="text-xs text-volt hover:underline cursor-pointer hidden sm:inline">hello@msb.dev</a>
         </div>
 
