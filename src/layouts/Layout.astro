@@ -70,24 +70,26 @@ const {
     #nav.scrolled { top: 0.5rem; }
 
     .dot-grid {
-      position: absolute;
+      position: fixed;
+      inset: 0;
       pointer-events: none;
       background-image: radial-gradient(rgba(var(--accent-rgb), 0.18) 1px, transparent 1px);
       background-size: 28px 28px;
-      mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
     }
 
     /* Animated replacement for .dot-grid, mounted by JS when motion is allowed.
        .dot-grid stays in the DOM underneath as the no-JS / reduced-motion fallback. */
     .dot-canvas {
       display: none;
-      position: absolute;
-      width: 100%;
-      height: 100%;
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
-      mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
     }
 
     .noise {
