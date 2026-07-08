@@ -7,6 +7,7 @@ const { page = 'home' } = Astro.props;
 const isHome = page === 'home';
 const anchor = (id: string) => (isHome ? `#${id}` : `/#${id}`);
 const isProd = import.meta.env.ENVIRONMENT === 'production';
+const showWriting = import.meta.env.SHOW_WRITING !== 'false';
 ---
 
 <!-- Nav: floating pill -->
@@ -19,11 +20,13 @@ const isProd = import.meta.env.ENVIRONMENT === 'production';
         <a href={anchor('experience')} class="px-3 py-1.5 font-mono text-xs text-void-400 hover:text-void-100 transition-colors cursor-pointer">work</a>
         <a href={anchor('projects')} class="px-3 py-1.5 font-mono text-xs text-void-400 hover:text-void-100 transition-colors cursor-pointer">builds</a>
         <a href={anchor('contact')} class="px-3 py-1.5 font-mono text-xs text-void-400 hover:text-void-100 transition-colors cursor-pointer hidden sm:inline">contact</a>
+        {showWriting && (
         <a
             href="/blog"
             aria-current={page === 'blog' ? 'page' : undefined}
             class={`px-3 py-1.5 font-mono text-xs transition-colors cursor-pointer ${page === 'blog' ? 'text-volt' : 'text-void-400 hover:text-void-100'}`}
         >writing</a>
+        )}
         <span class="w-px h-4 bg-void-700 mx-1" aria-hidden="true"></span>
         <div class="relative group pb-3 -mb-3">
             {isHome ? (
