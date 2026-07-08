@@ -354,7 +354,7 @@ const bento = {
 
     <footer class="border-t border-void-800 relative z-10">
         <div class="max-w-6xl mx-auto px-5 py-8 flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-void-400">
-            <p>&copy; 2026 Matt Smith Burlage</p>
+            <p>&copy; 2026 Matthew Smith Burlage</p>
             <button data-ide-open class="text-volt hover:underline cursor-pointer">$ enter dev mode</button>
         </div>
     </footer>
@@ -614,20 +614,31 @@ const bento = {
                 accentRGB = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || accentRGB;
                 ctx.clearRect(0, 0, width, height);
 
-                const scatterT = Math.min(1, scrollY / SCATTER_RANGE);
-                const scatterDist = scatterT * SCATTER_DISTANCE;
+                // Normal downward scroll: dots explode outward and fade.
+                // Upward overscroll: dots are pulled inward and condense.
+                const isOverscroll = scrollY < 0;
+                const scrollT = isOverscroll ? 0 : Math.min(1, scrollY / SCATTER_RANGE);
+                const overscrollT = isOverscroll ? Math.min(-scrollY / 250, 1) : 0;
+                const overscrollEased = overscrollT * (2 - overscrollT); // easeOutQuad
+
+                const scatterDist = scrollT * SCATTER_DISTANCE;
+                const pullDist = -overscrollEased * 130;
 
                 for (const dot of dots) {
                     const shimmer = 0.5 + 0.5 * Math.sin(time * 0.0006 + dot.phase);
-                    const alpha = (0.2 + shimmer * 0.35) * (1 - scatterT);
+                    const baseAlpha = 0.2 + shimmer * 0.35;
+                    const alpha = isOverscroll
+                        ? Math.min(1, baseAlpha * (1 + overscrollEased * 1.2))
+                        : baseAlpha * (1 - scrollT);
                     if (alpha <= 0.01) continue;
 
-                    // "Toward the viewer" factor: closer dots move outward and scale up faster.
-                    const approach = scatterT * dot.depth;
-                    const scale = 1 + approach * 2.2;
+                    // "Toward the viewer" scaling on normal scroll; slight contraction on overscroll.
+                    const approach = scrollT * dot.depth;
+                    const scale = (1 + approach * 2.2) * (1 - overscrollEased * 0.35);
                     const explosionFactor = 1 + dot.distFromCenter * 0.003;
-                    const x = dot.x + dot.dirX * scatterDist * explosionFactor * scale;
-                    const y = dot.y + dot.dirY * scatterDist * explosionFactor * scale;
+                    const displacement = (scatterDist * explosionFactor * scale) + pullDist;
+                    const x = dot.x + dot.dirX * displacement;
+                    const y = dot.y + dot.dirY * displacement;
                     const radius = BASE_RADIUS * scale;
 
                     ctx.beginPath();
