@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import { getCollection } from 'astro:content';
 
-const showWriting = import.meta.env.SHOW_WRITING !== 'false';
+const showWriting = process.env.SHOW_WRITING !== 'false';
 const allPosts = showWriting ? await getCollection('blog') : [];
 const posts = allPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()

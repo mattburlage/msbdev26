@@ -4,9 +4,12 @@ import Nav from '../components/Nav.astro';
 import { getCollection } from 'astro:content';
 
 // Latest blog posts, surfaced in the "How I build" section.
-const recentPosts = (await getCollection('blog'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+const showWriting = process.env.SHOW_WRITING !== 'false';
+const recentPosts = showWriting
+  ? (await getCollection('blog'))
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+      .slice(0, 3)
+  : [];
 const fmtDate = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 
 const isProd = import.meta.env.ENVIRONMENT === 'production';
