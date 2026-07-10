@@ -1,0 +1,43 @@
+---
+import { featuredRoles, compactRoles } from '../../data/roles';
+---
+
+<!-- Experience -->
+<section id="experience">
+    <div class="max-w-6xl mx-auto px-5 pt-20 sm:pt-28 pb-10 sm:pb-16">
+        <div class="flex items-baseline gap-6 mb-14">
+            <span class="sec-num m-reveal">01</span>
+            <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">Where I've been<span class="caret"></span></h2>
+        </div>
+
+        <div class="space-y-6" data-stagger>
+            {featuredRoles.map((r) => (
+                <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 m-reveal">
+                    <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                        <h3 class="text-xl font-bold text-void-100">{r.company}</h3>
+                        <span class="font-mono text-sm text-volt">{r.title}</span>
+                        <span class="font-mono text-xs text-void-400 ml-auto">{r.start}</span>
+                    </div>
+                    <ul class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-void-200 leading-relaxed">
+                        {r.highlights.map((h) => <li>{h}</li>)}
+                    </ul>
+                </div>
+            ))}
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" data-stagger>
+                {compactRoles.map((r) => (
+                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                        <div class="flex flex-col gap-y-1">
+                            <div class="flex items-baseline justify-between">
+                                <h3 class="text-lg font-bold text-void-100">{r.company}</h3>
+                                <span class="font-mono text-xs text-void-400">{r.start}</span>
+                            </div>
+                            <span class="font-mono text-xs text-volt">{r.title}</span>
+                        </div>
+                        <p class="mt-4 text-sm text-void-200 leading-relaxed">{r.highlights[0]}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>

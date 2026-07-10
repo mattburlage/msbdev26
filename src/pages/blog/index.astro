@@ -2,8 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import { getCollection } from 'astro:content';
+import { showWriting } from '../../lib/env';
 
-const showWriting = process.env.SHOW_WRITING !== 'false';
 const allPosts = showWriting ? await getCollection('blog') : [];
 const posts = allPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -45,12 +45,12 @@ const fmtDate = (d: Date) =>
                 )}
               </div>
               <h2 class="text-xl font-bold text-void-100 mb-2">
-                <a href={`/blog/${post.slug}`} class="hover:text-volt transition-colors">
+                <a href={`/blog/${post.id}`} class="hover:text-volt transition-colors">
                   {post.data.title}
                 </a>
               </h2>
               <p class="text-sm text-void-400 leading-relaxed mb-4">{post.data.description}</p>
-              <a href={`/blog/${post.slug}`} class="inline-block font-mono text-xs text-volt hover:underline cursor-pointer">
+              <a href={`/blog/${post.id}`} class="inline-block font-mono text-xs text-volt hover:underline cursor-pointer">
                 Read more →
               </a>
             </article>

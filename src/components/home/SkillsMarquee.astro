@@ -1,0 +1,13 @@
+---
+import { SKILL_TAGS } from '../../data/skills';
+---
+
+<!-- Skills marquee -->
+<section id="skills" class="accent-band py-10">
+    <div class="marquee" aria-label={`Skills: ${SKILL_TAGS.join(', ')}`}>
+        <div class="marquee-track font-mono text-sm" aria-hidden="true" id="marquee-track">
+            <!-- populated by JS from the same SKILL_TAGS list (two copies for seamless loop) -->
+        </div>
+    </div>
+    <p class="text-center mt-6 font-mono text-xs text-void-400">BS, Computer Science · University of North Georgia</p>
+</section>

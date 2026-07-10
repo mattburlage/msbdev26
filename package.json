@@ -6,21 +6,25 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "check": "astro check",
+    "build": "astro check && astro build && node scripts/post-build.js",
     "preview": "astro preview",
-    "deploy": "astro build && wrangler deploy",
+    "deploy": "npm run build && wrangler deploy",
     "dev:tunnel": "astro dev & ngrok http 4025 --domain=msb.ngrok.app & sleep 3 && open https://msb.ngrok.app",
     "stop": "lsof -ti:4025 | xargs kill && pkill -f 'ngrok http 4025'"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.0.2",
-    "@astrojs/tailwind": "^6.0.0",
+    "@astrojs/mdx": "^7.0.2",
     "@tailwindcss/typography": "^0.5.20",
-    "astro": "^5.0.0",
+    "astro": "^7.0.7",
+    "motion": "^10.18.0",
     "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
-    "live-server": "^1.2.2",
-    "wrangler": "4.106.0"
+    "@astrojs/check": "^0.9.9",
+    "@types/node": "^26.1.1",
+    "autoprefixer": "^10.5.2",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.110.0"
   }
 }

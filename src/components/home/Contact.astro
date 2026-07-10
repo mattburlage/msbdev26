@@ -1,0 +1,17 @@
+---
+import { EMAIL_FALLBACK } from '../../data/identity';
+---
+
+<!-- Contact -->
+<section id="contact" class="accent-band">
+    <div class="max-w-6xl mx-auto px-5 py-24 sm:py-32 text-center">
+        <p class="font-mono text-volt text-sm mb-4 m-reveal">so now what?</p>
+        <h2 class="text-4xl sm:text-6xl font-bold text-void-100 tracking-tight m-reveal">Let's build something<br/><span class="text-volt">worth shipping.</span></h2>
+        <p class="mt-6 text-void-400 max-w-md mx-auto m-reveal">If you think I can help your project or organization, reach out!</p>
+        <div class="mt-10 flex flex-wrap justify-center gap-4 m-reveal">
+            <a href="#" data-email class="px-7 py-3.5 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">{EMAIL_FALLBACK}</a>
+            <a href="https://github.com/mattburlage" target="_blank" rel="noopener" class="px-7 py-3.5 border border-void-700 text-void-200 rounded hover:border-volt/50 hover:text-void-100 transition-colors cursor-pointer">github.com/mattburlage</a>
+        </div>
+        <button type="button" onclick="window.print()" class="mt-6 text-sm text-void-500 hover:text-volt transition-colors cursor-pointer underline decoration-dotted m-reveal">Print resume</button>
+    </div>
+</section>

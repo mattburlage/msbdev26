@@ -1,0 +1,76 @@
+---
+import { NAME, SUBTITLE, TAGLINE } from '../../data/identity';
+import { systemsCount, integrationsCount } from '../../data/builds';
+import { heroCode } from '../../lib/ide-code';
+---
+
+<!-- Hero -->
+<header id="top" class="relative z-10">
+    <div class="max-w-6xl mx-auto px-5 pt-28 pb-12 sm:pt-40 sm:pb-16 relative">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            <!-- Left column: text -->
+            <div>
+                <p class="font-mono text-volt text-sm mb-3 m-reveal" data-hero>Hello World, I'm</p>
+                <h1 class="m-reveal" data-hero>
+                    <span class="block text-3xl sm:text-4xl font-semibold text-void-100 mb-4">{NAME}</span>
+                    <span class="block text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-void-100 leading-[0.95]">
+                        <span id="scramble-1" data-text="SENIOR">SENIOR</span><br/>
+                        <span id="scramble-2" data-text="SOFTWARE">SOFTWARE</span><br/>
+                        <span class="text-volt" id="scramble-3" data-text="ENGINEER">ENGINEER</span>
+                    </span>
+                </h1>
+                <p class="mt-4 text-3xl sm:text-4xl text-void-300 font-medium m-reveal" data-hero>{SUBTITLE}</p>
+                <div class="mt-8 m-reveal" data-hero>
+                    <p class="max-w-md text-void-400 leading-relaxed mb-8">
+                        {TAGLINE}
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#contact" id="magnetic" class="inline-block px-6 py-3 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer will-change-transform">Get in touch</a>
+                        <a href="#experience" class="inline-block px-6 py-3 border border-void-700 text-void-200 rounded hover:border-volt hover:text-void-100 transition-colors cursor-pointer">See the work</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right column: code window + stats -->
+            <div class="lg:mt-12 m-reveal sticky top-8" data-hero>
+                <!-- Teaser code window: the door to dev mode -->
+                <div class="border border-void-700 rounded-lg bg-void-900 overflow-hidden">
+                    <div class="flex items-center gap-2 px-4 py-2.5 border-b border-void-700">
+                        <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-void-500"></span>
+                        <span class="ml-2 font-mono text-xs text-void-400">msb.ts</span>
+                        <button data-ide-open class="ide-btn-gradient ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded font-mono text-[11px] text-volt border border-void-700 hover:border-volt transition-colors cursor-pointer">
+                            <svg width="9" height="9" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2l10 6-10 6V2z"/></svg>
+                            open in IDE
+                        </button>
+                    </div>
+                    <pre class="p-8 font-mono text-sm sm:text-base leading-relaxed"><code set:html={heroCode}></code></pre>
+                </div>
+
+                <!-- Stats -->
+                <div class="mt-8 max-w-xl m-reveal" data-hero>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span id="years-count">0</span><span class="text-volt">+</span></p>
+                            <p class="text-xs font-mono text-void-400 mt-1">years</p>
+                        </div>
+                        <div>
+                            <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span data-count={systemsCount}>0</span><span class="text-volt">+</span></p>
+                            <p class="text-xs font-mono text-void-400 mt-1">production systems</p>
+                        </div>
+                        <div>
+                            <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span data-count={integrationsCount}>0</span><span class="text-volt">+</span></p>
+                            <p class="text-xs font-mono text-void-400 mt-1">integrations shipped</p>
+                        </div>
+                    </div>
+                    <!-- Bento Row (fading, single row) -->
+                    <div id="bento-row" class="mt-4">
+                        <div id="bento-row-content" class="grid grid-cols-3 gap-3 auto-rows-[168px]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

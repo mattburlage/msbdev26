@@ -1,0 +1,24 @@
+---
+import { builds } from '../../data/builds';
+---
+
+<!-- Projects: bento grid -->
+<section id="projects" class="relative overflow-hidden">
+    <div id="projects-code" aria-hidden="true"></div>
+    <div class="max-w-6xl mx-auto px-5 pt-10 sm:pt-16 pb-20 sm:pb-28">
+        <div class="flex items-baseline gap-6 mb-14">
+            <span class="sec-num m-reveal">02</span>
+            <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">Things I've built<span class="caret"></span></h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" data-stagger>
+            {builds.filter((b) => b.type === 'system').map((b) => (
+                <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                    <h3 class="font-bold text-void-100">{b.name}</h3>
+                    <p class="font-mono text-xs text-volt mt-1">{b.sub}</p>
+                    {b.content && <p class="text-sm text-void-400 mt-3 leading-relaxed">{b.content}</p>}
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
