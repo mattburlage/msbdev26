@@ -48,9 +48,9 @@ const msbCore = {
   name: NAME,
   role: TITLE,
   year: 2019,
-  frontend: ['Vue', 'React', 'Angular', 'Nuxt'],
-  backend: ['Django', 'WebSockets'],
-  db: ['PostgreSQL', 'SQL Server', 'Hasura', 'Redis'],
+  frontend: ['Vue', 'React', 'Angular'],
+  backend: ['Django', 'Node'],
+  db: ['PostgreSQL', 'SQL Server', 'Hasura'],
   securityFirst: true,
 };
 // msbCore.systems / .integrations are set below once `builds` exists — one count, everywhere.
@@ -466,7 +466,7 @@ const SITE_DATA = {
 
         <!-- Skills marquee -->
         <section id="skills" class="accent-band py-10">
-            <div class="marquee" aria-label="Skills: Vue, React, Angular, Nuxt, TypeScript, Python, Django, WebSockets, Okta, Entra ID, Active Directory, PostgreSQL, SQL Server, Hasura, Redis, Docker, Jenkins, GitHub Actions, DigitalOcean, GCP, Cloudflare, Stripe">
+            <div class="marquee" aria-label="Skills: Vue, React, Angular, Nuxt, TypeScript, Python, Django, Node, WebSockets, Okta, Entra ID, Active Directory, PostgreSQL, SQL Server, Hasura, Redis, Docker, Jenkins, GitHub Actions, DigitalOcean, GCP, Cloudflare, Stripe">
                 <div class="marquee-track font-mono text-sm" aria-hidden="true" id="marquee-track">
                     <!-- populated by JS (two copies for seamless loop) -->
                 </div>
@@ -940,7 +940,7 @@ const SITE_DATA = {
     }
 
     // ---------- Skills marquee (built from one list, duplicated for the loop) ----------
-    const SKILL_TAGS = ['Vue', 'React', 'Angular', 'Nuxt', 'TypeScript', 'Python', 'Django', 'WebSockets',
+    const SKILL_TAGS = ['Vue', 'React', 'Angular', 'Nuxt', 'TypeScript', 'Python', 'Django', 'Node', 'WebSockets',
         'Okta', 'Entra ID', 'Active Directory', 'PostgreSQL', 'SQL Server', 'Hasura', 'Redis',
         'Docker', 'Jenkins', 'GitHub Actions', 'DigitalOcean', 'GCP', 'Cloudflare', 'Stripe'];
     const track = document.getElementById('marquee-track');
