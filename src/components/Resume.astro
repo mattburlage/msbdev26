@@ -1,0 +1,122 @@
+---
+export interface Props {
+  resume: {
+    name: string;
+    title: string;
+    contact: {
+      email: string;
+      github: string;
+      website: string;
+      phone?: string;
+      location?: string;
+    };
+    summary: string;
+    skills: Record<string, string[]>;
+    experience: Array<{
+      company: string;
+      title: string;
+      location?: string;
+      start: string;
+      end: string;
+      highlights: string[];
+    }>;
+    earlier?: Array<{
+      company: string;
+      title: string;
+      start: string;
+      end: string;
+      note: string;
+    }>;
+    education: Array<{
+      degree: string;
+      school: string;
+      year?: string;
+    }>;
+  };
+}
+
+const { resume } = Astro.props;
+const { name, title, contact, summary, skills, experience, earlier = [], education } = resume;
+
+const fmtUrl = (url: string) => url.replace(/^https?:\/\//, '');
+---
+
+<div id="resume" class="print-only resume-sheet font-sans text-black bg-white">
+  <header class="resume-section mb-3 border-b border-black pb-2.5">
+    <h1 class="text-2xl font-bold tracking-tight">{name}</h1>
+    <p class="text-base text-gray-900 mt-0.5">{title}</p>
+    <div class="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-gray-800">
+      {/* Scraper obfuscation: the shared [data-email] script fills the real address on load */}
+      <a href="#" data-email>{contact.email.replace('@', ' [at] ')}</a>
+      {contact.phone && <span>{contact.phone}</span>}
+      <a href={`https://${contact.github}`} target="_blank" rel="noopener">{fmtUrl(contact.github)}</a>
+      <a href={`https://${contact.website}`} target="_blank" rel="noopener">{fmtUrl(contact.website)}</a>
+      {contact.location && <span>{contact.location}</span>}
+    </div>
+  </header>
+
+  <section class="resume-section mb-3">
+    <h2 class="text-xs uppercase tracking-widest font-semibold border-b border-gray-400 pb-0.5 mb-1.5">Summary</h2>
+    <p class="text-xs leading-snug">{summary}</p>
+  </section>
+
+  <section class="resume-section mb-3">
+    <h2 class="text-xs uppercase tracking-widest font-semibold border-b border-gray-400 pb-0.5 mb-1.5">Skills</h2>
+    <div class="space-y-0.5 text-xs leading-snug">
+      {Object.entries(skills).map(([category, items]) => (
+        <div>
+          <span class="font-semibold">{category}:</span>
+          <span class="text-gray-900"> {items.join(', ')}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="resume-section mb-3">
+    <h2 class="text-xs uppercase tracking-widest font-semibold border-b border-gray-400 pb-0.5 mb-2">Experience</h2>
+    <div class="space-y-2.5">
+      {experience.map((job) => (
+        <div class="resume-entry">
+          <div class="flex justify-between items-baseline">
+            <h3 class="font-bold text-sm">{job.company}</h3>
+            <span class="text-xs text-gray-700 font-mono whitespace-nowrap ml-3">{job.start} — {job.end}</span>
+          </div>
+          <p class="text-xs font-medium text-gray-800">
+            {job.title}
+            {job.location && <span class="text-gray-600 font-normal"> — {job.location}</span>}
+          </p>
+          <ul class="mt-1 list-disc list-outside ml-4 text-xs leading-snug text-gray-900 space-y-0.5">
+            {job.highlights.map((h) => <li>{h}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {earlier.length > 0 && (
+    <section class="resume-section mb-3">
+      <h2 class="text-xs uppercase tracking-widest font-semibold border-b border-gray-400 pb-0.5 mb-1.5">Earlier Experience</h2>
+      <div class="space-y-1 text-xs leading-snug">
+        {earlier.map((job) => (
+          <div class="flex justify-between items-baseline gap-3">
+            <p><span class="font-semibold">{job.title}</span><span class="text-gray-800">, {job.company}</span><span class="text-gray-700"> — {job.note}</span></p>
+            <span class="text-gray-700 font-mono whitespace-nowrap">{job.start} — {job.end}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="resume-section">
+    <h2 class="text-xs uppercase tracking-widest font-semibold border-b border-gray-400 pb-0.5 mb-1.5">Education</h2>
+    <div class="space-y-0.5 text-xs">
+      {education.map((edu) => (
+        <div>
+          <span class="font-semibold">{edu.degree}</span>
+          <span class="text-gray-700"> — {edu.school}</span>
+          {edu.year && <span class="text-gray-600 font-mono ml-2">{edu.year}</span>}
+        </div>
+      ))}
+    </div>
+  </section>
+</div>

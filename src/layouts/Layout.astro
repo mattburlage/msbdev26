@@ -19,8 +19,8 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="description" content={description}/>
   <meta name="author" content="Matthew Smith Burlage"/>
-  <link rel="shortcut icon" href="/static/favicon.png"/>
-  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon.png"/>
+  <link rel="shortcut icon" href="/static/favicon.png" data-favicon/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon.png" data-favicon/>
   <meta name="theme-color" content="#050507"/>
   <title>{title}</title>
 
@@ -126,6 +126,22 @@ const {
     .marquee-track { display: flex; gap: 1rem; width: max-content; animation: marquee 30s linear infinite; }
     .marquee:hover .marquee-track { animation-play-state: paused; }
     @keyframes marquee { to { transform: translateX(calc(-50% - 0.5rem)); } }
+    #tumbleweed-wrap.rolling #tumbleweed-mover { animation: tumbleweed-move 6s linear infinite; }
+    #tumbleweed-wrap.rolling #tumbleweed { animation: tumbleweed-spin 0.9s ease-in-out infinite; }
+    #tumbleweed-wrap.rolling .tumbleweed-shadow { animation: tumbleweed-shadow-pulse 0.9s ease-in-out infinite; }
+    @keyframes tumbleweed-move {
+      0% { left: -14%; }
+      100% { left: 114%; }
+    }
+    @keyframes tumbleweed-spin {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-28px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+    @keyframes tumbleweed-shadow-pulse {
+      0%, 100% { opacity: 0.6; transform: scaleX(1); }
+      50% { opacity: 0.25; transform: scaleX(0.65); }
+    }
     .accent-band {
       background-color: rgba(var(--accent-rgb), 0.06);
       border-top: 1px solid rgba(var(--accent-rgb), 0.25);
@@ -133,7 +149,10 @@ const {
     }
     #projects-code {
       position: absolute;
-      inset: 0;
+      top: 130px;
+      left: 0;
+      right: 0;
+      bottom: 0;
       pointer-events: none;
       z-index: -1;
       overflow: hidden;
@@ -143,8 +162,8 @@ const {
       font-size: 13px;
       line-height: 18px;
       white-space: pre;
-      mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 100%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 100%);
     }
     .code-line {
       position: absolute;
@@ -234,13 +253,30 @@ const {
     .tree-item.active { background: #13131b; color: #c4c4d4; }
     .tree-item.active .tree-name { color: var(--accent); }
     .tab.active { background: #050507; color: #c4c4d4; border-top: 2px solid var(--accent); }
+    .tab.active .tab-close { opacity: 1; }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      .marquee-track, .caret::after, .caret-block::after, .ide-btn-gradient { animation: none; }
+      .marquee-track, .caret::after, .caret-block::after, .ide-btn-gradient,
+      #tumbleweed-wrap.rolling #tumbleweed-mover, #tumbleweed-wrap.rolling #tumbleweed,
+      #tumbleweed-wrap.rolling .tumbleweed-shadow { animation: none; }
       .m-reveal { opacity: 1; }
       #glow { display: none; }
       #ide, #ide .ide-titlebar, #ide .ide-sidebar, #ide .ide-terminal, #site { transition: none; }
+    }
+
+    /* ---------- Print styles: site becomes the resume ---------- */
+    .print-only { display: none !important; }
+    @media print {
+      @page { margin: 0.45in 0.6in; }
+      body { background: white !important; color: black !important; }
+      .noise, #progress, #site, #ide, footer { display: none !important; }
+      .print-only { display: block !important; }
+      #resume { position: static; width: 100%; max-width: none; padding: 0; margin: 0; background: white; color: black; }
+      #resume a { color: black !important; text-decoration: none !important; }
+      #resume .resume-section { break-inside: avoid; }
+      #resume .resume-entry { break-inside: avoid; }
+      #resume ul { padding-left: 1.1rem; }
     }
   </style>
 
@@ -297,11 +333,50 @@ const {
 
       var accentPicker = document.getElementById('accent-picker');
 
+      // ---------- Dynamic favicon: recolors the "m" mark to match the active accent ----------
+      // favicon-mask.png encodes the icon as a luminance mask (R channel: 0 = bg, 255 = glyph)
+      // with the rounded-square shape carried in the alpha channel, so any accent can be
+      // painted in at runtime without shipping a separate PNG per color.
+      var faviconLinks = document.querySelectorAll('[data-favicon]');
+      var faviconMask = new Image();
+      var faviconCanvas = document.createElement('canvas');
+      faviconCanvas.width = 64;
+      faviconCanvas.height = 64;
+      var faviconCtx = faviconCanvas.getContext('2d', { willReadFrequently: true });
+      var faviconMaskReady = false;
+      var pendingFaviconAccent = null;
+
+      function drawFavicon(accent) {
+        if (!faviconMaskReady) { pendingFaviconAccent = accent; return; }
+        var bg = accent.rgb.split(',').map(function (n) { return parseInt(n, 10); });
+        var fg = [5, 5, 7]; // matches the site's --void-950 background, used for the glyph
+        faviconCtx.clearRect(0, 0, 64, 64);
+        faviconCtx.drawImage(faviconMask, 0, 0, 64, 64);
+        var imageData = faviconCtx.getImageData(0, 0, 64, 64);
+        var d = imageData.data;
+        for (var i = 0; i < d.length; i += 4) {
+          var t = d[i] / 255;
+          d[i] = bg[0] + (fg[0] - bg[0]) * t;
+          d[i + 1] = bg[1] + (fg[1] - bg[1]) * t;
+          d[i + 2] = bg[2] + (fg[2] - bg[2]) * t;
+        }
+        faviconCtx.putImageData(imageData, 0, 0);
+        var dataUrl = faviconCanvas.toDataURL('image/png');
+        faviconLinks.forEach(function (link) { link.href = dataUrl; });
+      }
+
+      faviconMask.onload = function () {
+        faviconMaskReady = true;
+        if (pendingFaviconAccent) drawFavicon(pendingFaviconAccent);
+      };
+      faviconMask.src = '/static/favicon-mask.png';
+
       function setAccent(accent) {
         document.documentElement.style.setProperty('--accent', accent.hex);
         document.documentElement.style.setProperty('--accent-dim', accent.dim);
         document.documentElement.style.setProperty('--accent-rgb', accent.rgb);
         localStorage.setItem('msb-accent', JSON.stringify(accent));
+        drawFavicon(accent);
       }
 
       // Wire up static picker buttons
@@ -321,7 +396,10 @@ const {
         var saved = JSON.parse(localStorage.getItem('msb-accent') || 'null');
         var accent = saved && ACCENTS.find(function (a) { return a.name === saved.name; });
         if (accent) setAccent(accent);
-      } catch (e) {}
+        else drawFavicon(ACCENTS[0]);
+      } catch (e) {
+        drawFavicon(ACCENTS[0]);
+      }
     })();
   </script>
 </body>

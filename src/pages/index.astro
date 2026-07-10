@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
+import Resume from '../components/Resume.astro';
 import { getCollection } from 'astro:content';
 
 // Latest blog posts, surfaced in the "How I build" section.
@@ -15,56 +16,55 @@ const fmtDate = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: '
 const isProd = import.meta.env.ENVIRONMENT === 'production';
 
 // Email obfuscation - simple encoding to protect from scrapers
-const EMAIL = 'hello@msb.dev';
+const EMAIL = 'matt@msb.dev';
 const ENCODED_EMAIL = EMAIL.split('').map(c => c.charCodeAt(0)).join(',');
+// Static fallback text; the client script swaps in the decoded address at runtime.
+const EMAIL_FALLBACK = 'matt [at] msb.dev';
 
-// Code-window contents are passed through set:html because they contain literal
-// { } which Astro would otherwise parse as expressions. The class names still
-// live in this file's source text, so Tailwind's content scanner picks them up.
-const heroCode = `<span class="text-syn-kw">import</span> { msb } <span class="text-syn-kw">from</span> <span class="text-syn-str">"./career"</span>;
+// Identity copy shared word-for-word by the hero and the IDE's README.md.
+const NAME = 'Matthew Smith Burlage';
+const TITLE = 'Senior Software Engineer';
+const SUBTITLE = 'Leader & Systems Architect';
+const TAGLINE = 'I design, build, and scale secure, mission-critical software while mentoring those around me.';
+// Shown in the editor pane AND echoed to the status bar when every tab is closed.
+const EMPTY_STATE_TITLE = 'No file open';
 
-<span class="text-void-100">msb</span>.role;  <span class="text-syn-cm">// Senior Software Engineer</span>
-<span class="text-void-100">msb</span>.since; <span class="text-syn-cm">// 2019</span>
-<span class="text-void-100">msb</span>.frontend; <span class="text-syn-cm">// ["Vue", "React", "Angular"]</span>
-<span class="text-void-100">msb</span>.backend; <span class="text-syn-cm">// ["Django", "WebSockets"]</span>
-<span class="text-void-100">msb</span>.db; <span class="text-syn-cm">// ["PostgreSQL", "SQL Server", "Hasura"]</span>
-<span class="text-void-100">msb</span>.contact(); <span class="text-syn-cm">// hello@msb.dev</span>`;
+// Helpers that render the shared data below as syntax-highlighted code strings,
+// so the IDE panes can't drift from the objects that render the normal site.
+// Output is passed through set:html because it contains literal { } which Astro
+// would otherwise parse as expressions. The class names live in this file's
+// source text, so Tailwind's content scanner picks them up.
+const hlEsc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const kw = (s) => `<span class="text-syn-kw">${s}</span>`;
+const st = (s) => `<span class="text-syn-str">"${hlEsc(s)}"</span>`;
+const nm = (s) => `<span class="text-syn-num">${s}</span>`;
+const cm = (s) => `<span class="text-syn-cm">${hlEsc(s)}</span>`;
+const jkey = (s) => `<span class="text-syn-fn">"${hlEsc(s)}"</span>`;
+const jsList = (arr) => '[' + arr.map((v) => `"${v}"`).join(', ') + ']';
 
-const experienceCode = `<span class="text-syn-cm">// experience.ts — reverse chronological</span>
-
-<span class="text-syn-kw">export const</span> incyteStudios = {
-  role: <span class="text-syn-str">"Senior Software Engineer"</span>,
-  since: <span class="text-syn-num">2021</span>,
-  highlights: [
-    <span class="text-syn-str">"Go-to for novel, ambiguous problems on a mission-critical equipment-tracking system"</span>,
-    <span class="text-syn-str">"Replaced legacy Django auth with Okta SSO for client logins"</span>,
-    <span class="text-syn-str">"Integrated a client's Entra ID with Okta; server-to-server token negotiation"</span>,
-    <span class="text-syn-str">"Solo-modernized a legacy technician-dispatch web & mobile app"</span>,
-  ],
+// The msb object: rendered into the hero code window and installed as window.msb
+// in the IDE terminal, so both stay word-for-word.
+const msbCore = {
+  name: NAME,
+  role: TITLE,
+  year: 2019,
+  frontend: ['Vue', 'React', 'Angular', 'Nuxt'],
+  backend: ['Django', 'WebSockets'],
+  db: ['PostgreSQL', 'SQL Server', 'Hasura', 'Redis'],
+  securityFirst: true,
 };
+// msbCore.systems / .integrations are set below once `builds` exists — one count, everywhere.
 
-<span class="text-syn-kw">export const</span> hallCounty = {
-  role: <span class="text-syn-str">"Senior Applications Developer"</span>,
-  since: <span class="text-syn-num">2019</span>,
-  highlights: [
-    <span class="text-syn-str">"Founded and built the Enterprise Application Development division from the ground up"</span>,
-    <span class="text-syn-str">"Led mission-critical systems across Agenda, Personnel, Fleet, Finance, Policies, and IT Access"</span>,
-    <span class="text-syn-str">"Built a no-code CRUD platform, adopted across county departments"</span>,
-    <span class="text-syn-str">"Deep Active Directory automation; owned the division's full SDLC"</span>,
-    <span class="text-syn-str">"Mentored non-senior developers; owned sprints, timelines, and goals"</span>,
-    <span class="text-syn-str">"Installed, configured, and managed CI/CD across dev, staging, and production"</span>,
-  ],
-};`;
+const heroCode = `${kw('import')} { msb } ${kw('from')} ${st('./career')};
 
-const skillsCode = `{
-  <span class="text-syn-fn">"frontend"</span>:  [<span class="text-syn-str">"Vue"</span>, <span class="text-syn-str">"React"</span>, <span class="text-syn-str">"Angular"</span>, <span class="text-syn-str">"Nuxt"</span>],
-  <span class="text-syn-fn">"backend"</span>:   [<span class="text-syn-str">"Python"</span>, <span class="text-syn-str">"Django"</span>, <span class="text-syn-str">"WebSockets"</span>],
-  <span class="text-syn-fn">"data"</span>:      [<span class="text-syn-str">"PostgreSQL"</span>, <span class="text-syn-str">"SQL Server"</span>, <span class="text-syn-str">"Hasura"</span>, <span class="text-syn-str">"Redis"</span>],
-  <span class="text-syn-fn">"identity"</span>:  [<span class="text-syn-str">"Okta"</span>, <span class="text-syn-str">"Entra ID"</span>, <span class="text-syn-str">"Active Directory"</span>],
-  <span class="text-syn-fn">"infra"</span>:     [<span class="text-syn-str">"Docker"</span>, <span class="text-syn-str">"Jenkins"</span>, <span class="text-syn-str">"GitHub Actions"</span>, <span class="text-syn-str">"Cloudflare"</span>],
-  <span class="text-syn-fn">"cloud"</span>:     [<span class="text-syn-str">"DigitalOcean"</span>, <span class="text-syn-str">"GCP"</span>],
-  <span class="text-syn-fn">"education"</span>: <span class="text-syn-str">"BS, Computer Science — University of North Georgia"</span>
-}`;
+<span class="text-void-100">msb</span>.role;  ${cm('// ' + msbCore.role)}
+<span class="text-void-100">msb</span>.year; ${cm('// ' + msbCore.year)}
+<span class="text-void-100">msb</span>.frontend; ${cm('// ' + jsList(msbCore.frontend))}
+<span class="text-void-100">msb</span>.backend; ${cm('// ' + jsList(msbCore.backend))}
+<span class="text-void-100">msb</span>.db; ${cm('// ' + jsList(msbCore.db))}
+<span class="text-void-100">msb</span>.contact(); <span class="text-syn-cm">// <span data-email-text>${EMAIL_FALLBACK}</span></span>`;
+
+
 
 // Single source of truth for "things I've built" — drives the hero bento cards
 // (name + sub) and, next, Section 2 + the IDE projects pane (name + sub + content).
@@ -90,12 +90,233 @@ const builds = [
   { type: 'integration', name: 'Video Post Production', sub: 'Automate graphics, footage organization', content: '' },
   { type: 'integration', name: 'Employee Onboarding', sub: 'Automatically create and provision new accounts', content: '' },
 ];
+const systemsCount = builds.filter((b) => b.type === 'system').length;
+const integrationsCount = builds.filter((b) => b.type === 'integration').length;
+msbCore.systems = systemsCount;
+msbCore.integrations = integrationsCount;
+
+// IDE-flavored mirror of the hero's stat row (years / systems / integrations),
+// as direct assignments rather than the hero's "property; // comment" style —
+// these are exact values, not documentation. "years" is time-dependent, so
+// it's a placeholder filled client-side by the same computation that
+// animates the hero's counter.
+const readmeStatsCode = `<span class="text-void-100">career</span>.years <span class="text-void-500">=</span> <span class="text-syn-num" data-stat="years">–</span>;
+<span class="text-void-100">systems</span>.length <span class="text-void-500">=</span> <span class="text-syn-num">${systemsCount}</span>;
+<span class="text-void-100">integrations</span>.length <span class="text-void-500">=</span> <span class="text-syn-num">${integrationsCount}</span>;`;
+
+// Career data shared by the portfolio, IDE panes, and printable resume.
+const roles = [
+  {
+    company: 'Hall County Government',
+    title: 'Senior Applications Developer',
+    location: 'Atlanta, GA (Remote since 2021)',
+    start: '2019',
+    end: 'Present',
+    priority: 'featured',
+    highlights: [
+      'Founded and built the Enterprise Application Development division from the ground up.',
+      'Led development of mission-critical systems spanning Agenda Management, Personnel, Fleet, Finance, Policies, and IT Access automation, including deep Active Directory automation.',
+      'Implemented a no-code CRUD application platform, adopted for building additional applications across county departments.',
+      "Developed the division's full SDLC from scratch, including foundational decisions on tools, design paradigms, methodology, and stack.",
+      'Managed and mentored non-senior developers toward business and career goals.',
+      'Owned timelines, goals, and sprints for scrum development.',
+      'Installed, configured, and managed CI/CD across dev, staging, and production.',
+      "Introduced GitHub Copilot into the division's engineering workflow and established internal guidelines for responsible AI use in a government context.",
+    ],
+    // Condensed set used by the one-page print resume.
+    resumeHighlights: [
+      'Founded and built the Enterprise Application Development division from the ground up.',
+      'Led development of mission-critical systems spanning Agenda Management, Personnel, Fleet, Finance, Policies, and IT Access automation, including deep Active Directory automation.',
+      'Implemented a no-code CRUD application platform, adopted for building additional applications across county departments.',
+      "Developed the division's full SDLC from scratch; owned timelines, goals, and sprints for scrum development.",
+      'Managed and mentored non-senior developers toward business and career goals.',
+      'Installed, configured, and managed CI/CD across dev, staging, and production.',
+    ],
+  },
+  {
+    company: 'Incyte Studios',
+    title: 'Senior Software Engineer',
+    location: '',
+    start: '2021',
+    end: '2026',
+    priority: 'featured',
+    highlights: [
+      'Contributed to a mission-critical equipment-tracking system for a Fortune 200 client.',
+      'Key contributor to an asset-tracking initiative within that system.',
+      'Go-to developer for the team lead on a 5-person internal team, frequently assigned novel/ambiguous problems.',
+      'Solo-modernized a related legacy Technician Dispatch web & mobile application.',
+      'Replaced legacy local Django authentication with Okta SSO for client logins.',
+      "Integrated a client's Entra ID with Okta for SSO.",
+      'Set up server-to-server Entra token negotiations.',
+      'Implemented a driver safety system integrated with company-wide training tracking.',
+    ],
+    // Condensed set used by the one-page print resume.
+    resumeHighlights: [
+      'Contributed to a mission-critical equipment-tracking system for a Fortune 200 client; key contributor to an asset-tracking initiative within that system.',
+      'Go-to developer for the team lead on a 5-person internal team, frequently assigned novel/ambiguous problems.',
+      'Solo-modernized a related legacy Technician Dispatch web & mobile application.',
+      "Replaced legacy local Django authentication with Okta SSO for client logins; integrated a client's Entra ID with Okta and set up server-to-server Entra token negotiations.",
+      'Implemented a driver safety system integrated with company-wide training tracking.',
+    ],
+  },
+  {
+    company: 'Hall County Government',
+    title: 'PC Technician',
+    location: 'Atlanta, GA',
+    start: '2017',
+    end: '2019',
+    priority: 'compact',
+    highlights: ['Hardware and software support for county systems.'],
+  },
+  {
+    company: 'Geek Squad',
+    title: 'Advanced Repair Agent',
+    location: '',
+    start: '2013',
+    end: '2017',
+    priority: 'compact',
+    highlights: ['Repaired computers and consumer electronics.'],
+  },
+  {
+    company: 'French Woods Festival',
+    title: 'Stage Manager, Magic Department',
+    location: '',
+    start: '2007',
+    end: '2013',
+    priority: 'compact',
+    highlights: ['Managed a theater, taught kids to cut each other in half.'],
+  },
+];
+
+const resume = {
+  name: 'Matthew Smith-Burlage',
+  title: 'Senior Software Engineer & Systems Architect',
+  contact: {
+    email: EMAIL,
+    github: 'github.com/mattburlage',
+    website: 'www.msb.dev',
+    location: 'Atlanta, GA, USA (Remote)',
+  },
+  summary: 'Senior full-stack engineer with a track record of building and leading enterprise systems from the ground up, including founding a public-sector development division, modernizing legacy platforms, and integrating enterprise identity systems (Okta, Entra ID) for a Fortune 200-scale client. Combines hands-on architecture and feature development with technical leadership: setting stack direction, mentoring developers, and owning delivery, while staying close to the code.',
+  skills: {
+    'Full-Stack Development': ['JavaScript/TypeScript', 'Vue', 'React', 'Angular', 'Nuxt', 'Python (Django)'],
+    'Identity & Access Management': ['Okta SSO', 'Microsoft Entra ID', 'Active Directory', 'server-to-server token negotiation'],
+    'Systems Architecture & Leadership': ['Founded and led an application development division', 'SDLC design', 'technical mentorship'],
+    'DevOps & Cloud Infrastructure': ['CI/CD (Jenkins, GitHub Actions, Docker)', 'DigitalOcean', 'GCP', 'Cloudflare'],
+    'Databases': ['PostgreSQL', 'SQL Server', 'Redis', 'Hasura'],
+    'Integration & Domain Systems': ['ERP/CRM integration', 'payments (Stripe)', 'dispatch/logistics systems', 'government/public-sector systems'],
+  },
+  experience: roles
+    .filter((r) => r.priority === 'featured')
+    .map((r) => ({ company: r.company, title: r.title, location: r.location, start: r.start, end: r.end, highlights: r.resumeHighlights ?? r.highlights })),
+  earlier: roles
+    .filter((r) => r.priority === 'compact')
+    .map((r) => ({ company: r.company, title: r.title, start: r.start, end: r.end, note: r.highlights[0] })),
+  education: [{ degree: 'Bachelor of Science in Computer Science', school: 'University of North Georgia', year: 'Graduated 2020' }],
+};
 
 // Lightweight projection injected into the client-side bento script (name + sub only).
 const bento = {
   all: builds.map((b) => ({ name: b.name, sub: b.sub })),
   systems: builds.filter((b) => b.type === 'system').map((b) => ({ name: b.name, sub: b.sub })),
   integrations: builds.filter((b) => b.type === 'integration').map((b) => ({ name: b.name, sub: b.sub })),
+};
+
+// How I build — one list drives section 03 and the IDE's principles/ folder,
+// where each principle is its own markdown file (slug = filename).
+const PRINCIPLES_TAGLINE = 'The hard part is the fun part.';
+const principles = [
+  {
+    slug: 'self-sufficient',
+    title: 'Self-sufficient',
+    text: "I'm at my best taking on a task, understanding the why behind it along with the constraints and expectations, then executing.",
+  },
+  {
+    slug: 'sure-calls',
+    title: 'Fast on the sure calls, consensus on the big ones',
+    text: 'On familiar ground I decide quickly and move. When a call is high-stakes or genuinely ambiguous, I slow down on purpose and bring in the people it affects the most.',
+  },
+  {
+    slug: 'collaboration',
+    title: 'Collaboration where it counts',
+    text: "I reach for collaboration where it moves the work: code review, training, and untangling a genuinely hard problem together. Otherwise I'm heads-down and shipping.",
+  },
+  {
+    slug: 'clear-committed',
+    title: 'Clear, then committed',
+    text: 'I raise concerns and tradeoffs early, so calls get made with the full picture. Once we land on a direction, I follow through.',
+  },
+];
+
+// experience.ts — generated from `roles`, the same array that renders section 01.
+const roleIdent = (company) =>
+  company.split(/\s+/).map((w, i) => (i === 0 ? w.toLowerCase() : w[0].toUpperCase() + w.slice(1).toLowerCase())).join('');
+const featuredRoles = roles.filter((r) => r.priority === 'featured');
+const compactRoles = roles.filter((r) => r.priority === 'compact');
+const experienceCode = [
+  cm('// experience.ts: the same data that renders the main site'),
+  '',
+  ...featuredRoles.map((r) => [
+    `${kw('export const')} ${roleIdent(r.company)} = {`,
+    `  role: ${st(r.title)},`,
+    `  year: ${nm(r.start)},`,
+    '  highlights: [',
+    ...r.highlights.map((h) => `    ${st(h)},`),
+    '  ],',
+    '};',
+    '',
+  ].join('\n')),
+  `${kw('export const')} earlier = [`,
+  ...compactRoles.map((r) => `  { company: ${st(r.company)}, role: ${st(r.title)}, year: ${nm(r.start)} }, ${cm('// ' + r.highlights[0])}`),
+  '];',
+].join('\n');
+
+// skills.json — generated from resume.skills, the same object that renders the
+// print resume. Every mapped skill is a button that runs msb.reveal(...) in the
+// terminal; REVEAL_ALIASES translates the visible label to a deep-dive blurb key
+// in the terminal's SKILLS registry (labels must not contain quote characters).
+const REVEAL_ALIASES = {
+  'JavaScript/TypeScript': 'frontend',
+  'Vue': 'frontend',
+  'React': 'frontend',
+  'Angular': 'frontend',
+  'Nuxt': 'frontend',
+  'Python (Django)': 'django',
+  'Okta SSO': 'okta',
+  'Microsoft Entra ID': 'entra',
+  'Active Directory': 'activedirectory',
+  'server-to-server token negotiation': 'entra',
+  'Founded and led an application development division': 'leadership',
+  'SDLC design': 'leadership',
+  'technical mentorship': 'leadership',
+  'CI/CD (Jenkins, GitHub Actions, Docker)': 'cicd',
+  'DigitalOcean': 'cicd',
+  'GCP': 'cicd',
+  'Cloudflare': 'cicd',
+  'PostgreSQL': 'databases',
+  'SQL Server': 'databases',
+  'Redis': 'databases',
+  'Hasura': 'databases',
+  'ERP/CRM integration': 'integrations',
+  'payments (Stripe)': 'integrations',
+  'dispatch/logistics systems': 'mobile',
+  'government/public-sector systems': 'leadership',
+};
+const skillBtn = (label) => REVEAL_ALIASES[label]
+  ? `<button data-run='msb.reveal("${label}")' class="text-syn-str underline decoration-dotted decoration-void-500 underline-offset-4 hover:text-volt transition-colors cursor-pointer">"${hlEsc(label)}"</button>`
+  : st(label);
+const skillsCode = '{\n'
+  + Object.entries(resume.skills).map(([cat, items]) => `  ${jkey(cat)}: [${items.map(skillBtn).join(', ')}],`).join('\n')
+  + `\n  ${jkey('education')}: ${st(resume.education[0].degree + ', ' + resume.education[0].school)}\n}`;
+
+// Shared data injected into the client script: the IDE terminal's window.msb,
+// msb.experience(), and the reveal alias map all come from the objects above.
+const SITE_DATA = {
+  msb: msbCore,
+  experience: featuredRoles.map((r) => ({ company: r.company, role: r.title, year: Number(r.start) })),
+  revealAliases: REVEAL_ALIASES,
+  principleFiles: principles.map((p) => ({ id: p.slug, name: `principles/${p.slug}.md` })),
+  emptyStateTitle: EMPTY_STATE_TITLE,
 };
 ---
 
@@ -117,17 +338,17 @@ const bento = {
                 <div>
                     <p class="font-mono text-volt text-sm mb-3 m-reveal" data-hero>Hello World, I'm</p>
                     <h1 class="m-reveal" data-hero>
-                        <span class="block text-3xl sm:text-4xl font-semibold text-void-100 mb-4">Matthew Smith Burlage</span>
+                        <span class="block text-3xl sm:text-4xl font-semibold text-void-100 mb-4">{NAME}</span>
                         <span class="block text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-void-100 leading-[0.95]">
                             <span id="scramble-1" data-text="SENIOR">SENIOR</span><br/>
                             <span id="scramble-2" data-text="SOFTWARE">SOFTWARE</span><br/>
                             <span class="text-volt" id="scramble-3" data-text="ENGINEER">ENGINEER</span>
                         </span>
                     </h1>
-                    <p class="mt-4 text-3xl sm:text-4xl text-void-300 font-medium m-reveal" data-hero>Leader &amp; Systems Architect</p>
+                    <p class="mt-4 text-3xl sm:text-4xl text-void-300 font-medium m-reveal" data-hero>{SUBTITLE}</p>
                     <div class="mt-8 m-reveal" data-hero>
                         <p class="max-w-md text-void-400 leading-relaxed mb-8">
-                            I design, build, and scale secure, mission-critical software while mentoring those around me.
+                            {TAGLINE}
                         </p>
                         <div class="flex gap-4">
                             <a href="#contact" id="magnetic" class="inline-block px-6 py-3 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer will-change-transform">Get in touch</a>
@@ -162,11 +383,11 @@ const bento = {
                                 <p class="text-xs font-mono text-void-400 mt-1">years</p>
                             </div>
                             <div>
-                                <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span data-count="12">0</span><span class="text-volt">+</span></p>
+                                <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span data-count={systemsCount}>0</span><span class="text-volt">+</span></p>
                                 <p class="text-xs font-mono text-void-400 mt-1">production systems</p>
                             </div>
                             <div>
-                                <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span data-count="7">0</span><span class="text-volt">+</span></p>
+                                <p class="font-mono text-3xl sm:text-4xl font-semibold text-void-100"><span data-count={integrationsCount}>0</span><span class="text-volt">+</span></p>
                                 <p class="text-xs font-mono text-void-400 mt-1">integrations shipped</p>
                             </div>
                         </div>
@@ -183,7 +404,7 @@ const bento = {
     <main class="relative z-10">
 
         <!-- Experience -->
-        <section id="experience" class="border-t border-void-800">
+        <section id="experience">
             <div class="max-w-6xl mx-auto px-5 pt-20 sm:pt-28 pb-10 sm:pb-16">
                 <div class="flex items-baseline gap-6 mb-14">
                     <span class="sec-num m-reveal">01</span>
@@ -191,71 +412,32 @@ const bento = {
                 </div>
 
                 <div class="space-y-6" data-stagger>
-                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 m-reveal">
-                        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                            <h3 class="text-xl font-bold text-void-100">Incyte Studios</h3>
-                            <span class="font-mono text-sm text-volt">Senior Software Engineer</span>
-                            <span class="font-mono text-xs text-void-400 ml-auto">2021</span>
+                    {roles.filter((r) => r.priority === 'featured').map((r) => (
+                        <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 m-reveal">
+                            <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                                <h3 class="text-xl font-bold text-void-100">{r.company}</h3>
+                                <span class="font-mono text-sm text-volt">{r.title}</span>
+                                <span class="font-mono text-xs text-void-400 ml-auto">{r.start}</span>
+                            </div>
+                            <ul class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-void-200 leading-relaxed">
+                                {r.highlights.map((h) => <li>{h}</li>)}
+                            </ul>
                         </div>
-                        <ul class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-void-200 leading-relaxed">
-                            <li>The team's go-to for novel, ambiguous problems on a mission-critical equipment-tracking system for a Fortune 200 client.</li>
-                            <li>Implemented Okta SSO end-to-end, replacing legacy local auth.</li>
-                            <li>Integrated a client's Entra tenant with Okta for SSO.</li>
-                            <li>Spearheaded a Salesforce integration with existing systems, including server-to-server Entra token negotiation.</li>
-                            <li>Solo-modernized a legacy technician-dispatch web &amp; mobile app.</li>
-                            <li>Built a driver-safety feature integrated with company-wide training tracking.</li>
-                        </ul>
-                    </div>
-
-                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 m-reveal">
-                        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                            <h3 class="text-xl font-bold text-void-100">Hall County Government</h3>
-                            <span class="font-mono text-sm text-volt">Senior Applications Developer</span>
-                            <span class="font-mono text-xs text-void-400 ml-auto">2019</span>
-                        </div>
-                        <ul class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-void-200 leading-relaxed">
-                            <li>Founded and built the Enterprise Application Development division from the ground up.</li>
-                            <li>Led development of mission-critical systems across Agenda, Personnel, Fleet, Finance, Policies, and IT Access automation.</li>
-                            <li>Built a no-code CRUD application platform, adopted for new apps across county departments.</li>
-                            <li>Defined the division's full SDLC: tools, design paradigms, methodology, and stack.</li>
-                            <li>Mentored non-senior developers; owned sprints, timelines, and goals.</li>
-                            <li>Installed, configured, and managed CI/CD across dev, staging, and production.</li>
-                        </ul>
-                    </div>
+                    ))}
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" data-stagger>
-                        <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
-                            <div class="flex flex-col gap-y-1">
-                                <div class="flex items-baseline justify-between">
-                                    <h3 class="text-lg font-bold text-void-100">Hall County Government</h3>
-                                    <span class="font-mono text-xs text-void-400">2017</span>
+                        {roles.filter((r) => r.priority === 'compact').map((r) => (
+                            <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                                <div class="flex flex-col gap-y-1">
+                                    <div class="flex items-baseline justify-between">
+                                        <h3 class="text-lg font-bold text-void-100">{r.company}</h3>
+                                        <span class="font-mono text-xs text-void-400">{r.start}</span>
+                                    </div>
+                                    <span class="font-mono text-xs text-volt">{r.title}</span>
                                 </div>
-                                <span class="font-mono text-xs text-volt">PC Technician</span>
+                                <p class="mt-4 text-sm text-void-200 leading-relaxed">{r.highlights[0]}</p>
                             </div>
-                            <p class="mt-4 text-sm text-void-200 leading-relaxed">Handled hardware and software support for county systems.</p>
-                        </div>
-
-                        <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
-                            <div class="flex flex-col gap-y-1">
-                                <div class="flex items-baseline justify-between">
-                                    <h3 class="text-lg font-bold text-void-100">Geek Squad</h3>
-                                    <span class="font-mono text-xs text-void-400">2013</span>
-                                </div>
-                                <span class="font-mono text-xs text-volt">Advanced Repair Agent</span>
-                            </div>
-                            <p class="mt-4 text-sm text-void-200 leading-relaxed">Repaired computers and consumer electronics.</p>
-                        </div>
-
-                        <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
-                            <div class="flex flex-col gap-y-1">
-                                <div class="flex items-baseline justify-between">
-                                    <h3 class="text-lg font-bold text-void-100">French Woods Festival</h3>
-                                    <span class="font-mono text-xs text-void-400">2007</span>
-                                </div>
-                                <span class="font-mono text-xs text-volt">Stage Manager, Magic Department</span>
-                            </div>
-                            <p class="mt-4 text-sm text-void-200 leading-relaxed">Managed a theater, taught kids to cut each other in half.</p>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -376,29 +558,16 @@ const bento = {
                     <span class="sec-num m-reveal">03</span>
                     <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">How I build<span class="caret"></span></h2>
                 </div>
-                <p class="font-mono text-volt text-sm mb-12 m-reveal">The hard part is the fun part.</p>
+                <p class="font-mono text-volt text-sm mb-12 m-reveal">{PRINCIPLES_TAGLINE}</p>
 
                 <div class="grid gap-4 sm:grid-cols-2" data-stagger>
-                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
-                        <p class="font-mono text-volt text-xs mb-3">[01]</p>
-                        <h3 class="font-bold text-void-100 mb-2">Self-sufficient</h3>
-                        <p class="text-sm text-void-400 leading-relaxed">I'm at my best taking on a task, understanding the why behind it along with the constraints and expectations, then executing.</p>
-                    </div>
-                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
-                        <p class="font-mono text-volt text-xs mb-3">[02]</p>
-                        <h3 class="font-bold text-void-100 mb-2">Fast on the sure calls, consensus on the big ones</h3>
-                        <p class="text-sm text-void-400 leading-relaxed">On familiar ground I decide quickly and move. When a call is high-stakes or genuinely ambiguous, I slow down on purpose and bring in the people it affects the most.</p>
-                    </div>
-                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
-                        <p class="font-mono text-volt text-xs mb-3">[03]</p>
-                        <h3 class="font-bold text-void-100 mb-2">Collaboration where it counts</h3>
-                        <p class="text-sm text-void-400 leading-relaxed">I reach for collaboration where it moves the work: code review, training, and untangling a genuinely hard problem together. Otherwise I'm heads-down and shipping.</p>
-                    </div>
-                    <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
-                        <p class="font-mono text-volt text-xs mb-3">[04]</p>
-                        <h3 class="font-bold text-void-100 mb-2">Clear, then committed</h3>
-                        <p class="text-sm text-void-400 leading-relaxed">I raise concerns and tradeoffs early, so calls get made with the full picture. Once we land on a direction, I follow through.</p>
-                    </div>
+                    {principles.map((p, i) => (
+                        <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                            <p class="font-mono text-volt text-xs mb-3">[{String(i + 1).padStart(2, '0')}]</p>
+                            <h3 class="font-bold text-void-100 mb-2">{p.title}</h3>
+                            <p class="text-sm text-void-400 leading-relaxed">{p.text}</p>
+                        </div>
+                    ))}
                 </div>
 
                 {recentPosts.length > 0 && (
@@ -428,9 +597,10 @@ const bento = {
                 <h2 class="text-4xl sm:text-6xl font-bold text-void-100 tracking-tight m-reveal">Let's build something<br/><span class="text-volt">worth shipping.</span></h2>
                 <p class="mt-6 text-void-400 max-w-md mx-auto m-reveal">If you think I can help your project or organization, reach out!</p>
                 <div class="mt-10 flex flex-wrap justify-center gap-4 m-reveal">
-                    <a href="#" data-email class="px-7 py-3.5 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">hello@msb.dev</a>
+                    <a href="#" data-email class="px-7 py-3.5 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">{EMAIL_FALLBACK}</a>
                     <a href="https://github.com/mattburlage" target="_blank" rel="noopener" class="px-7 py-3.5 border border-void-700 text-void-200 rounded hover:border-volt/50 hover:text-void-100 transition-colors cursor-pointer">github.com/mattburlage</a>
                 </div>
+                <button type="button" onclick="window.print()" class="mt-6 text-sm text-void-500 hover:text-volt transition-colors cursor-pointer underline decoration-dotted m-reveal">Print resume</button>
             </div>
         </section>
 
@@ -456,14 +626,14 @@ const bento = {
                 <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true"></span>
             </div>
             <p class="flex-1 text-center text-xs text-void-400 truncate">
-                {isProd ? 'matthew smith burlage' : <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-orange-500 text-void-950 font-semibold">matthew smith burlage</span>}
+                {isProd ? NAME.toLowerCase() : <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-orange-500 text-void-950 font-semibold">{NAME.toLowerCase()}</span>}
             </p>
-            <a href="#" data-email class="text-xs text-volt hover:underline cursor-pointer hidden sm:inline">hello@msb.dev</a>
+            <a href="#" data-email class="text-xs text-volt hover:underline cursor-pointer hidden sm:inline">{EMAIL_FALLBACK}</a>
         </div>
 
         <!-- Workbench -->
         <div class="flex-1 flex min-h-0">
-            <aside class="ide-sidebar w-52 lg:w-60 bg-void-900 border-r border-void-700 shrink-0 hidden md:flex flex-col" aria-label="File explorer">
+            <aside id="ide-sidebar" class="ide-sidebar w-52 lg:w-60 bg-void-900 border-r border-void-700 shrink-0 hidden md:flex flex-col" aria-label="File explorer">
                 <p class="px-4 pt-4 pb-2 text-[10px] tracking-widest text-void-400">EXPLORER</p>
                 <p class="px-4 pb-1 text-xs text-void-400 flex items-center gap-1.5">
                     <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 4l4 4-4 4V4z" transform="rotate(90 8 8)"/></svg>
@@ -482,50 +652,71 @@ const bento = {
                     <button data-file="skills" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
                         <span class="text-syn-num">{}</span><span class="tree-name">skills.json</span>
                     </button>
-                    <button data-file="principles" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
-                        <span class="text-syn-fn">M↓</span><span class="tree-name">principles.md</span>
+                    <button id="folder-principles" aria-expanded="true" class="w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                        <svg id="folder-principles-chevron" class="transition-transform shrink-0 rotate-90" width="10" height="10" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M6 4l4 4-4 4V4z"/></svg>
+                        <span class="tree-name">principles</span>
                     </button>
+                    <div id="folder-principles-children">
+                        {principles.map((p) => (
+                            <button data-file={p.slug} class="tree-item w-full text-left pl-11 pr-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
+                                <span class="text-syn-fn">M↓</span><span class="tree-name truncate">{p.slug}.md</span>
+                            </button>
+                        ))}
+                    </div>
                     <button data-file="contact" class="tree-item w-full text-left px-6 py-1.5 text-xs text-void-400 hover:bg-void-800 transition-colors cursor-pointer flex items-center gap-2">
                         <span class="text-volt">$</span><span class="tree-name">contact.sh</span>
                     </button>
                 </nav>
                 <div class="px-4 py-3 border-t border-void-700 text-[10px] text-void-500 leading-relaxed">
-                    try <span class="text-volt">help</span> in the terminal below
+                    <p>try <span class="text-volt">help</span> in the terminal below</p>
+                    <p>type <span class="text-volt">exit</span> to return to the main site</p>
                 </div>
             </aside>
 
+            <div id="sidebar-resizer" class="hidden md:block w-1.5 shrink-0 cursor-col-resize touch-none hover:bg-syn-fn/25 transition-colors" role="separator" aria-orientation="vertical" aria-label="Resize file explorer" tabindex="0"></div>
+
             <div class="flex-1 flex flex-col min-w-0">
-                <div id="tabs" class="flex bg-void-900 border-b border-void-700 overflow-x-auto shrink-0" role="tablist">
-                    <button data-file="readme" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">README.md</button>
-                    <button data-file="experience" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">experience.ts</button>
-                    <button data-file="projects" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">projects.md</button>
-                    <button data-file="skills" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">skills.json</button>
-                    <button data-file="principles" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">principles.md</button>
-                    <button data-file="contact" role="tab" class="tab px-4 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer">contact.sh</button>
-                </div>
+                <!-- Tabs are built at runtime (see ensureTab): README opens by default, everything else opens on demand and can be closed. -->
+                <div id="tabs" class="flex bg-void-900 border-b border-void-700 overflow-x-auto shrink-0" role="tablist"></div>
 
                 <div class="flex-1 overflow-y-auto min-h-0" id="editor">
 
+                    <div id="editor-empty" class="hidden h-full flex-col items-center justify-center text-center px-6">
+                        <p class="font-mono text-xs text-void-400">{EMPTY_STATE_TITLE}</p>
+                        <p class="font-mono text-[11px] text-void-500 mt-1">pick one from the sidebar, or <span class="text-volt">ls()</span> below</p>
+                        <div id="tumbleweed-wrap" class="hidden relative w-full max-w-lg h-44 mt-10 mx-auto overflow-hidden">
+                            <div id="tumbleweed-mover" class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                                <svg id="tumbleweed" class="text-void-500" width="116" height="116" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">
+                                    <path d="M86 50Q83 32 78.3 21.7Q68 14 50 16Q34 18 22.4 22.4Q15 35 13 50Q15 65 25.3 74.7Q36 86 50 91Q65 86 75.5 75.5Q84 65 86 50Z" stroke-width="1.5" opacity="0.55"/>
+                                    <path d="M20 30L82 68M18 62L80 28M30 15L66 88M68 14L34 90M14 46L88 54M46 14L54 88" stroke-width="1" opacity="0.45"/>
+                                    <circle cx="50" cy="50" r="13" opacity="0.3" stroke-width="1"/>
+                                    <path d="M86 50l8-4M78.3 21.7l6-9M22.4 22.4l-7-10M13 50l-9 4M25.3 74.7l-8 9M75.5 75.5l7 10M50 16l0-10M50 91l0 8" stroke-width="1.3" opacity="0.5"/>
+                                </svg>
+                                <div class="tumbleweed-shadow -mt-1.5 h-3.5 w-24 rounded-full bg-void-950/70 blur-[2px]"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <article id="pane-readme" class="file-pane active max-w-3xl px-6 sm:px-10 py-8 font-display">
-                        <h1 class="text-3xl font-bold text-void-100">Matthew Smith Burlage</h1>
-                        <p class="mt-1 text-volt font-mono text-sm">Senior Software Engineer &amp; Systems Architect</p>
+                        <h1 class="text-3xl font-bold text-void-100">{NAME}</h1>
+                        <p class="mt-1 text-volt font-mono text-sm">{TITLE}</p>
+                        <p class="mt-1 text-void-300 font-medium">{SUBTITLE}</p>
                         <hr class="my-6 border-void-700"/>
-                        <p class="leading-relaxed text-void-200">
-                            I architect and build secure, full-stack systems that remove duplicate work,
-                            bad process, and waste — and I help the teams around me ship them.
-                        </p>
-                        <p class="mt-4 leading-relaxed text-void-400">
-                            At Incyte Studios I was the team's go-to for novel, ambiguous problems on a
-                            mission-critical equipment-tracking system for a Fortune 200 client — bringing
-                            Okta SSO to client logins, wiring a client's Entra ID into Okta with
-                            server-to-server token negotiation, and solo-modernizing a legacy
-                            technician-dispatch web and mobile app. Before that, I founded Hall County
-                            Government's Enterprise Application Development division from the ground up.
-                        </p>
+                        <p class="leading-relaxed text-void-200">{TAGLINE}</p>
+                        <pre class="mt-6 text-xs sm:text-sm leading-[1.8] overflow-x-auto"><code set:html={readmeStatsCode}></code></pre>
                         <div class="mt-8 flex flex-wrap gap-3 font-mono text-xs">
                             <button data-open="experience" class="px-4 py-2 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">open experience.ts</button>
                             <button data-open="projects" class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">open projects.md</button>
                             <button data-open="contact" class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">open contact.sh</button>
+                        </div>
+
+                        <div class="mt-10 pt-8 border-t border-void-700">
+                            <p class="font-mono text-[10px] tracking-widest text-void-500 uppercase mb-3">Using dev mode</p>
+                            <ul class="space-y-2 text-sm text-void-400 leading-relaxed">
+                                <li><span class="text-volt font-mono mr-2">→</span>click a file in the sidebar to open it — the <span class="text-void-200">×</span> on a tab closes it</li>
+                                <li><span class="text-volt font-mono mr-2">→</span>the terminal is a real JS console — try <button data-run="help" class="text-volt font-mono hover:underline cursor-pointer">help</button></li>
+                                <li><span class="text-volt font-mono mr-2">→</span>type <button data-run="exit" class="text-volt font-mono hover:underline cursor-pointer">exit</button>, press <kbd class="px-1.5 py-0.5 rounded border border-void-700 text-void-300 font-mono text-xs">Esc</kbd>, or click the red dot up top to leave</li>
+                            </ul>
                         </div>
                     </article>
 
@@ -551,33 +742,27 @@ const bento = {
                         <p class="mt-6 text-xs text-syn-cm">// deep-dive any of these: <button data-run='msb.reveal()' class="text-volt hover:underline cursor-pointer">msb.reveal()</button></p>
                     </div>
 
-                    <article id="pane-principles" class="file-pane max-w-3xl px-6 sm:px-10 py-8 font-display">
-                        <h1 class="text-2xl font-bold text-void-100 mb-6">How I build</h1>
-                        <div class="space-y-6">
-                            <div>
-                                <h2 class="font-semibold text-void-100"><span class="text-volt font-mono">1.</span> Security First</h2>
-                                <p class="text-sm text-void-400 mt-1 leading-relaxed">The value of data is ever-increasing. Any system should consider security from the outset — from design through implementation and maintenance. No system is worth a penny if it is insecure.</p>
+                    {principles.map((p, i) => (
+                        <article id={`pane-${p.slug}`} class="file-pane max-w-3xl px-6 sm:px-10 py-8 font-display">
+                            <p class="font-mono text-xs text-void-500 mb-6">// How I build · {PRINCIPLES_TAGLINE}</p>
+                            <h1 class="text-2xl font-bold text-void-100"><span class="text-volt font-mono mr-2">{String(i + 1).padStart(2, '0')}.</span>{p.title}</h1>
+                            <p class="mt-4 text-void-400 leading-relaxed">{p.text}</p>
+                            <div class="mt-8 flex flex-wrap gap-3 font-mono text-xs">
+                                {principles[i + 1] && <button data-open={principles[i + 1].slug} class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">next: {principles[i + 1].slug}.md →</button>}
+                                {!principles[i + 1] && <button data-open={principles[0].slug} class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">back to: {principles[0].slug}.md</button>}
                             </div>
-                            <div>
-                                <h2 class="font-semibold text-void-100"><span class="text-volt font-mono">2.</span> Ease of Use</h2>
-                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Users should be able to focus on their work, not on learning new systems. All a user needs to know is their end goal — the system should put the right information in front of whoever needs it.</p>
-                            </div>
-                            <div>
-                                <h2 class="font-semibold text-void-100"><span class="text-volt font-mono">3.</span> Embrace and Prepare for Change</h2>
-                                <p class="text-sm text-void-400 mt-1 leading-relaxed">Business needs change regularly. Solutions must be customizable and built from day one in a way that makes later upgrades a breeze.</p>
-                            </div>
-                        </div>
-                    </article>
+                        </article>
+                    ))}
 
                     <div id="pane-contact" class="file-pane px-6 sm:px-10 py-8">
                         <pre class="text-xs sm:text-sm leading-[1.8] overflow-x-auto"><code><span class="text-syn-cm">#!/bin/sh</span>
-<span class="text-syn-cm"># if you think I can help your project or organization, reach out</span>
+<span class="text-syn-cm"># If you think I can help your project or organization, reach out!</span>
 
-<span class="text-syn-fn">echo</span> <span class="text-syn-str">"email:  hello@msb.dev"</span>
+<span class="text-syn-fn">echo</span> <span class="text-syn-str">"email:  <span data-email-text>{EMAIL_FALLBACK}</span>"</span>
 <span class="text-syn-fn">echo</span> <span class="text-syn-str">"github: github.com/mattburlage"</span>
 <span class="text-syn-fn">echo</span> <span class="text-syn-str">"web:    www.msb.dev"</span></code></pre>
                         <div class="mt-8 flex flex-wrap gap-3 font-mono text-xs">
-                            <a href="#" data-email class="px-4 py-2 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">hello@msb.dev</a>
+                            <a href="#" data-email class="px-4 py-2 bg-volt text-void-950 font-semibold rounded hover:bg-volt-dim transition-colors cursor-pointer">{EMAIL_FALLBACK}</a>
                             <a href="https://github.com/mattburlage" target="_blank" rel="noopener" class="px-4 py-2 border border-void-700 rounded hover:border-volt/50 transition-colors cursor-pointer">github.com/mattburlage</a>
                         </div>
                     </div>
@@ -586,14 +771,17 @@ const bento = {
             </div>
         </div>
 
+        <div id="terminal-resizer" class="h-1.5 shrink-0 cursor-row-resize touch-none hover:bg-syn-fn/25 transition-colors" role="separator" aria-orientation="horizontal" aria-label="Resize terminal" tabindex="0"></div>
+
         <!-- Terminal -->
-        <div class="ide-terminal h-48 sm:h-52 bg-void-900 border-t border-void-700 shrink-0 flex flex-col">
+        <div id="ide-terminal" class="ide-terminal h-48 sm:h-52 bg-void-900 border-t border-void-700 shrink-0 flex flex-col">
             <div class="flex items-center gap-4 px-4 py-1.5 border-b border-void-700 text-[10px] tracking-widest text-void-400 shrink-0">
                 <span class="text-void-200 border-b border-volt pb-1 -mb-[7px]">TERMINAL</span>
                 <span class="ml-auto flex flex-wrap gap-1.5">
                     <button data-run="msb.reveal()" class="px-2 py-0.5 rounded border border-void-700 text-void-400 hover:text-volt hover:border-volt/40 transition-colors cursor-pointer normal-case tracking-normal font-mono">msb.reveal()</button>
                     <button data-run="ls()" class="px-2 py-0.5 rounded border border-void-700 text-void-400 hover:text-volt hover:border-volt/40 transition-colors cursor-pointer normal-case tracking-normal font-mono">ls()</button>
                     <button data-run="help" class="px-2 py-0.5 rounded border border-void-700 text-void-400 hover:text-volt hover:border-volt/40 transition-colors cursor-pointer normal-case tracking-normal font-mono">help</button>
+                    <button data-run="exit" class="px-2 py-0.5 rounded border border-void-700 text-void-400 hover:text-volt hover:border-volt/40 transition-colors cursor-pointer normal-case tracking-normal font-mono">exit</button>
                 </span>
             </div>
             <div id="repl-out" class="flex-1 overflow-y-auto px-4 py-2 text-xs leading-relaxed" aria-live="polite"></div>
@@ -601,7 +789,7 @@ const bento = {
                 <span class="text-xs text-volt select-none" aria-hidden="true">msb.dev &gt;</span>
                 <input id="repl-in" type="text" autocomplete="off" spellcheck="false"
                     class="flex-1 bg-transparent text-xs text-void-100 placeholder-void-500 focus:outline-none"
-                    placeholder='msb.reveal() — or "help"' aria-label="Interactive JavaScript console. Type help for commands."/>
+                    placeholder='"help" for commands · "exit" to leave' aria-label="Interactive JavaScript console. Type help for commands, or exit to leave."/>
             </div>
         </div>
 
@@ -618,7 +806,10 @@ const bento = {
     </div>
 </div>
 
-<script define:vars={{ bento, ENCODED_EMAIL }}>window.__BENTO__ = bento; window.__EMAIL__ = ENCODED_EMAIL;</script>
+<!-- ==================== PRINT RESUME ==================== -->
+<Resume resume={resume} />
+
+<script define:vars={{ bento, ENCODED_EMAIL, SITE_DATA }}>window.__BENTO__ = bento; window.__EMAIL__ = ENCODED_EMAIL; window.__SITE__ = SITE_DATA;</script>
 <script is:inline type="module">
     import { animate, inView, stagger, scroll } from "https://cdn.jsdelivr.net/npm/motion@10.18.0/+esm";
 
@@ -636,6 +827,8 @@ const bento = {
         link.textContent = realEmail;
         link.href = 'mailto:' + realEmail;
     });
+    // Plain-text spots (code panes) that show the obfuscation fallback until now
+    document.querySelectorAll('[data-email-text]').forEach(el => { el.textContent = realEmail; });
     const fine = window.matchMedia('(pointer: fine)').matches;
 
     // ---------- Hero dot-grid: ambient shimmer + scatter-and-fade on scroll ----------
@@ -815,21 +1008,171 @@ const bento = {
     // Arriving from another page's "dev mode" link (e.g. /#ide from the blog nav)
     if (localStorage.getItem('msb-mode') === 'ide' || location.hash === '#ide') enterIDE();
 
+    // ---------- IDE: drag-to-resize sidebar + terminal ----------
+    function makeResizer({ handle, target, axis, prop, min, max, storageKey, growKeys }) {
+        if (!handle || !target) return;
+        const clamp = (v) => Math.min(max(), Math.max(min, v));
+        const dim = axis === 'x' ? 'width' : 'height';
+        const point = axis === 'x' ? 'clientX' : 'clientY';
+
+        const stored = parseInt(localStorage.getItem(storageKey), 10);
+        if (!Number.isNaN(stored)) target.style[prop] = clamp(stored) + 'px';
+
+        let startPos = 0, startSize = 0, dragging = false;
+        const onMove = (e) => {
+            if (!dragging) return;
+            const delta = (axis === 'x' ? 1 : -1) * (e[point] - startPos);
+            target.style[prop] = clamp(startSize + delta) + 'px';
+        };
+        const onUp = () => {
+            if (!dragging) return;
+            dragging = false;
+            // Same token as the hover state (bg-syn-fn/25) at higher opacity — toggled in JS
+            // rather than via CSS :active, since :active drops the instant the pointer
+            // leaves the 6px strip mid-drag.
+            handle.classList.remove('bg-syn-fn/40');
+            document.body.style.userSelect = '';
+            document.body.style.cursor = '';
+            localStorage.setItem(storageKey, parseInt(target.style[prop], 10));
+            window.removeEventListener('pointermove', onMove);
+            window.removeEventListener('pointerup', onUp);
+        };
+        handle.addEventListener('pointerdown', (e) => {
+            dragging = true;
+            handle.classList.add('bg-syn-fn/40');
+            startPos = e[point];
+            startSize = target.getBoundingClientRect()[dim];
+            document.body.style.userSelect = 'none';
+            document.body.style.cursor = axis === 'x' ? 'col-resize' : 'row-resize';
+            window.addEventListener('pointermove', onMove);
+            window.addEventListener('pointerup', onUp);
+            e.preventDefault();
+        });
+        // Arrow-key nudge for keyboard users operating the separator.
+        handle.addEventListener('keydown', (e) => {
+            let dir = 0;
+            if (e.key === growKeys[0]) dir = 1;
+            else if (e.key === growKeys[1]) dir = -1;
+            if (!dir) return;
+            e.preventDefault();
+            const size = clamp(target.getBoundingClientRect()[dim] + dir * 16);
+            target.style[prop] = size + 'px';
+            localStorage.setItem(storageKey, size);
+        });
+        window.addEventListener('resize', () => {
+            if (target.style[prop]) target.style[prop] = clamp(parseFloat(target.style[prop])) + 'px';
+        });
+    }
+    makeResizer({
+        handle: document.getElementById('sidebar-resizer'),
+        target: document.getElementById('ide-sidebar'),
+        axis: 'x', prop: 'width', min: 180, max: () => Math.min(480, window.innerWidth * 0.5),
+        storageKey: 'msb-sidebar-width', growKeys: ['ArrowRight', 'ArrowLeft'],
+    });
+    makeResizer({
+        handle: document.getElementById('terminal-resizer'),
+        target: document.getElementById('ide-terminal'),
+        axis: 'y', prop: 'height', min: 120, max: () => Math.min(600, window.innerHeight * 0.7),
+        storageKey: 'msb-terminal-height', growKeys: ['ArrowUp', 'ArrowDown'],
+    });
+
     // ---------- IDE: files ----------
     const FILE_NAMES = {
         readme: 'README.md', experience: 'experience.ts', projects: 'projects.md',
-        skills: 'skills.json', principles: 'principles.md', contact: 'contact.sh',
+        skills: 'skills.json', contact: 'contact.sh',
     };
+    // One file per principle, injected from the same array that renders section 03.
+    window.__SITE__.principleFiles.forEach((f) => { FILE_NAMES[f.id] = f.name; });
+
+    // Empty state: shown whenever every tab is closed. A tumbleweed rolls
+    // through if that stays true for a while — nobody's expected to see it,
+    // it's just there for anyone who closes everything and wanders off.
+    const editorEmpty = document.getElementById('editor-empty');
+    const tumbleweedWrap = document.getElementById('tumbleweed-wrap');
+    const TUMBLEWEED_DELAY = 10000;
+    let tumbleweedTimer = null;
+    function showEmptyState() {
+        editorEmpty.classList.remove('hidden');
+        editorEmpty.classList.add('flex');
+        document.getElementById('status-file').textContent = window.__SITE__.emptyStateTitle;
+        tumbleweedTimer = setTimeout(() => {
+            tumbleweedWrap.classList.remove('hidden');
+            if (!reduced) tumbleweedWrap.classList.add('rolling');
+        }, TUMBLEWEED_DELAY);
+    }
+    function hideEmptyState() {
+        editorEmpty.classList.add('hidden');
+        editorEmpty.classList.remove('flex');
+        tumbleweedWrap.classList.add('hidden');
+        tumbleweedWrap.classList.remove('rolling');
+        clearTimeout(tumbleweedTimer);
+    }
+
+    // Files without an open tab get one appended on first open, like an IDE.
+    // Each tab is a label (switches to the file) plus a close button.
+    function ensureTab(id) {
+        const tabs = document.getElementById('tabs');
+        if (tabs.querySelector(`.tab[data-file="${id}"]`)) return;
+        const name = FILE_NAMES[id].split('/').pop();
+        const tab = document.createElement('div');
+        tab.dataset.file = id;
+        tab.setAttribute('role', 'tab');
+        tab.className = 'tab group flex items-center gap-2 pl-4 pr-2 py-2 text-xs text-void-400 whitespace-nowrap border-r border-void-700 hover:text-void-200 transition-colors cursor-pointer';
+        tab.addEventListener('click', () => openFile(id));
+
+        const label = document.createElement('span');
+        label.textContent = name;
+        tab.appendChild(label);
+
+        const close = document.createElement('button');
+        close.className = 'tab-close shrink-0 w-3.5 h-3.5 flex items-center justify-center rounded-sm text-void-500 opacity-0 group-hover:opacity-100 hover:text-void-100 hover:bg-void-700 transition-colors cursor-pointer';
+        close.setAttribute('aria-label', 'Close ' + name);
+        close.innerHTML = '<svg width="8" height="8" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg>';
+        close.addEventListener('click', (e) => { e.stopPropagation(); closeFile(id); });
+        tab.appendChild(close);
+
+        tabs.appendChild(tab);
+    }
+    function closeFile(id) {
+        const tabEl = document.querySelector(`#tabs .tab[data-file="${id}"]`);
+        if (!tabEl) return;
+        const wasActive = tabEl.classList.contains('active');
+        const fallback = wasActive ? (tabEl.previousElementSibling || tabEl.nextElementSibling) : null;
+        tabEl.remove();
+        if (!wasActive) return;
+        if (fallback) {
+            openFile(fallback.dataset.file);
+        } else {
+            document.querySelectorAll('.file-pane').forEach((p) => p.classList.remove('active'));
+            document.querySelectorAll('#tree .tree-item').forEach((el) => el.classList.remove('active'));
+            showEmptyState();
+        }
+    }
     function openFile(id) {
         if (!FILE_NAMES[id]) return false;
+        hideEmptyState();
+        ensureTab(id);
         document.querySelectorAll('.file-pane').forEach((p) => p.classList.toggle('active', p.id === 'pane-' + id));
         document.querySelectorAll('#tabs .tab, #tree .tree-item').forEach((el) =>
             el.classList.toggle('active', el.dataset.file === id));
         document.getElementById('status-file').textContent = FILE_NAMES[id];
         document.getElementById('editor').scrollTop = 0;
+        // If the file lives in a collapsed tree folder (e.g. opened from the
+        // terminal), expand the folder so the highlighted item is visible.
+        const treeItem = document.querySelector(`#tree .tree-item[data-file="${id}"]`);
+        const folder = treeItem && treeItem.closest('#folder-principles-children');
+        if (folder && folder.classList.contains('hidden')) togglePrinciplesFolder();
         return true;
     }
-    document.querySelectorAll('[data-file]').forEach((el) =>
+    function togglePrinciplesFolder() {
+        const kids = document.getElementById('folder-principles-children');
+        const open = !kids.classList.toggle('hidden');
+        document.getElementById('folder-principles').setAttribute('aria-expanded', open);
+        document.getElementById('folder-principles-chevron').classList.toggle('rotate-90', open);
+    }
+    document.getElementById('folder-principles')?.addEventListener('click', togglePrinciplesFolder);
+    // Tabs bind their own click/close handlers in ensureTab; this only covers the tree.
+    document.querySelectorAll('#tree [data-file]').forEach((el) =>
         el.addEventListener('click', () => openFile(el.dataset.file)));
     document.querySelectorAll('[data-open]').forEach((el) =>
         el.addEventListener('click', () => openFile(el.dataset.open)));
@@ -837,17 +1180,23 @@ const bento = {
 
     // ---------- Terminal: real JS console ----------
     const SKILLS = {
-        okta: { tag: 'auth / SSO', text: 'At Incyte Studios I replaced legacy Django authentication with Okta SSO for client logins — single sign-on for the client portal without disrupting existing users.' },
+        okta: { tag: 'auth / SSO', text: 'At Incyte Studios I replaced legacy Django authentication with Okta SSO for client logins: single sign-on for the client portal without disrupting existing users.' },
         entra: { tag: 'identity', text: 'Integrated a client\'s Microsoft Entra ID with Okta for SSO, and separately set up server-to-server Entra token negotiation for machine-to-machine access.' },
-        frontend: { tag: 'frontend', text: 'Vue, React, Angular, and Nuxt in production since 2019 — government agenda management, a no-code forms platform, and a technician-dispatch web & mobile app all shipped on this stack.' },
+        frontend: { tag: 'frontend', text: 'Vue, React, Angular, and Nuxt in production since 2019: government agenda management, a no-code forms platform, and a technician-dispatch web & mobile app all shipped on this stack.' },
         django: { tag: 'backend', text: 'Django sits behind almost everything I have shipped: government agenda workflows, HR position control, form platforms, and REST APIs consumed by web and mobile clients.' },
         databases: { tag: 'data', text: 'PostgreSQL, SQL Server, Hasura, and Redis in production. I also wrote SmartBackup, an open-source PostgreSQL backup manager that automates recurring backups with dynamic consolidation.' },
         leadership: { tag: 'teams', text: 'At Incyte Studios I was the team\'s go-to for novel, ambiguous problems. Before that I founded Hall County\'s Enterprise Application Development division from the ground up and mentored its developers.' },
-        mobile: { tag: 'web + mobile', text: 'I solo-modernized a legacy technician-dispatch application across web and mobile — triage, architecture, and shipping features end to end.' },
-        activedirectory: { tag: 'identity', text: 'Deep Active Directory automation at Hall County, plus Okta and Entra ID integration at Incyte — identity and access is a core part of what I do.' },
-        cicd: { tag: 'devops', text: 'Installed, configured, and managed CI/CD across development, staging, and production — Docker, Jenkins, and GitHub Actions, with Sentry for error tracking.' },
+        mobile: { tag: 'web + mobile', text: 'I solo-modernized a legacy technician-dispatch application across web and mobile: triage, architecture, and shipping features end to end.' },
+        activedirectory: { tag: 'identity', text: 'Deep Active Directory automation at Hall County, plus Okta and Entra ID integration at Incyte. Identity and access is a core part of what I do.' },
+        cicd: { tag: 'devops', text: 'Installed, configured, and managed CI/CD across development, staging, and production: Docker, Jenkins, and GitHub Actions, with Sentry for error tracking.' },
         automation: { tag: 'philosophy', text: 'My favorite thing to kill is duplicate work. The no-code platform I built lets teams spin up a new form-based app in hours instead of weeks. If a process is done twice, I automate it.' },
+        integrations: { tag: 'systems', text: 'Systems talking to systems: a massive Salesforce integration of an internal billing system, ERP inventory and shipment tracking across systems, and payments with Stripe.' },
     };
+    // Maps the labels shown in skills.json (and anything a visitor might type,
+    // case-insensitively) onto the SKILLS keys above. Injected from the server so
+    // the clickable pane and the terminal resolve identically.
+    const REVEAL_LOOKUP = {};
+    Object.entries(window.__SITE__.revealAliases).forEach(([label, key]) => { REVEAL_LOOKUP[label.toLowerCase()] = key; });
 
     const out = document.getElementById('repl-out');
     const input = document.getElementById('repl-in');
@@ -884,18 +1233,14 @@ const bento = {
     }
 
     window.msb = {
-        name: 'Matthew Smith Burlage',
-        role: 'Senior Software Engineer & Systems Architect',
-        since: 2019,
-        systems: 12,
-        frontend: ['Vue', 'React', 'Angular', 'Nuxt'],
-        backend: ['Django', 'WebSockets'],
-        db: ['PostgreSQL', 'SQL Server', 'Hasura', 'Redis'],
-        securityFirst: true,
+        ...window.__SITE__.msb,
         skills() { return Object.keys(SKILLS); },
-        contact() { return realEmail + ' · github.com/mattburlage'; },
         reveal(skill) {
-            let k = skill && SKILLS[skill] ? skill : null;
+            let k = null;
+            if (skill != null) {
+                const q = String(skill).toLowerCase().trim();
+                k = SKILLS[q] ? q : REVEAL_LOOKUP[q] || null;
+            }
             if (!k) {
                 const keys = Object.keys(SKILLS).filter((s) => s !== lastReveal);
                 k = keys[Math.floor(Math.random() * keys.length)];
@@ -903,12 +1248,7 @@ const bento = {
             lastReveal = k;
             print('<b class="text-volt">' + k + '</b> <span class="text-void-500">[' + SKILLS[k].tag + ']</span> ' + esc(SKILLS[k].text));
         },
-        experience() {
-            return [
-                { company: 'Incyte Studios', role: 'Senior Software Engineer', since: 2021 },
-                { company: 'Hall County Government', role: 'Senior Applications Developer', since: 2019 },
-            ];
-        },
+        experience() { return window.__SITE__.experience; },
         contact() {
             print('<a class="text-volt underline cursor-pointer" href="mailto:' + realEmail + '">' + realEmail + '</a> · <a class="text-volt underline cursor-pointer" target="_blank" rel="noopener" href="https://github.com/mattburlage">github.com/mattburlage</a>');
         },
@@ -920,7 +1260,7 @@ const bento = {
     window.openTab = (f) => {
         const id = resolveFile(f);
         if (id) { openFile(id); return FILE_NAMES[id]; }
-        throw new Error('openTab(file) — try one of: ' + Object.values(FILE_NAMES).join(', '));
+        throw new Error('openTab(file): try one of ' + Object.values(FILE_NAMES).join(', '));
     };
     window.open_ = window.open;
     window.open = (f) => {
@@ -929,7 +1269,7 @@ const bento = {
             if (id) { openFile(id); return FILE_NAMES[id]; }
             if (/^https?:\/\//.test(f)) return window.open_(f);
         }
-        throw new Error('open(file) — try one of: ' + Object.values(FILE_NAMES).join(', '));
+        throw new Error('open(file): try one of ' + Object.values(FILE_NAMES).join(', '));
     };
 
     function format(v) {
@@ -1005,6 +1345,12 @@ const bento = {
     // ---------- Normal-site animations ----------
     if (reduced) {
         document.documentElement.classList.add('reduced-motion');
+        // No count-up animation, but the real numbers still need to land
+        // (hero stat row + the README.md mirror of the same numbers).
+        const yearsSince2019 = new Date().getFullYear() - 2019;
+        document.getElementById('years-count').textContent = yearsSince2019;
+        document.querySelectorAll('[data-stat="years"]').forEach((el) => { el.textContent = yearsSince2019; });
+        document.querySelectorAll('[data-count]').forEach((el) => { el.textContent = el.dataset.count; });
     } else {
         try {
             animate('[data-hero]', { opacity: [0, 1], y: [28, 0] },
@@ -1063,6 +1409,8 @@ const bento = {
         // Calculate years since 2019
         const yearsSince2019 = new Date().getFullYear() - 2019;
         countUp(document.getElementById('years-count'), yearsSince2019);
+        // Same number, mirrored into the IDE's README.md stat block
+        document.querySelectorAll('[data-stat="years"]').forEach((el) => { el.textContent = yearsSince2019; });
 
         const bentoRowContent = document.getElementById('bento-row-content');
         if (!bentoRowContent) {
