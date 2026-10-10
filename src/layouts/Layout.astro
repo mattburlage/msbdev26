@@ -1,4 +1,13 @@
 ---
+// Self-host the same font families and weights for reliable site/PDF builds.
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/600.css';
+
 interface Props {
   title?: string;
   description?: string;
@@ -34,9 +43,6 @@ const {
   <meta name="twitter:description" content={description}/>
   <meta name="twitter:image" content={image}/>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 
   <style is:global>
     @import '../styles/global.css';
@@ -101,23 +107,6 @@ const {
       opacity: 0.03;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     }
-
-    .spot { position: relative; overflow: hidden; }
-    .spot::after {
-      content: '';
-      position: absolute; inset: 0; pointer-events: none;
-      opacity: var(--spot-o, 0);
-      transition: opacity 0.4s ease;
-      background: radial-gradient(circle 240px at var(--spot-x, 50%) var(--spot-y, 50%), rgba(var(--accent-rgb), 0.12), transparent 80%);
-    }
-
-    .sec-num {
-      font-size: clamp(4rem, 10vw, 7rem);
-      line-height: 1; font-weight: 700; color: transparent;
-      -webkit-text-stroke: 1px #3a3a4d; user-select: none;
-    }
-    #experience .sec-num { color: rgba(5, 5, 7, 0.25); }
-    #projects .sec-num { color: rgba(5, 5, 7, 0.75); }
 
     .marquee {
       overflow: hidden; position: relative;

@@ -22,7 +22,6 @@ const fmtDate = (d: Date) =>
 
     <main class="max-w-4xl mx-auto px-5 py-24 sm:py-32">
       <div class="flex items-baseline gap-6 mb-14">
-        <span class="sec-num">04</span>
         <h1 class="text-2xl sm:text-4xl font-bold text-void-100">Writing<span class="caret"></span></h1>
       </div>
 
@@ -31,7 +30,7 @@ const fmtDate = (d: Date) =>
       ) : (
         <div class="space-y-8">
           {posts.map((post) => (
-            <article class="spot border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 hover:border-volt/50 transition-colors">
+            <article class="relative overflow-hidden border border-void-700 rounded-xl bg-void-900 p-6 sm:p-8 hover:border-volt/50 transition-colors">
               <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
                 <time datetime={post.data.pubDate.toISOString()} class="font-mono text-xs text-void-400">
                   {fmtDate(post.data.pubDate)}

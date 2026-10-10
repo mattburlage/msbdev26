@@ -94,14 +94,13 @@ const fmtDate = (d: Date) =>
     </div>
     <div class="max-w-6xl mx-auto px-5 py-20 sm:py-28">
         <div class="flex items-baseline gap-6 mb-4">
-            <span class="sec-num m-reveal">03</span>
             <h2 class="text-2xl sm:text-4xl font-bold text-void-100 m-reveal">How I build<span class="caret"></span></h2>
         </div>
         <p class="font-mono text-volt text-sm mb-12 m-reveal">{PRINCIPLES_TAGLINE}</p>
 
         <div class="grid gap-4 sm:grid-cols-2" data-stagger>
             {principles.map((p, i) => (
-                <div class="spot border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
+                <div class="relative overflow-hidden border border-void-700 rounded-xl bg-void-900 p-6 m-reveal">
                     <p class="font-mono text-volt text-xs mb-3">[{String(i + 1).padStart(2, '0')}]</p>
                     <h3 class="font-bold text-void-100 mb-2">{p.title}</h3>
                     <p class="text-sm text-void-400 leading-relaxed">{p.text}</p>
@@ -117,7 +116,7 @@ const fmtDate = (d: Date) =>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {recentPosts.map((post) => (
-                        <a href={`/blog/${post.id}`} class="spot block border border-void-700 rounded-xl bg-void-900 p-5 hover:border-volt/50 transition-colors">
+                        <a href={`/blog/${post.id}`} class="relative overflow-hidden block border border-void-700 rounded-xl bg-void-900 p-5 hover:border-volt/50 transition-colors">
                             <time datetime={post.data.pubDate.toISOString()} class="font-mono text-xs text-void-400">{fmtDate(post.data.pubDate)}</time>
                             <h4 class="font-bold text-void-100 mt-2 leading-snug">{post.data.title}</h4>
                             <p class="text-sm text-void-400 mt-2 leading-relaxed">{post.data.description}</p>
