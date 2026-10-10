@@ -7,6 +7,8 @@ import '@fontsource/space-grotesk/700.css';
 import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
 import '@fontsource/jetbrains-mono/600.css';
+import '@fontsource/noto-sans/400.css';
+import '@fontsource/noto-sans/700.css';
 
 interface Props {
   title?: string;
@@ -262,7 +264,7 @@ const {
       body { background: white !important; color: black !important; }
       .noise, #progress, #site, #ide, footer { display: none !important; }
       .print-only { display: block !important; }
-      #resume { position: static; width: 100%; max-width: none; padding: 0; margin: 0; background: white; color: black; }
+      #resume { font-family: 'Noto Sans', sans-serif; position: static; width: 100%; max-width: none; padding: 0; margin: 0; background: white; color: black; }
       #resume a { color: black !important; text-decoration: none !important; }
       #resume .resume-section { break-inside: avoid; }
       #resume .resume-entry { break-inside: avoid; }

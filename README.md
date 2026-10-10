@@ -83,7 +83,8 @@ No résumé data, copy, or print styles are rewritten by the generator.
 - Use Node.js 22.13.0 or later (Node 24 LTS recommended).
 - Run `npm ci` with development dependencies and package install scripts enabled.
   Puppeteer installs its pinned Chrome for Testing; the build host also needs
-  Chrome's Linux system libraries and permission to launch sandboxed Chromium.
+  permission to launch sandboxed Chromium. The Ubuntu 24.04 x86_64 Workers
+  build image's missing libraries are prepared automatically as described below.
 - Keep Puppeteer's browser cache available to the build. If the dependency cache
   is restored without the browser cache, run `npx puppeteer browsers install chrome`
   before building. `PUPPETEER_CACHE_DIR` can select a writable cache directory.
@@ -110,13 +111,54 @@ See [Puppeteer installation](https://pptr.dev/guides/installation),
 [Linux requirements](https://pptr.dev/troubleshooting), and
 [Cloudflare's build image](https://developers.cloudflare.com/workers/ci-cd/builds/build-image/).
 
+### Cloudflare build-image dependency preparation
+
+Cloudflare Workers Builds currently uses Ubuntu 24.04 x86_64, but does not include
+all of Chrome's shared libraries (for example `libatk-1.0.so.0`). The generator
+checks the pinned executable with `ldd` before launch. On that exact OS/architecture,
+`scripts/prepare-chrome.js` prepares missing dependencies without root:
+
+1. Read the `deb.deps` declaration shipped by Google with that pinned Chrome.
+2. Use private APT state and a copy of the installed-package database. Fetch only
+   Noble, Noble Updates, and Noble Security from official Ubuntu HTTPS archives,
+   authenticated with the build image's existing Ubuntu archive keyring. APT's
+   signature and package-hash checks remain enabled.
+3. Resolve and download dependencies with `apt-get --download-only satisfy`, then
+   extract package payloads with `dpkg-deb`. No package install/maintainer scripts,
+   sudo, global package database updates, or system configuration changes occur.
+   Any proposed replacement of the host C library/loader is rejected.
+4. Recheck `ldd` and pass the temporary library/font paths only to Chrome. Remove
+   the temporary files after the browser closes, including on failure.
+
+This needs `apt-get`, `dpkg-deb`, the Ubuntu archive keyring and outbound HTTPS to
+Ubuntu's repositories. Other OSes use their existing dependencies and get a clear
+error if libraries are missing. The browser sandbox stays enabled: this resolves
+library loading, not a host policy that forbids sandboxed Chrome. The normal PDF
+content/resource checks and nonzero build failure remain mandatory. Actual hosting
+build success must be verified after deploying this change.
+
+References: [Cloudflare build image](https://developers.cloudflare.com/workers/ci-cd/builds/build-image/),
+[Puppeteer system dependencies](https://pptr.dev/troubleshooting),
+[APT download-only/satisfy](https://manpages.ubuntu.com/manpages/noble/man8/apt-get.8.html),
+[package extraction](https://manpages.ubuntu.com/manpages/noble/man1/dpkg-deb.1.html).
+
 ### Checks
 
 - `npm run test:resume`: content-parity and stale-file cleanup unit tests.
 - `RESUME_PDF_INTEGRATION=1 npm run test:resume`: also run real-browser rendering,
-  missing-stylesheet and invalid-print-style checks on a Chromium-capable host.
+  missing-stylesheet, invalid-print-style and one-page overflow checks on a Chromium-capable host.
 - `npm run build`: verifies the actual current site and creates the PDF. Review
   `dist/resume.pdf` visually after changing the résumé layout or content.
+
+The shared print résumé explicitly uses self-hosted Noto Sans (pinned Fontsource
+5.3.0, regular and bold), matching the font family in the reviewed one-page PDF.
+This prevents host-specific system fonts from changing pagination. Its OFL license
+is included in `public/static/fonts/Noto-Sans-LICENSE.txt`. The build refuses to
+publish a PDF longer than one page; it never shrinks or truncates content to fit.
+
+Noto Sans adds about 745 KiB of built font assets (all supported subsets) and
+8.1 MiB to the development install; browsers fetch only the subsets they use.
+It needs no network request during the build or PDF render.
 
 ## License
 

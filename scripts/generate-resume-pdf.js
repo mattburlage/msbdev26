@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import { readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { prepareChromeEnvironment } from './prepare-chrome.js';
 
 const root = fileURLToPath(new URL('../dist/', import.meta.url));
 
@@ -55,6 +56,7 @@ export async function generateResumePdf(distDir = root) {
     }
   });
   let browser;
+  let chromeEnvironment;
   let pageCount;
   try {
     await new Promise((done, reject) => {
@@ -62,7 +64,8 @@ export async function generateResumePdf(distDir = root) {
       server.listen(0, '127.0.0.1', done);
     });
     const origin = `http://127.0.0.1:${server.address().port}`;
-    browser = await puppeteer.launch({ headless: true });
+    chromeEnvironment = await prepareChromeEnvironment(await puppeteer.executablePath());
+    browser = await puppeteer.launch({ headless: true, env: chromeEnvironment.env });
     const page = await browser.newPage();
     const failures = [];
     const required = (request) => ['document', 'stylesheet', 'script', 'font'].includes(request.resourceType());
@@ -101,6 +104,7 @@ export async function generateResumePdf(distDir = root) {
     const texts = [];
     try {
       const document = await loadingTask.promise;
+      if (document.numPages !== 1) throw new Error(`Expected a one-page résumé, got ${document.numPages} pages. Refusing to publish it.`);
       for (let number = 1; number <= document.numPages; number++) {
         const content = await (await document.getPage(number)).getTextContent();
         texts.push(content.items.map((item) => 'str' in item ? item.str : '').join(' '));
@@ -119,7 +123,9 @@ export async function generateResumePdf(distDir = root) {
     try {
       try { await browser?.close(); } finally {
         server.closeAllConnections();
-        await new Promise((done) => server.close(done));
+        try { await new Promise((done) => server.close(done)); } finally {
+          await chromeEnvironment?.cleanup();
+        }
       }
     } catch (error) {
       await cleanResumePdf(distDir);
