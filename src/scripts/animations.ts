@@ -251,16 +251,6 @@ if (reduced) {
   }
 
   if (fine) {
-    document.querySelectorAll<HTMLElement>('.spot').forEach((card) => {
-      card.addEventListener('pointermove', (e) => {
-        const r = card.getBoundingClientRect();
-        card.style.setProperty('--spot-x', (e.clientX - r.left) + 'px');
-        card.style.setProperty('--spot-y', (e.clientY - r.top) + 'px');
-        card.style.setProperty('--spot-o', '1');
-      }, { passive: true });
-      card.addEventListener('pointerleave', () => card.style.setProperty('--spot-o', '0'));
-    });
-
     const mag = document.getElementById('magnetic');
     if (mag) {
       mag.addEventListener('pointermove', (e) => {
