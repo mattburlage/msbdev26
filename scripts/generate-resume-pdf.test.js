@@ -45,6 +45,7 @@ ${extra}</head><body><div id="site">Do not print this</div><div id="ide"></div>
 <p>Exact words, dates 2020–2026, punctuation &amp; repeated repeated words.</p></div></body></html>`;
 for (const [name, html, succeeds] of [
   ['renders and validates the built print content', fixture(), true],
+  ['fails closed when the résumé overflows one page', fixture('<style>#resume { min-height: 30in }</style>'), /Expected a one-page résumé/],
   ['fails closed when a required stylesheet is missing', fixture('<link rel="stylesheet" href="/missing.css">'), /Required page resources failed/],
   ['fails closed when print styles leak the website into the PDF', fixture('<style>@media print { #site { display:block } }</style>'), /#site is not hidden/],
 ]) {

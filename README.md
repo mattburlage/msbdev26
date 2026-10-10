@@ -146,9 +146,19 @@ References: [Cloudflare build image](https://developers.cloudflare.com/workers/c
 
 - `npm run test:resume`: content-parity and stale-file cleanup unit tests.
 - `RESUME_PDF_INTEGRATION=1 npm run test:resume`: also run real-browser rendering,
-  missing-stylesheet and invalid-print-style checks on a Chromium-capable host.
+  missing-stylesheet, invalid-print-style and one-page overflow checks on a Chromium-capable host.
 - `npm run build`: verifies the actual current site and creates the PDF. Review
   `dist/resume.pdf` visually after changing the résumé layout or content.
+
+The shared print résumé explicitly uses self-hosted Noto Sans (pinned Fontsource
+5.3.0, regular and bold), matching the font family in the reviewed one-page PDF.
+This prevents host-specific system fonts from changing pagination. Its OFL license
+is included in `public/static/fonts/Noto-Sans-LICENSE.txt`. The build refuses to
+publish a PDF longer than one page; it never shrinks or truncates content to fit.
+
+Noto Sans adds about 745 KiB of built font assets (all supported subsets) and
+8.1 MiB to the development install; browsers fetch only the subsets they use.
+It needs no network request during the build or PDF render.
 
 ## License
 

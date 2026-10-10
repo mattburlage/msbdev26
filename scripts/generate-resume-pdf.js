@@ -104,6 +104,7 @@ export async function generateResumePdf(distDir = root) {
     const texts = [];
     try {
       const document = await loadingTask.promise;
+      if (document.numPages !== 1) throw new Error(`Expected a one-page résumé, got ${document.numPages} pages. Refusing to publish it.`);
       for (let number = 1; number <= document.numPages; number++) {
         const content = await (await document.getPage(number)).getTextContent();
         texts.push(content.items.map((item) => 'str' in item ? item.str : '').join(' '));
