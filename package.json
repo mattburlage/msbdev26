@@ -13,7 +13,7 @@
     "dev:tunnel": "astro dev & ngrok http 4025 --domain=msb.ngrok.app & sleep 3 && open https://msb.ngrok.app",
     "stop": "lsof -ti:4025 | xargs kill && pkill -f 'ngrok http 4025'",
     "prebuild": "node scripts/generate-resume-pdf.js --clean",
-    "test:resume": "node --test scripts/generate-resume-pdf.test.js"
+    "test:resume": "node --test scripts/generate-resume-pdf.test.js scripts/prepare-chrome.test.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.2",
