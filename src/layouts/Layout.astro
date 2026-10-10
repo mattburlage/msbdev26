@@ -1,4 +1,13 @@
 ---
+// Self-host the same font families and weights for reliable site/PDF builds.
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/600.css';
+
 interface Props {
   title?: string;
   description?: string;
@@ -34,9 +43,6 @@ const {
   <meta name="twitter:description" content={description}/>
   <meta name="twitter:image" content={image}/>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 
   <style is:global>
     @import '../styles/global.css';
